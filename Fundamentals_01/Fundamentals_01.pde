@@ -9,9 +9,8 @@ void setup() {
 }
 
 void draw() {
-  setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop);    
-
-  drawTextDaniel(0, 0, 0, 1);
+  setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop);     //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+  drawTextDaniel(0, 0, 0);
 }
 
 void setGradient(int x, int y, float gradientWidth, float gradientHeight, color gradientColorBottom, color gradientColorTop ) 
@@ -25,43 +24,49 @@ void setGradient(int x, int y, float gradientWidth, float gradientHeight, color 
   }
 }
 
-void drawTextDaniel(int positionX, int positionY, float depth, float size)
+void drawTextDaniel(int positionX, int positionY, float size)
 {
   stroke(105, 160, 238);      
-  strokeWeight(4);
+  strokeWeight(3);
 
-  nameLetterD(0, 0, 0, 0);    
-  nameLetterA(0, 0, 0, 0); 
-  nameLetterN(0, 0, 0, 0); 
-  nameLetterI(0, 0, 0, 0); 
-  nameLetterE(0, 0, 0, 0); 
-  nameLetterL(0, 0, 0, 0);
+  nameLetterD(0, 0, 0);    
+  nameLetterA(0, 0, 0); 
+  nameLetterN(0, 0, 0); 
+  nameLetterI(0, 0, 0); 
+  nameLetterE(0, 0, 0); 
+  nameLetterL(0, 0, 0);
 }
 
-void nameLetterD(int positionX, int positionY, float depth, float size)
+void nameLetterD(int positionX, int positionY, float size)
 {
   // line(199, 166, 388, 295);
 }
 
-void nameLetterA(int positionX, int positionY, float depth, float size)
+void nameLetterA(int positionX, int positionY, float size)
 {
-  line(256, 161, 220, 245);
-  line(256, 161, 291, 245);
-  line(278, 214, 233, 214);
+  translate(150, 0);
+  line(30, 161, 0, 245);
+  line(30, 161, 60, 245);
+  line(12, 214, 47, 214);
 }
 
-void nameLetterN(int positionX, int positionY, float depth, float size)
+void nameLetterN(int positionX, int positionY, float size)
+{
+  translate(95, 0);
+  line(0, 161, 0, 245);
+  line(0, 161, 60, 245);
+  line(60, 161, 60, 245);
+}
+
+void nameLetterI(int positionX, int positionY, float size)
+{
+
+}
+
+void nameLetterE(int positionX, int positionY, float size)
 {
 }
 
-void nameLetterI(int positionX, int positionY, float depth, float size)
-{
-}
-
-void nameLetterE(int positionX, int positionY, float depth, float size)
-{
-}
-
-void nameLetterL(int positionX, int positionY, float depth, float size)
+void nameLetterL(int positionX, int positionY, float size)
 {
 }
