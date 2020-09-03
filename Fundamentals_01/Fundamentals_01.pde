@@ -1,16 +1,22 @@
 color gradientColorBottom, gradientColorTop;
 color strokeColor;
+PImage img;
 
 void setup() {
 	size(768, 432);
 
 	gradientColorTop = color(45, 73, 123);
 	gradientColorBottom = color(42, 16, 49);
+
+  img = loadImage("sketch.png");
+
 }
 
 void draw() {
 	setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop);
 
+  image(img, 50, 50);
+  drawTextDaniel(0, 0, 0, 0);
 
 }
 
@@ -28,14 +34,14 @@ void setGradient(int x, int y, float gradientWidth, float gradientHeight, color 
 
 void drawTextDaniel(int positionX, int positionY, float depth, float size)
 {
-  stroke(105, 160, 238);
-  strokeWeight(2.5);
-  line(40, 60, 0, 40);
+    stroke(105, 160, 238);      
+    strokeWeight(3);
+    nameLetterD(0,0,0,0);    
 }
 
 void nameLetterD(int positionX, int positionY, float depth, float size)
 {
-  
+  line(40, 60, 0, 40);
 }
 
 void nameLetterA(int positionX, int positionY, float depth, float size)
