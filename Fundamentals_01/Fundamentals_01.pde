@@ -9,7 +9,7 @@ void setup() {
 }
 
 void draw() {
-  setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop); //<>// //<>// //<>// //<>//
+  setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop); //<>// //<>// //<>// //<>// //<>//
   drawTextDaniel(0, 0, 0);
 }
 
@@ -39,48 +39,58 @@ void drawTextDaniel(int positionX, int positionY, float size)
 
 void nameLetterD(int positionX, int positionY, float size)
 {
-  translate(42, 132);
   noFill();
   push();
+  translate(65, 201);
   rotate(radians(247));
-  arc(0, 0, 80, 80, 0, PI+QUARTER_PI, CHORD);
+  arc(0, 0, 81, 81, 0, PI+QUARTER_PI, CHORD);
   pop();
 }
 
 void nameLetterA(int positionX, int positionY, float size)
 {
-  translate(103, 0);
+  push();
+  translate(112, 0);
   line(30, 161, 0, 245);
   line(30, 161, 60, 245);
   line(12, 214, 47, 214);
+  pop();
 }
 
 void nameLetterN(int positionX, int positionY, float size)
 {
-  translate(91, 0);
+  push();
+  translate(189, 0);
   line(0, 161, 0, 245);
   line(0, 161, 60, 245);
   line(60, 161, 60, 245);
+  pop();
 }
 
 void nameLetterI(int positionX, int positionY, float size)
 {
-  translate(100, 0);
+  push();
+  translate(279, 0);
   line(0, 161, 0, 245);
+  pop();
 }
 
 void nameLetterE(int positionX, int positionY, float size)
 {
-  translate(38, 0);
+  push();
+  translate(310, 0);
   line(0, 161, 0, 245);
   line(0, 161, 50, 161);
   line(0, 203, 50, 203);
   line(0, 245, 50, 245);
+  pop();
 }
 
 void nameLetterL(int positionX, int positionY, float size)
 {
-  translate(80, 0);
+  push();
+  translate(402, 0);
   line(0, 161, 0, 245);
   line(0, 245, 50, 245);
+  pop();
 }
