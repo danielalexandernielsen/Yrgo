@@ -1,4 +1,4 @@
-color gradientColorBottom, gradientColorTop;
+color gradientColorBottom, gradientColorTop; //<>//
 color strokeColor;
 
 void setup() {
@@ -9,8 +9,8 @@ void setup() {
 }
 
 void draw() {
-  setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop); //<>// //<>// //<>// //<>// //<>//
-  drawTextDaniel(0, 0, 0);
+  setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop);
+  drawTextDaniel(33, 89, 1.6);
 }
 
 void setGradient(int x, int y, float gradientWidth, float gradientHeight, color gradientColorBottom, color gradientColorTop ) 
@@ -26,22 +26,24 @@ void setGradient(int x, int y, float gradientWidth, float gradientHeight, color 
 
 void drawTextDaniel(int positionX, int positionY, float size)
 {
+  scale(size);
+  translate(positionX, positionY);
+  
   stroke(105, 160, 238);      
   strokeWeight(3);
-
-  nameLetterD(0, 0, 0);    
-  nameLetterA(0, 0, 0); 
-  nameLetterN(0, 0, 0); 
-  nameLetterI(0, 0, 0); 
-  nameLetterE(0, 0, 0); 
-  nameLetterL(0, 0, 0);
+  nameLetterD(13, 43, 0);    
+  nameLetterA(68, 0, 0); 
+  nameLetterN(153, 0, 0); 
+  nameLetterI(247, 0, 0); 
+  nameLetterE(280, 0, 0); 
+  nameLetterL(359, 0, 0);
 }
 
 void nameLetterD(int positionX, int positionY, float size)
 {
-  noFill();
   push();
-  translate(65, 201);
+  noFill();
+  translate(positionX, positionY);
   rotate(radians(247));
   arc(0, 0, 81, 81, 0, PI+QUARTER_PI, CHORD);
   pop();
@@ -50,47 +52,47 @@ void nameLetterD(int positionX, int positionY, float size)
 void nameLetterA(int positionX, int positionY, float size)
 {
   push();
-  translate(112, 0);
-  line(30, 161, 0, 245);
-  line(30, 161, 60, 245);
-  line(12, 214, 47, 214);
+  translate(positionX, positionY);
+  line(30, 0, 0, 85);
+  line(30, 0, 60, 84);
+  line(12, 53, 47, 53);
   pop();
 }
 
 void nameLetterN(int positionX, int positionY, float size)
 {
   push();
-  translate(189, 0);
-  line(0, 161, 0, 245);
-  line(0, 161, 60, 245);
-  line(60, 161, 60, 245);
+  translate(positionX, positionY);
+  line(0, 0, 0, 84);
+  line(0, 0, 60, 84);
+  line(60, 0, 60, 84);
   pop();
 }
 
 void nameLetterI(int positionX, int positionY, float size)
 {
   push();
-  translate(279, 0);
-  line(0, 161, 0, 245);
+  translate(positionX, positionY);
+  line(0, 0, 0, 84);
   pop();
 }
 
 void nameLetterE(int positionX, int positionY, float size)
 {
   push();
-  translate(310, 0);
-  line(0, 161, 0, 245);
-  line(0, 161, 50, 161);
-  line(0, 203, 50, 203);
-  line(0, 245, 50, 245);
+  translate(positionX, positionY);
+  line(0, 0, 0, 84);
+  line(0, 0, 50, 0);
+  line(0, 42, 50, 42);
+  line(0, 84, 50, 84);
   pop();
 }
 
 void nameLetterL(int positionX, int positionY, float size)
 {
   push();
-  translate(402, 0);
-  line(0, 161, 0, 245);
-  line(0, 245, 50, 245);
+  translate(positionX, positionY);
+  line(0, 0, 0, 84);
+  line(0, 84, 50, 84);
   pop();
 }
