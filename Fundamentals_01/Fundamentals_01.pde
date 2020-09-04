@@ -1,4 +1,4 @@
-color gradientColorBottom, gradientColorTop; //<>//
+color gradientColorBottom, gradientColorTop; //<>// //<>// //<>//
 color strokeColor;
 PImage renderedName;
 
@@ -7,23 +7,23 @@ void setup() {
 
   gradientColorTop = color(45, 73, 123);
   gradientColorBottom = color(42, 16, 49);
-  setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop);
-
-  drawTextDaniel(39, 89, 1.6);
-  filter(BLUR, 4);
-  renderedName = get();
 }
 
 void draw() {
-  
-  // displaceText();
+  setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop);
+
+  drawTextDaniel(57, 136, 1.6);
+  //filter(BLUR, 4);
+  renderedName = get();
+  //displaceText();
 }
 
 
 void drawTextDaniel(int positionX, int positionY, float size)
 {
-  scale(size);
+
   translate(positionX, positionY);
+  scale(size);
 
   stroke(105, 160, 238);      
   strokeWeight(3);
@@ -107,15 +107,17 @@ void setGradient(int x, int y, float gradientWidth, float gradientHeight, color 
 void displaceText()
 {
   renderedName.loadPixels();
-  
+
   for (int y = 0; y < height; y++)
   {
     for (int x = 0; x < width; x++)
     {
-      
+      int location = x + (y * renderedName.width);
+      float luminance = brightness(renderedName.get(x, y));
+      renderedName.pixels[location] = color(255);
     }
   }
-  
+
   renderedName.updatePixels();
-  image(renderedName,0,0);
+  image(renderedName, 0, 0);
 }
