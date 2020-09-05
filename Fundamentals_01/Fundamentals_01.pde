@@ -1,4 +1,4 @@
-color gradientColorBottom, gradientColorTop; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+color colorBottom, colorTop;
 color strokeColor;
 PImage renderedName;
 PShape name;
@@ -9,8 +9,8 @@ void setup() {
 
   name = createShape(GROUP);
 
-  gradientColorTop = color(45, 73, 123);
-  gradientColorBottom = color(42, 16, 49);
+  colorTop = color(45, 73, 123);
+  colorBottom = color(42, 16, 49);
 
   D = new Letter('D');
   A = new Letter('A');
@@ -19,20 +19,18 @@ void setup() {
   E = new Letter('E');
   L = new Letter('L');
 
-
   // renderedName = get();
 }
 
 void draw() {
 
-  setGradient(0, 0, width, height, gradientColorBottom, gradientColorTop);
+  setGradient(0, 0, width, height, colorBottom, colorTop);
 
   translate(57, 136);
   scale(1.6);
 
   stroke(105, 160, 238);      
   strokeWeight(3);
-
 
   // D.rotateLetter(247);
   D.moveLetter(13, 43);
@@ -55,85 +53,86 @@ void draw() {
 }
 
 
-class Letter
-{  
-  char character;
-  boolean wasExecuted;
+void setGradient(int x, int y, float wide, float tall, color colorBottom, color colorTop) {
+  for (int i = y; i <= y + tall; i++) {
+    float inter = map(i, y, y + tall, 0, 1);
+    color gradient = lerpColor(colorBottom, colorTop, inter);
+    stroke(gradient);
+    line(x, i, x+wide, i);
+  }
+}
 
-  Letter(char character)
-  {
+
+
+class Letter {  
+  char character;
+  boolean pushExecuted = false;
+
+  Letter(char character) {
     this.character = character;
   }
 
-  void printLetter()
-  {
-
-    switch(character)
-    {
-    case 'D':
+  void printLetter() {
+    switch(character) {
+      case 'D':
       noFill();
       arc(0, 0, 81, 81, 0, PI+QUARTER_PI, CHORD);
       break;
 
-    case 'A':
+      case 'A':
       line(30, 0, 0, 85);
       line(30, 0, 60, 84);
       line(12, 53, 47, 53);
       break;
 
-    case 'N':
+      case 'N':
       line(0, 0, 0, 84);
       line(0, 0, 60, 84);
       line(60, 0, 60, 84);
       break;
 
-    case 'I':
+      case 'I':
       line(0, 0, 0, 84);
       break;
 
-    case 'E':
+      case 'E':
       line(0, 0, 0, 84);
       line(0, 0, 50, 0);
       line(0, 42, 50, 42);
       line(0, 84, 50, 84);
       break;
 
-    case 'L':
+      case 'L':
       line(0, 0, 0, 84);
       line(0, 84, 50, 84);
       break;
-    }
 
+      default:
+      print("Error: Letter not implemented.");
+      break;
+    }
     pop();
+    pushToStack(reset);
   }
 
-  void moveLetter(int positionX, int positionY)
-  {
-    if (character != ' ')
-    {
+  void moveLetter(int positionX, int positionY) {
+    pushToStack(execute);
+    translate(positionX, positionY);
+  }
+
+  void rotateLetter(int degrees) {
+    pushToStack(execute);
+    rotate(radians(degrees));
+  }
+
+  void pushToStack(String command) {
+    if (!pushExecuted) {     
       push();
-      translate(positionX, positionY);
+      pushExecuted = true;
     }
-  }
-
-  void rotateLetter(int degrees)
-  {
-    if (character != ' ')
-    {
-      rotate(radians(degrees));
+    else if (reset) {
+      pushExecuted = false;
     }
-  }
-}
 
-
-
-void setGradient(int x, int y, float gradientWidth, float gradientHeight, color gradientColorBottom, color gradientColorTop ) 
-{
-  for (int i = y; i <= y + gradientHeight; i++) 
-  {
-    float inter = map(i, y, y + gradientHeight, 0, 1);
-    color gradient = lerpColor(gradientColorBottom, gradientColorTop, inter);
-    stroke(gradient);
-    line(x, i, x+gradientWidth, i);
   }
 }
