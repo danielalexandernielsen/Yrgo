@@ -21,16 +21,36 @@ void draw() {
   printName(57, 136, 1.6, strokeColor, 3);
   loadPixels();
   drawGradient(colorTop, colorBottom);
+  zDisplacement(pixels);
   updatePixels();
 }
 
 
 void drawGradient(color colorTop, color colorBottom) {
-  for (int y = 0; y <= height; y++) {
+  for (int y = 0, x = 0; y <= height; y++) {
     float interval = map(y, 0, height, 0, 1);
     color gradient = lerpColor(colorBottom, colorTop, interval);
     stroke(gradient);
-    line(0, y, width, y);
+    line(x, y, width, y);
+  }
+}
+
+void zDisplacement(int[] pixelsSnapshot)
+{
+  float b, z, px, pz;
+  int max_height = 60;
+
+  for (int y = 0; y < height; y++) {
+    px = -1;
+    pz = 0;
+    for (int x = 0; x < width; x++) {
+      b = brightness(pixelsSnapshot[x + (y * width)]);
+      z = map(b, 0, 200, 0, max_height);
+
+      line(px, y, pz, x, y, z);
+      px = x;
+      pz = z;
+    }
   }
 }
 
