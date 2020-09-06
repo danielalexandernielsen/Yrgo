@@ -1,6 +1,4 @@
-color colorBottom, colorTop;
-color strokeColor;
-PGraphics name; 
+color colorBottom, colorTop, strokeColor;
 Letter D, A, N, I, E, L;
 
 void setup() {
@@ -8,21 +6,42 @@ void setup() {
 
   colorTop = color(45, 73, 123);
   colorBottom = color(42, 16, 49);
-  name = createGraphics(width, height);
+  strokeColor = color(105, 160, 238);
 
   D = new Letter('D');
   A = new Letter('A');
   N = new Letter('N');
   I = new Letter('I');
   E = new Letter('E');
-  L = new Letter('L'); 
-  
-  name.beginDraw();
-  name.translate(57, 136);
-  name.scale(1.6);
+  L = new Letter('L');
+}
 
-  name.stroke(105, 160, 238);      
-  name.strokeWeight(3);
+void draw() {
+
+  printName(57, 136, 1.6, strokeColor, 3);
+  loadPixels();
+  drawGradient(colorTop, colorBottom);
+  updatePixels();
+}
+
+
+void drawGradient(color colorTop, color colorBottom) {
+  for (int y = 0; y <= height; y++) {
+    float interval = map(y, 0, height, 0, 1);
+    color gradient = lerpColor(colorBottom, colorTop, interval);
+    stroke(gradient);
+    line(0, y, width, y);
+  }
+}
+
+void printName(int positionX, int positionY, float scale, color strokeColor, int strokeWidth)
+{
+  push();
+  translate(positionX, positionY);
+  scale(scale);
+
+  stroke(strokeColor);      
+  strokeWeight(strokeWidth);
 
   D.moveLetter(13, 43);
   D.rotateLetter(247);
@@ -47,27 +66,9 @@ void setup() {
   L.moveLetter(359, 0);
   L.rotateLetter(0);
   L.printLetter();
-  name.endDraw();
+  pop();
 }
 
-void draw() {
-
-
-  setGradient(0, 0, width, height, colorBottom, colorTop);
-
-
-  
-}
-
-
-void setGradient(int x, int y, float wide, float tall, color colorBottom, color colorTop) {
-  for (int i = y; i <= y + tall; i++) {
-    float inter = map(i, y, y + tall, 0, 1);
-    color gradient = lerpColor(colorBottom, colorTop, inter);
-    stroke(gradient);
-    line(x, i, x+wide, i);
-  }
-}
 
 class Letter {  
   char character;
@@ -86,7 +87,7 @@ class Letter {
       break;
 
     case 'A':
-      line(30, 0, 0, 85);
+      line(0, 84, 30, 0);
       line(30, 0, 60, 84);
       line(12, 53, 47, 53);
       break;
@@ -123,12 +124,12 @@ class Letter {
 
   void moveLetter(int positionX, int positionY) {
     pushToStack("execute");
-    name.translate(positionX, positionY);
+    translate(positionX, positionY);
   }
 
   void rotateLetter(int degrees) {
     pushToStack("execute");
-    name.rotate(radians(degrees));
+    rotate(radians(degrees));
   }
 
   void pushToStack(String command) {
