@@ -1,9 +1,10 @@
 color colorBottom, colorTop, strokeColor;
-int[] snapshot;
+int[] textBuffer, gradientBuffer;
 Letter D, A, N, I, E, L;
 
 void setup() {
   size(768, 432, P3D);
+  background(0);
 
   colorTop = color(45, 73, 123);
   colorBottom = color(42, 16, 49);
@@ -18,62 +19,48 @@ void setup() {
 }
 
 void draw() {
-
-  rotateX(map(mouseY, 0, height, -PI, PI));
-
+  displayGradient(colorTop, colorBottom);
   displayName(57, 136, 1.6, strokeColor, 3);
-  background(0); 
-  loadPixels();
-  generateZDepthMap(pixels);
-
-  drawGradient(colorTop, colorBottom);
-
-  // zDisplacement(pixels, snapshot);
 }
 
-
-void drawGradient(color colorTop, color colorBottom) {
+int[] displayGradient(color colorTop, color colorBottom) {
   for (int y = 0, x = 0; y <= height; y++) {
     float interval = map(y, 0, height, 0, 1);
     color gradient = lerpColor(colorBottom, colorTop, interval);
     stroke(gradient);
     line(x, y, width, y);
   }
+
+  loadPixels();
+  return pixels;
 }
 
-float[] generateZDepthMap(int[] snapshot)
-{
-  float[] zDepthMap = new float[snapshot.length];
+void drawPointcloud() {
   float z, luminance;
   int maxHeight = 60;
 
+  //translate(width/2, height/2);
+
+  beginShape(POINTS);
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      luminance = brightness(snapshot[x + (y * width)]);
+      int index = x + (y * width);
+      luminance = brightness(textBuffer[index]);
       z = map(luminance, 0, 200, 0, maxHeight);
       print(z);
-      zDepthMap[x + (y * width)] = z;      
+
+      pushMatrix();
+      stroke(gradientBuffer[index]);
+      point(x, y, z);
+      popMatrix();
     }
   }
-  return zDepthMap;
+  endShape();
 }
 
-void zDisplacement(int[] pixel, int[] snapshot)
-{
-  float z, luminance;
-  int max_height = 60;
 
-  for (int y = 0; y < height; y++) {
-    for (int x = 0; x < width; x++) {
-      luminance = brightness(snapshot[x + (y * width)]);
-      z = map(luminance, 0, 200, 0, max_height);
 
-      line(0, y, 0, x, y, z);
-    }
-  }
-}
-
-void displayName(int positionX, int positionY, float scale, color strokeColor, int strokeWidth)
+int[] displayName(int positionX, int positionY, float scale, color strokeColor, int strokeWidth)
 {
   push();
   translate(positionX, positionY);
@@ -106,6 +93,9 @@ void displayName(int positionX, int positionY, float scale, color strokeColor, i
   L.rotateLetter(0);
   L.displayLetter();
   pop();
+
+  loadPixels();
+  return pixels;
 }
 
 
