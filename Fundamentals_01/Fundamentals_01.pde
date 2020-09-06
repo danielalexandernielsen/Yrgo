@@ -1,4 +1,5 @@
 color colorBottom, colorTop, strokeColor;
+int[] snapshot;
 Letter D, A, N, I, E, L;
 
 void setup() {
@@ -18,11 +19,16 @@ void setup() {
 
 void draw() {
 
-  printName(57, 136, 1.6, strokeColor, 3);
+  rotateX(map(mouseY, 0, height, -PI, PI));
+
+  displayName(57, 136, 1.6, strokeColor, 3);
+  background(0); 
   loadPixels();
+  generateZDepthMap(pixels);
+
   drawGradient(colorTop, colorBottom);
-  zDisplacement(pixels);
-  updatePixels();
+
+  // zDisplacement(pixels, snapshot);
 }
 
 
@@ -35,26 +41,39 @@ void drawGradient(color colorTop, color colorBottom) {
   }
 }
 
-void zDisplacement(int[] pixelsSnapshot)
+float[] generateZDepthMap(int[] snapshot)
 {
-  float b, z, px, pz;
+  float[] zDepthMap = new float[snapshot.length];
+  float z, luminance;
+  int maxHeight = 60;
+
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
+      luminance = brightness(snapshot[x + (y * width)]);
+      z = map(luminance, 0, 200, 0, maxHeight);
+      print(z);
+      zDepthMap[x + (y * width)] = z;      
+    }
+  }
+  return zDepthMap;
+}
+
+void zDisplacement(int[] pixel, int[] snapshot)
+{
+  float z, luminance;
   int max_height = 60;
 
   for (int y = 0; y < height; y++) {
-    px = -1;
-    pz = 0;
     for (int x = 0; x < width; x++) {
-      b = brightness(pixelsSnapshot[x + (y * width)]);
-      z = map(b, 0, 200, 0, max_height);
+      luminance = brightness(snapshot[x + (y * width)]);
+      z = map(luminance, 0, 200, 0, max_height);
 
-      line(px, y, pz, x, y, z);
-      px = x;
-      pz = z;
+      line(0, y, 0, x, y, z);
     }
   }
 }
 
-void printName(int positionX, int positionY, float scale, color strokeColor, int strokeWidth)
+void displayName(int positionX, int positionY, float scale, color strokeColor, int strokeWidth)
 {
   push();
   translate(positionX, positionY);
@@ -65,27 +84,27 @@ void printName(int positionX, int positionY, float scale, color strokeColor, int
 
   D.moveLetter(13, 43);
   D.rotateLetter(247);
-  D.printLetter();
+  D.displayLetter();
 
   A.moveLetter(68, 0);
   A.rotateLetter(0);
-  A.printLetter();
+  A.displayLetter();
 
   N.moveLetter(153, 0);
   N.rotateLetter(0);
-  N.printLetter();
+  N.displayLetter();
 
   I.moveLetter(247, 0);
   I.rotateLetter(0);
-  I.printLetter();
+  I.displayLetter();
 
   E.moveLetter(280, 0);
   E.rotateLetter(0);
-  E.printLetter();
+  E.displayLetter();
 
   L.moveLetter(359, 0);
   L.rotateLetter(0);
-  L.printLetter();
+  L.displayLetter();
   pop();
 }
 
@@ -99,7 +118,7 @@ class Letter {
     this.character = character;
   }
 
-  void printLetter() {
+  void displayLetter() {
     switch(character) {
     case 'D':
       noFill();
