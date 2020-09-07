@@ -2,9 +2,9 @@ color colorBottom, colorTop, strokeColor;
 int[] textBuffer, gradientBuffer;
 Letter D, A, N, I, E, L;
 
-void setup() {
+void setup() 
+{
   size(768, 432, P3D);
-  background(0);
 
   colorTop = color(45, 73, 123);
   colorBottom = color(42, 16, 49);
@@ -16,14 +16,32 @@ void setup() {
   I = new Letter('I');
   E = new Letter('E');
   L = new Letter('L');
+
+  textBuffer = displayName(57, 136, 1.6, strokeColor, 3);
+  gradientBuffer = displayGradient(colorTop, colorBottom);
+
+  background(0);
 }
 
-void draw() {
-  displayGradient(colorTop, colorBottom);
+void draw() 
+{
   displayName(57, 136, 1.6, strokeColor, 3);
+  color pink = color(255, 102, 204);
+  loadPixels();
+  for (int i = 0; i < (width*height/2)-width/2; i++) {
+    pixels[i] = pink;
+  }
+  updatePixels();
+
+  //drawPointcloud();
+  //loadPixels();
+  //pixels = textBuffer;
+  //updatePixels();
 }
 
-int[] displayGradient(color colorTop, color colorBottom) {
+int[] displayGradient(color colorTop, color colorBottom)
+{
+  background(0);
   for (int y = 0, x = 0; y <= height; y++) {
     float interval = map(y, 0, height, 0, 1);
     color gradient = lerpColor(colorBottom, colorTop, interval);
@@ -35,33 +53,38 @@ int[] displayGradient(color colorTop, color colorBottom) {
   return pixels;
 }
 
-void drawPointcloud() {
-  float z, luminance;
-  int maxHeight = 60;
+void drawPointcloud() 
+{
+  background(#f1f1f1);
+  fill(0);
+  noStroke();
+  sphereDetail(3);
+  float tiles = 100;
+  float tileSize = width/tiles;
+  push();
+  translate(width/2, height/2);
+  rotateY(radians(frameCount));
 
-  //translate(width/2, height/2);
+  for (int x = 0; x < tiles; x++) {
+    for (int y = 0; y < tiles; y++) {
+      color c = get(int(x*tileSize), int(y*tileSize));
+      float b = map(brightness(c), 0, 255, 1, 0);
+      float z = map(b, 0, 1, -150, 150);
 
-  beginShape(POINTS);
-  for (int y = 0; y < height; y++) {
-    for (int x = 0; x < width; x++) {
-      int index = x + (y * width);
-      luminance = brightness(textBuffer[index]);
-      z = map(luminance, 0, 200, 0, maxHeight);
-      print(z);
-
-      pushMatrix();
-      stroke(gradientBuffer[index]);
-      point(x, y, z);
-      popMatrix();
+      push();
+      translate(x*tileSize - width/2, y*tileSize - height/2, z);
+      sphere(tileSize*b*0.8);
+      pop();
     }
   }
-  endShape();
+  pop();
 }
-
 
 
 int[] displayName(int positionX, int positionY, float scale, color strokeColor, int strokeWidth)
 {
+  background(0);
+
   push();
   translate(positionX, positionY);
   scale(scale);
@@ -99,17 +122,21 @@ int[] displayName(int positionX, int positionY, float scale, color strokeColor, 
 }
 
 
-class Letter {  
+class Letter 
+{  
   char character;
   boolean pushExecuted = false;
   ArrayList<Object> shapes = new ArrayList<Object>();
 
-  Letter(char character) {
+  Letter(char character) 
+  {
     this.character = character;
   }
 
-  void displayLetter() {
-    switch(character) {
+  void displayLetter() 
+  {
+    switch(character) 
+    {
     case 'D':
       noFill();
       arc(0, 0, 81, 81, 0, PI+QUARTER_PI, CHORD);
@@ -151,17 +178,20 @@ class Letter {
     pushToStack("reset");
   }
 
-  void moveLetter(int positionX, int positionY) {
+  void moveLetter(int positionX, int positionY) 
+  {
     pushToStack("execute");
     translate(positionX, positionY);
   }
 
-  void rotateLetter(int degrees) {
+  void rotateLetter(int degrees) 
+  {
     pushToStack("execute");
     rotate(radians(degrees));
   }
 
-  void pushToStack(String command) {
+  void pushToStack(String command) 
+  {
     if (!pushExecuted) {     
       push();
       pushExecuted = true;
