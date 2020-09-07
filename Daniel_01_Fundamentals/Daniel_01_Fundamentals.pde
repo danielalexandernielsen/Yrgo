@@ -23,6 +23,7 @@ void draw()
 {
   displayGradient(colorTop, colorBottom);
   displayName(strokeColor, 4);
+  //saveFrame("nielsen_daniel_Fundamentals01_-######.png");
 }
 
 
