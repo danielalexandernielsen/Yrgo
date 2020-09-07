@@ -25,6 +25,7 @@ void draw()
   displayName(strokeColor, 4);
 }
 
+
 void displayGradient(color colorTop, color colorBottom)
 {
   for (int y = 0, x = 0; y <= height; y++) {
@@ -34,7 +35,6 @@ void displayGradient(color colorTop, color colorBottom)
     line(x, y, width, y);
   }
 }
-
 
 
 void displayName(color strokeColor, int strokeWidth)
