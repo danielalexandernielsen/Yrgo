@@ -1,5 +1,4 @@
 color colorBottom, colorTop, strokeColor;
-int[] textBuffer, gradientBuffer;
 Letter D, A, N, I, E, L;
 
 void setup() 
@@ -17,116 +16,69 @@ void setup()
   E = new Letter('E');
   L = new Letter('L');
 
-  textBuffer = displayName(57, 136, 1.6, strokeColor, 3);
-  gradientBuffer = displayGradient(colorTop, colorBottom);
-
   background(0);
 }
 
 void draw() 
 {
-  displayName(57, 136, 1.6, strokeColor, 3);
-  color pink = color(255, 102, 204);
-  loadPixels();
-  for (int i = 0; i < (width*height/2)-width/2; i++) {
-    pixels[i] = pink;
-  }
-  updatePixels();
-
-  //drawPointcloud();
-  //loadPixels();
-  //pixels = textBuffer;
-  //updatePixels();
+  displayGradient(colorTop, colorBottom);
+  displayName(strokeColor, 4);
 }
 
-int[] displayGradient(color colorTop, color colorBottom)
+void displayGradient(color colorTop, color colorBottom)
 {
-  background(0);
   for (int y = 0, x = 0; y <= height; y++) {
     float interval = map(y, 0, height, 0, 1);
     color gradient = lerpColor(colorBottom, colorTop, interval);
     stroke(gradient);
     line(x, y, width, y);
   }
-
-  loadPixels();
-  return pixels;
-}
-
-void drawPointcloud() 
-{
-  background(#f1f1f1);
-  fill(0);
-  noStroke();
-  sphereDetail(3);
-  float tiles = 100;
-  float tileSize = width/tiles;
-  push();
-  translate(width/2, height/2);
-  rotateY(radians(frameCount));
-
-  for (int x = 0; x < tiles; x++) {
-    for (int y = 0; y < tiles; y++) {
-      color c = get(int(x*tileSize), int(y*tileSize));
-      float b = map(brightness(c), 0, 255, 1, 0);
-      float z = map(b, 0, 1, -150, 150);
-
-      push();
-      translate(x*tileSize - width/2, y*tileSize - height/2, z);
-      sphere(tileSize*b*0.8);
-      pop();
-    }
-  }
-  pop();
 }
 
 
-int[] displayName(int positionX, int positionY, float scale, color strokeColor, int strokeWidth)
-{
-  background(0);
 
+void displayName(color strokeColor, int strokeWidth)
+{
   push();
-  translate(positionX, positionY);
-  scale(scale);
 
   stroke(strokeColor);      
   strokeWeight(strokeWidth);
 
-  D.moveLetter(13, 43);
+  D.animateLetter(13, 43, 5);
   D.rotateLetter(247);
   D.displayLetter();
 
-  A.moveLetter(68, 0);
+  A.animateLetter(68, 0, 6);
   A.rotateLetter(0);
   A.displayLetter();
 
-  N.moveLetter(153, 0);
+  N.animateLetter(153, 0, 4);
   N.rotateLetter(0);
   N.displayLetter();
 
-  I.moveLetter(247, 0);
+  I.animateLetter(247, 0, 7);
   I.rotateLetter(0);
   I.displayLetter();
 
-  E.moveLetter(280, 0);
+  E.animateLetter(280, 0, 3);
   E.rotateLetter(0);
   E.displayLetter();
 
-  L.moveLetter(359, 0);
+  L.animateLetter(359, 0, 5);
   L.rotateLetter(0);
   L.displayLetter();
-  pop();
 
-  loadPixels();
-  return pixels;
+  pop();
 }
 
 
 class Letter 
 {  
   char character;
+  int characterWidth, characterHeight, characterAdjustTop, characterAdjustLeft;
   boolean pushExecuted = false;
-  ArrayList<Object> shapes = new ArrayList<Object>();
+  boolean startConditionsSet = false;
+  int positionX, positionY, ySpeed, xSpeed;
 
   Letter(char character) 
   {
@@ -140,22 +92,32 @@ class Letter
     case 'D':
       noFill();
       arc(0, 0, 81, 81, 0, PI+QUARTER_PI, CHORD);
+      characterAdjustTop = -40;
+      characterAdjustLeft = -20;
+      characterWidth = 45;
+      characterHeight = 43;
       break;
 
     case 'A':
       line(0, 84, 30, 0);
       line(30, 0, 60, 84);
       line(12, 53, 47, 53);
+      characterWidth = 60;
+      characterHeight = 85;
       break;
 
     case 'N':
       line(0, 0, 0, 84);
       line(0, 0, 60, 84);
       line(60, 0, 60, 84);
+      characterWidth = 60;
+      characterHeight = 85;
       break;
 
     case 'I':
       line(0, 0, 0, 84);
+      characterWidth = 2;
+      characterHeight = 85;
       break;
 
     case 'E':
@@ -163,11 +125,15 @@ class Letter
       line(0, 0, 50, 0);
       line(0, 42, 50, 42);
       line(0, 84, 50, 84);
+      characterWidth = 50;
+      characterHeight = 84;
       break;
 
     case 'L':
       line(0, 0, 0, 84);
       line(0, 84, 50, 84);
+      characterWidth = 50;
+      characterHeight = 85;
       break;
 
     default:
@@ -178,10 +144,33 @@ class Letter
     pushToStack("reset");
   }
 
-  void moveLetter(int positionX, int positionY) 
+  void animateLetter(int positionX, int positionY, int speed) 
   {
     pushToStack("execute");
-    translate(positionX, positionY);
+
+    if (!startConditionsSet)
+    {
+      this.positionX = positionX;
+      this.positionY = positionY;
+      this.xSpeed = speed;
+      this.ySpeed = speed;
+      startConditionsSet = true;
+    }
+
+    this.positionX += this.xSpeed;
+    this.positionY += this.ySpeed;
+
+    if (this.positionX > width - characterWidth || this.positionX + characterAdjustLeft < 0)
+    {
+      this.xSpeed *= -1;
+    }
+
+    if (this.positionY > height - characterHeight || this.positionY + characterAdjustTop < 0)
+    {
+      this.ySpeed *= -1;
+    }
+
+    translate(this.positionX, this.positionY);
   }
 
   void rotateLetter(int degrees) 
