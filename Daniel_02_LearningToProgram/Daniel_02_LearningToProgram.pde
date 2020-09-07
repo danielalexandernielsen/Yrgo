@@ -1,11 +1,11 @@
 ParabolicCurve pCurve;
+Axis axis1, axis2;
 
 void setup()
 {
-  size(500, 500);
-  Axis axis1 = new Axis(0, 0);
-  Axis axis2 = new Axis(10, 500);
-
+  size(500, 500, P3D);
+  axis1 = new Axis(0, 0);
+  axis2 = new Axis(10, 500);
   pCurve = new ParabolicCurve(axis1, axis2, 20);
 }
 
@@ -16,15 +16,7 @@ void draw()
   pCurve.display();
 }
 
-class Axis
-{
-  int x, y;
-  Axis(int x, int y)
-  {
-    this.x = x;
-    this.y = y;
-  }
-}
+
 
 
 class ParabolicCurve
@@ -40,8 +32,8 @@ class ParabolicCurve
   }
 
   void display()
-  {
-    for (int x = axis2.x, y = axis1.y; y <= height; x+= width/numberOfLines, y+= height/numberOfLines)
+  {   
+    for (int x = axis2.x, y = axis1.y; y <= height; x+= width/this.numberOfLines, y+= height/this.numberOfLines)
     {
       if (x % 3 == 0)
       {
@@ -53,5 +45,15 @@ class ParabolicCurve
 
       line(axis1.x, y, x, axis2.y);
     }
+  }
+}
+
+class Axis
+{
+  int x, y;
+  Axis(int x, int y)
+  {
+    this.x = x;
+    this.y = y;
   }
 }
