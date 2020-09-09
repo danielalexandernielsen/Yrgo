@@ -2,10 +2,12 @@ ParabolicCurve pCurve;
 color colorBackground, colorForeground, strokeColor;
 Axis axis1, axis2;
 int numberOfLines;
+float zoom = 0.62;
 
 void setup()
 {
   size(500, 500, P3D);
+  smooth(8);
 
   colorBackground = color(45, 73, 123);
   colorForeground = color(42, 16, 49);
@@ -19,7 +21,7 @@ void draw()
 {
   background(10, 20, 41);
   pCurve.drawStar();
-  //saveFrame("nielsen_daniel_02LearningToProgram_-######.jpg");
+  saveFrame("nielsen_daniel_02LearningToProgram_-######.png");
 }
 
 
@@ -58,9 +60,16 @@ class ParabolicCurve
   void drawStar()
   {   
     int[] lineLength = new int[] {0, 125, 250, 350, 430, 480, 500, 480, 430, 350, 250, 125, 0};
+    
+    if (frame == 500)
+    {
+      zoom = 0.62;
+    }
+    
+    zoom += 0.0025;
 
     translate(width/2, height/2);
-    scale(0.62);
+    scale(zoom);
     stroke(243, 206, 24);
     strokeWeight(1);
     fill(192, 120, 24, 95);
