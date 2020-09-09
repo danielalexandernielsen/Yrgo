@@ -18,7 +18,8 @@ void setup()
 void draw()
 {
   background(10, 20, 41);
-  pCurve.drawRose();
+  pCurve.drawStar();
+  //saveFrame("nielsen_daniel_02LearningToProgram_-######.jpg");
 }
 
 
@@ -54,16 +55,15 @@ class ParabolicCurve
     frame++;
   }
 
-  void drawRose()
+  void drawStar()
   {   
     int[] lineLength = new int[] {0, 125, 250, 350, 430, 480, 500, 480, 430, 350, 250, 125, 0};
 
     translate(width/2, height/2);
-    scale(0.77);
+    scale(0.62);
     stroke(243, 206, 24);
     strokeWeight(1);
     fill(192, 120, 24, 95);
-    circle(0, 0, 497);
 
     for (int shiftRotation = 0; shiftRotation <= 360; shiftRotation += 15)
     {
@@ -73,8 +73,8 @@ class ParabolicCurve
       for (int degrees = 0, i = 0; degrees <= 180; degrees += 15, i++)
       {
         push();
-        translate(0, -250);
-        rotate(radians(degrees - 90));
+        translate(0, -14);
+        rotate(radians(degrees - 126));
         if (i % 2 == 0)
         {
           stroke(204, 145, 78, 255);
