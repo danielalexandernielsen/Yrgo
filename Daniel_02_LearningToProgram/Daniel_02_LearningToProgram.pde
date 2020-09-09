@@ -1,5 +1,5 @@
 ParabolicCurve pCurve;
-color colorBottom, colorTop, strokeColor;
+color colorBackground, colorForeground, strokeColor;
 Axis axis1, axis2;
 int numberOfLines;
 
@@ -7,8 +7,8 @@ void setup()
 {
   size(500, 500, P3D);
 
-  colorTop = color(45, 73, 123);
-  colorBottom = color(42, 16, 49);
+  colorBackground = color(45, 73, 123);
+  colorForeground = color(42, 16, 49);
 
   axis1 = new Axis(0, 0);
   axis2 = new Axis(10, width);
@@ -17,19 +17,11 @@ void setup()
 
 void draw()
 {
-  displayGradient(colorTop, colorBottom);
-  pCurve.displayRose();
+  background(10, 20, 41);
+  pCurve.drawRose();
 }
 
-void displayGradient(color colorTop, color colorBottom)
-{
-  for (int y = 0, x = 0; y <= height; y++) {
-    float interval = map(y, 0, height, 0, 1);
-    color gradient = lerpColor(colorBottom, colorTop, interval);
-    stroke(gradient);
-    line(x, y, width, y);
-  }
-}
+
 
 
 class ParabolicCurve
@@ -45,7 +37,7 @@ class ParabolicCurve
     this.axis2 = axis2;
   }
 
-  void displayCurve()
+  void drawCurve()
   {   
     for (int x = axis2.x, y = axis1.y; y <= height; x+= width/this.numberOfLines, y+= height/this.numberOfLines)
     {
@@ -62,13 +54,16 @@ class ParabolicCurve
     frame++;
   }
 
-  void displayRose()
+  void drawRose()
   {   
     int[] lineLength = new int[] {0, 125, 250, 350, 430, 480, 500, 480, 430, 350, 250, 125, 0};
-    
+
     translate(width/2, height/2);
-    scale(1.16);
-    circle(width, height, 499);
+    scale(0.77);
+    stroke(243, 206, 24);
+    strokeWeight(1);
+    fill(192, 120, 24, 95);
+    circle(0, 0, 497);
 
     for (int shiftRotation = 0; shiftRotation <= 360; shiftRotation += 15)
     {
@@ -80,6 +75,18 @@ class ParabolicCurve
         push();
         translate(0, -250);
         rotate(radians(degrees - 90));
+        if (i % 2 == 0)
+        {
+          stroke(204, 145, 78, 255);
+        } 
+        else if (i % 3 == 0)
+        {
+          stroke(213, 168, 75, 242);
+        } 
+        else if (i % 4 == 0)
+        {
+          stroke(194, 162, 91, 244);
+        }
         line(0, 0, frame % height, lineLength[i]);
         pop();
       }
