@@ -1,16 +1,11 @@
 ParabolicCurve pCurve;
-color colorBackground, colorForeground, strokeColor;
 Axis axis1, axis2;
-int numberOfLines;
 float zoom = 0.62;
 
 void setup()
 {
   size(500, 500, P3D);
   smooth(8);
-
-  colorBackground = color(45, 73, 123);
-  colorForeground = color(42, 16, 49);
 
   axis1 = new Axis(0, 0);
   axis2 = new Axis(10, width);
@@ -19,12 +14,11 @@ void setup()
 
 void draw()
 {
-  background(10, 20, 41);
-  pCurve.drawStar();
-  saveFrame("nielsen_daniel_02LearningToProgram_-######.png");
+
+  //pCurve.drawCurve();
+  pCurve.drawSun();
+  //saveFrame("nielsen_daniel_02LearningToProgram_-######.png");
 }
-
-
 
 
 class ParabolicCurve
@@ -42,7 +36,9 @@ class ParabolicCurve
 
   void drawCurve()
   {   
-    for (int x = axis2.x, y = axis1.y; y <= height; x+= width/this.numberOfLines, y+= height/this.numberOfLines)
+    background(255);
+    
+    for (int x = axis2.x, y = axis1.y; y <= height; x+= width/numberOfLines, y+= height/numberOfLines)
     {
       if (x % 3 == 0)
       {
@@ -57,52 +53,52 @@ class ParabolicCurve
     frame++;
   }
 
-  void drawStar()
-  {   
-    int[] lineLength = new int[] {0, 125, 250, 350, 430, 480, 500, 480, 430, 350, 250, 125, 0};
-    
-    if (frame == 500)
-    {
-      zoom = 0.62;
-    }
-    
-    zoom += 0.0025;
 
+  void drawSun()
+  {   
+    int[] rays = new int[] {0, 125, 250, 350, 430, 480, 500, 480, 430, 350, 250, 125, 0};
+    color backgroundColor = color(10, 20, 41);
+    color mainColor = color(243, 206, 24);
+    color secondaryColor1 = color(204, 145, 78, 255);
+    color secondaryColor2 = color(213, 168, 75, 242);
+    color secondaryColor3 = color(194, 162, 91, 244);
+
+    background(backgroundColor);
     translate(width/2, height/2);
     scale(zoom);
-    stroke(243, 206, 24);
+    stroke(mainColor);
     strokeWeight(1);
-    fill(192, 120, 24, 95);
 
-    for (int shiftRotation = 0; shiftRotation <= 360; shiftRotation += 15)
+    for (int degrees = 0; degrees <= 360; degrees += 15)
     {
       push();
-      rotate(radians(shiftRotation + 0));
+      rotate(radians(degrees));
 
-      for (int degrees = 0, i = 0; degrees <= 180; degrees += 15, i++)
+      for (int angle = 0, i = 0; angle <= 180; angle += 15, i++)
       {
         push();
         translate(0, -14);
-        rotate(radians(degrees - 126));
+        rotate(radians(angle - 126));
         if (i % 2 == 0)
         {
-          stroke(204, 145, 78, 255);
+          stroke(secondaryColor1);
         } 
         else if (i % 3 == 0)
         {
-          stroke(213, 168, 75, 242);
+          stroke(secondaryColor2);
         } 
         else if (i % 4 == 0)
         {
-          stroke(194, 162, 91, 244);
+          stroke(secondaryColor3);
         }
-        line(0, 0, frame % height, lineLength[i]);
+        line(0, 0, frame % height, rays[i]);
         pop();
       }
       pop();
     }
 
     frame++;
+    zoom += 0.0025;
   }
 }
 
