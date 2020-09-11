@@ -1,66 +1,82 @@
-PVector guess, random, results;
+PVector guess, random, origo, results, temp;
 boolean getNewVector = true;
 
 void setup() {
   size(500, 500);
-  ellipseMode(CENTER);
 
   guess = new PVector();
   random = new PVector();
   results = new PVector();
+  temp = new PVector();
 }
 
 void draw() {
   background(128);  
-  ellipse(width/2, height/2, 5, 5);
-  textSize(20);
+  textSize(18);
 
-  generateNewRandomVector();
+  generateRandomVector();
   displayRandomVectorValues();
 
-  drawGuessedVector();
+  drawGuessedVector();  
+  displayGuess();
+  displayScore();
 }
 
-void mousePressed() 
+
+void mouseReleased() 
 {
   guess.x = mouseX;
   guess.y = mouseY;
 }
 
-void mouseReleased() 
+void keyPressed()
 {
-  calculateResults();
-  displayResults();
+  if (key == ENTER)
+  {
+    getNewVector = true;
+  }
+}
+
+void generateRandomVector()
+{
+  if (getNewVector)
+  {
+    random = new PVector(round(random(width/2)), round(random(height/2)));
+    getNewVector = false;
+  }
 }
 
 void displayRandomVectorValues()
 {
-  text(random.x + " , " + random.y, 30, 30);
+  text("Randomized vector: " + random.x + " , " + random.y, 30, 30);
 }
 
 void drawGuessedVector() 
 {
   if (mousePressed)
   {
-    line(width/2, height/2, mouseX, mouseY);
+    line(0, 0, mouseX, mouseY);
   }
 }
 
-void generateNewRandomVector()
+
+void displayGuess()
 {
-  if (getNewVector)
+  text("Your guess: " + guess.x + " , " + guess.y, width/2, height - 20);
+}
+
+
+void displayScore()
+{
+  if (guess.x >= (random.x - 20) && guess.x <= (random.x + 20))
   {
-    random = new PVector(round(random(width)), round(random(height)));
-    getNewVector = false;
+    if (guess.y >= (random.y - 20) && guess.y <= (random.y + 20))
+    {
+      temp.x = random.x;
+      temp.y = random.y;
+      results = temp.sub(guess);
+      text("Your score (units away): " + results.x + " , " + results.y
+          + "\n Press ENTER for a new random vector.", width/2 - 167, height/2);
+    }
   }
-}
-
-void calculateResults()
-{
-  results = guess.sub(random);
-}
-
-void displayResults()
-{
-  text(guess.x + " , " + guess.y, width - 100, 30);
 }
