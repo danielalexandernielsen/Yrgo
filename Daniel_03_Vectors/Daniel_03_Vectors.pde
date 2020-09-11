@@ -1,7 +1,8 @@
 float size, speed;
 PVector position, direction, input;
 
-void setup() {
+void setup() 
+{
   size(500, 500);
   ellipseMode(CENTER);
 
@@ -13,30 +14,50 @@ void setup() {
   size = 20;
 }
 
-void draw() {
+void draw() 
+{
   background(128);
 
-  position.add(direction);
-
   ellipse(position.x, position.y, size, size);
-
-  if (mousePressed)
-  {
-    line(position.x, position.y, mouseX, mouseY);
-  }
+  position.add(direction);
+  drawVector();
+  bounce();
 }
 
-void mousePressed() {
+void mousePressed() 
+{
   direction.x = 0;
   direction.y = 0;
-  
+
   position.x = mouseX;
   position.y = mouseY;
 }
 
-void mouseReleased() {
+void mouseReleased() 
+{
   input.x = mouseX;
   input.y = mouseY;
   direction = input.sub(position);
   direction.mult(speed);
+}
+
+void bounce() 
+{
+  if (position.x <= 0 || position.x >= width)
+  {
+    direction.x *= -1;
+  }
+
+  if (position.y <= 0 || position.y >= height)
+  {
+    direction.y *= -1;
+  }
+}
+
+void drawVector() 
+{
+  if (mousePressed)
+  {
+    line(position.x, position.y, mouseX, mouseY);
+  }
 }
