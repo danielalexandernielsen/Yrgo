@@ -3,6 +3,7 @@ PVector position;
 PVector direction = new PVector();
 PVector input = new PVector();
 int paddleSize;
+boolean bounceOn = true;
 
 void setup() 
 {
@@ -14,7 +15,7 @@ void setup()
   speed = 0.05;
   arenaSize = 317;
   ballSize = 25;
-  paddleSize = 100;
+  paddleSize = 120;
 }
 
 void draw() 
@@ -26,11 +27,20 @@ void draw()
   colorBall();
   drawBall();
   drawVector();
-  bounce();
+  drawPadle();
+
+  if (bounceOn)
+  {
+    bounce();
+  }
+
+  displayGameOver();
 }
 
 void mousePressed() 
 {
+  bounceOn = true;
+  
   direction.x = 0;
   direction.y = 0;
   direction.z = 0;
@@ -49,10 +59,11 @@ void mouseReleased()
   direction.mult(speed);
 }
 
-void mouseMoved() 
+
+void drawPadle()
 {
   push();
-  fill(50, 50, 50, 255);
+  fill(40, 100);
   translate(mouseX - paddleSize/2, mouseY - paddleSize/2);
   rect(0, 0, paddleSize, paddleSize);
   pop();
@@ -66,7 +77,7 @@ void drawArena()
   noFill();
   box(arenaSize);
 
-  fill(10);
+  fill(20);
   translate(-(width/2), -(height/2), -height);
   rect(0, 0, width, height);
 
@@ -88,6 +99,15 @@ void drawBall()
   pop();
 }
 
+void drawVector() 
+{
+  if (mousePressed)
+  {
+    stroke(255);
+    line(position.x, position.y, mouseX, mouseY);
+  }
+}
+
 void bounce() 
 {
   if (position.x <= 0 || position.x >= width)
@@ -100,17 +120,31 @@ void bounce()
     direction.y *= -1;
   }
 
-  if (position.z <= -500 || position.z >= 0) 
+  if (position.z <= -500) 
   {
     direction.z *= -1;
   }
+
+  if (position.z >= 0)
+  {
+    if (position.x >= mouseX - paddleSize/2 && position.x <= mouseX + paddleSize/2 )
+    {
+      if (position.y >= mouseY - paddleSize/2 && position.y <= mouseY + paddleSize/2 )
+      {
+        direction.z *= -1;
+      }
+    }
+  }
 }
 
-void drawVector() 
+void displayGameOver()
 {
-  if (mousePressed)
+  if (position.z > 0)
   {
-    stroke(255);
-    line(position.x, position.y, mouseX, mouseY);
+    bounceOn = false;
+    
+    textSize(60);
+    text("GAME OVER" + "\n Insert coin!", width/2, height/2);
+    textAlign(CENTER, CENTER);
   }
 }
