@@ -1,10 +1,10 @@
-float arenaSize, ballSize, size, speed;
-PVector position;
-PVector direction = new PVector();
-PVector input = new PVector();
+float arenaSize, ballSize, ballSpeed;
+PVector ballPosition;
+PVector ballDirection = new PVector();
+PVector playerInput = new PVector();
 int paddleSize;
 int score = 0;
-boolean bounceOn = true;
+boolean gameOver = false;
 
 void setup() 
 {
@@ -12,8 +12,8 @@ void setup()
   smooth(8);
   lights();
 
-  position = new PVector(width/2, height/2);
-  speed = 0.05;
+  ballPosition = new PVector(width/2, height/2);
+  ballSpeed = 0.05;
   arenaSize = 317;
   ballSize = 30;
   paddleSize = 100;
@@ -23,18 +23,22 @@ void draw()
 {
   background(0);
 
-  position.add(direction);
+  ballPosition.add(ballDirection);
   drawArena();
   colorBall();
   drawBall();
   drawVector();
   drawPadle();
-  bounce();
-  score();
 
-  if (position.z > ballSize/2)
+  if (!gameOver)
   {
-    displayGameOver();
+    bounce();
+    score();
+  }
+
+  if (ballPosition.z > ballSize/2)
+  {
+    gameOver();
   }
 
   //saveFrame("nielsen_daniel_03Vectors_-######.png");
@@ -42,24 +46,28 @@ void draw()
 
 void mousePressed() 
 {
-  bounceOn = true;
+  if (gameOver)
+  {
+    score = 0;
+    gameOver = false;
+  }
 
-  direction.x = 0;
-  direction.y = 0;
-  direction.z = 0;
+  ballDirection.x = 0;
+  ballDirection.y = 0;
+  ballDirection.z = 0;
 
-  position.x = mouseX;
-  position.y = mouseY;
-  position.z = 0;
+  ballPosition.x = mouseX;
+  ballPosition.y = mouseY;
+  ballPosition.z = 0;
 }
 
 void mouseReleased() 
 {
-  input.x = mouseX;
-  input.y = mouseY;
-  input.z = -50;
-  direction = input.sub(position);
-  direction.mult(speed);
+  playerInput.x = mouseX;
+  playerInput.y = mouseY;
+  playerInput.z = -50;
+  ballDirection = playerInput.sub(ballPosition);
+  ballDirection.mult(ballSpeed);
 }
 
 
@@ -90,7 +98,7 @@ void drawArena()
 
 void colorBall()
 {
-  float interval = map(position.z, -500, 0, 0, 1);
+  float interval = map(ballPosition.z, -500, 0, 0, 1);
   color gradient = lerpColor(color(255/3, 125/3, 0), color(255, 125, 0), interval);
   stroke(gradient);
 }
@@ -98,7 +106,7 @@ void colorBall()
 void drawBall()
 {
   push();
-  translate(position.x, position.y, position.z);
+  translate(ballPosition.x, ballPosition.y, ballPosition.z);
   sphere(ballSize);
   pop();
 }
@@ -108,34 +116,34 @@ void drawVector()
   if (mousePressed)
   {
     stroke(255);
-    line(position.x, position.y, mouseX, mouseY);
+    line(ballPosition.x, ballPosition.y, mouseX, mouseY);
   }
 }
 
 void bounce() 
 {
-  if (position.x <= 0 || position.x >= width)
+  if (ballPosition.x <= 0 || ballPosition.x >= width)
   {
-    direction.x *= -1;
+    ballDirection.x *= -1;
   }
 
-  if (position.y <= 0 || position.y >= height)
+  if (ballPosition.y <= 0 || ballPosition.y >= height)
   {
-    direction.y *= -1;
+    ballDirection.y *= -1;
   }
 
-  if (position.z <= -500) 
+  if (ballPosition.z <= -500) 
   {
-    direction.z *= -1;
+    ballDirection.z *= -1;
   }
 
-  if (position.z > 0)
+  if (ballPosition.z > 0)
   {
-    if (position.x >= mouseX - paddleSize/2 && position.x <= mouseX + paddleSize/2 )
+    if (ballPosition.x >= mouseX - paddleSize/2 && ballPosition.x <= mouseX + paddleSize/2 )
     {
-      if (position.y >= mouseY - paddleSize/2 && position.y <= mouseY + paddleSize/2 )
+      if (ballPosition.y >= mouseY - paddleSize/2 && ballPosition.y <= mouseY + paddleSize/2 )
       {
-        direction.z *= -1;
+        ballDirection.z *= -1;
         score++;
       }
     }
@@ -144,16 +152,14 @@ void bounce()
 
 void score()
 {
-  bounceOn = false;
-
   textSize(20);
   text("Score: " + score, 52, 18);
   textAlign(CENTER, CENTER);
 }
 
-void displayGameOver()
+void gameOver()
 {
-  bounceOn = false;
+  gameOver = true;
 
   textSize(55);
   text("GAME OVER", width/2, height/2);
