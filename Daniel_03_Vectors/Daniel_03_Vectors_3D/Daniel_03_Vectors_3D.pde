@@ -41,7 +41,6 @@ void draw()
     gameOver();
   }
 
-  //saveFrame("nielsen_daniel_03Vectors_-######.png");
 }
 
 void mousePressed() 
@@ -164,6 +163,6 @@ void gameOver()
   textSize(55);
   text("GAME OVER", width/2, height/2);
   textSize(20);
-  text("Click to restart", width/2, height/2 - -43);
+  text("Click to restart", width/2, height/2 + 43);
   textAlign(CENTER, CENTER);
 }
