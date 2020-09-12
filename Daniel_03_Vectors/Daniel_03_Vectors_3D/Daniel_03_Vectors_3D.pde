@@ -3,6 +3,7 @@ PVector position;
 PVector direction = new PVector();
 PVector input = new PVector();
 int paddleSize;
+int score = 0;
 boolean bounceOn = true;
 
 void setup() 
@@ -14,8 +15,8 @@ void setup()
   position = new PVector(width/2, height/2);
   speed = 0.05;
   arenaSize = 317;
-  ballSize = 25;
-  paddleSize = 120;
+  ballSize = 30;
+  paddleSize = 100;
 }
 
 void draw() 
@@ -28,19 +29,21 @@ void draw()
   drawBall();
   drawVector();
   drawPadle();
+  bounce();
+  score();
 
-  if (bounceOn)
+  if (position.z > ballSize/2)
   {
-    bounce();
+    displayGameOver();
   }
 
-  displayGameOver();
+  //saveFrame("nielsen_daniel_03Vectors_-######.png");
 }
 
 void mousePressed() 
 {
   bounceOn = true;
-  
+
   direction.x = 0;
   direction.y = 0;
   direction.z = 0;
@@ -64,6 +67,7 @@ void drawPadle()
 {
   push();
   fill(40, 100);
+
   translate(mouseX - paddleSize/2, mouseY - paddleSize/2);
   rect(0, 0, paddleSize, paddleSize);
   pop();
@@ -125,26 +129,35 @@ void bounce()
     direction.z *= -1;
   }
 
-  if (position.z >= 0)
+  if (position.z > 0)
   {
     if (position.x >= mouseX - paddleSize/2 && position.x <= mouseX + paddleSize/2 )
     {
       if (position.y >= mouseY - paddleSize/2 && position.y <= mouseY + paddleSize/2 )
       {
         direction.z *= -1;
+        score++;
       }
     }
   }
 }
 
+void score()
+{
+  bounceOn = false;
+
+  textSize(20);
+  text("Score: " + score, 52, 18);
+  textAlign(CENTER, CENTER);
+}
+
 void displayGameOver()
 {
-  if (position.z > 0)
-  {
-    bounceOn = false;
-    
-    textSize(60);
-    text("GAME OVER" + "\n Insert coin!", width/2, height/2);
-    textAlign(CENTER, CENTER);
-  }
+  bounceOn = false;
+
+  textSize(55);
+  text("GAME OVER", width/2, height/2);
+  textSize(20);
+  text("Click to restart", width/2, height/2 - -43);
+  textAlign(CENTER, CENTER);
 }
