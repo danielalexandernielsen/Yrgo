@@ -1,19 +1,38 @@
 class Input
 {
   PVector position;
-  PVector velocity;
-  PVector acceleration;  
-  float velocityLimit;
+  PVector velocity = new PVector(5, 5);
+  PVector acceleration = new PVector(0.2, 0.2);
+  float velocityLimit = 20;
 
   Input(float x, float y)
   {
     position = new PVector(x, y);
-    velocity = new PVector(5, 5);
-    acceleration = new PVector(1, 1);
   }
 
-  void move()
+  void acceleration()
   {
+    if (accelerate)
+    {
+      if ((velocity.x <= velocityLimit) && (velocity.y <= velocityLimit))
+      {
+        velocity.add(acceleration);
+      }
+    } 
+    
+    else
+    {
+      velocity.x = 5;
+      velocity.y = 5;
+    }
+  }
+
+
+  void move()
+  {       
+
+    acceleration();
+
     if (moveLeft)
     {
       position.x -= velocity.x;
@@ -36,33 +55,48 @@ class Input
   }
 }
 
+
 void keyPressed()
 {
   if (keyCode == LEFT || key == 'a')
+  {
     moveLeft = true;
-
+  } 
   else if (keyCode == RIGHT || key == 'd')
+  {
     moveRight = true;
-
+  } 
   else if (keyCode == DOWN || key == 's')
+  {
     moveDown = true;
-
+  } 
   else if (keyCode == UP || key == 'w')
+  {
     moveUp = true;
-}
+  }
 
+  accelerate = true;
+}
 
 void keyReleased()
 {
-  if (keyCode == LEFT || key == 'a')
+  if (keyCode == LEFT || key == 'a') 
+  {
     moveLeft = false;
-
+  } 
+  
   else if (keyCode == RIGHT || key == 'd')
+  {
     moveRight = false;
-
+  } 
   else if (keyCode == DOWN || key == 's')
+  {
     moveDown = false;
-
+  } 
   else if (keyCode == UP || key == 'w')
+  {
     moveUp = false;
+  }
+
+  accelerate = false;
 }
