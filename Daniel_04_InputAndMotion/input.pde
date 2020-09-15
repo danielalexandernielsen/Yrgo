@@ -1,51 +1,68 @@
-void keyPressed()
+class Input
 {
-  switch (keyCode)
+  PVector position;
+  PVector velocity;
+  PVector acceleration;  
+  float velocityLimit;
+
+  Input(float x, float y)
   {
-  case LEFT:
-  case 'a':
-    moveLeft = true;
-    break;
+    position = new PVector(x, y);
+    velocity = new PVector(5, 5);
+    acceleration = new PVector(1, 1);
+  }
 
-  case RIGHT:
-  case 'd':
-    moveRight = true;
-    break;
+  void move()
+  {
+    if (moveLeft)
+    {
+      position.x -= velocity.x;
+    }
 
-  case UP:
-  case 'w':
-    moveUp = true;
-    break;
+    if (moveRight)
+    {
+      position.x += velocity.x;
+    }
 
-  case DOWN:
-  case 's':
-    moveDown = true;
-    break;
+    if (moveUp)
+    {
+      position.y -= velocity.y;
+    }
+
+    if (moveDown)
+    {
+      position.y += velocity.y;
+    }
   }
 }
 
+void keyPressed()
+{
+  if (keyCode == LEFT || key == 'a')
+    moveLeft = true;
+
+  else if (keyCode == RIGHT || key == 'd')
+    moveRight = true;
+
+  else if (keyCode == DOWN || key == 's')
+    moveDown = true;
+
+  else if (keyCode == UP || key == 'w')
+    moveUp = true;
+}
+
+
 void keyReleased()
 {
-  switch (keyCode)
-  {
-  case LEFT:
-  case 'a':
+  if (keyCode == LEFT || key == 'a')
     moveLeft = false;
-    break;
 
-  case RIGHT:
-  case 'd':
+  else if (keyCode == RIGHT || key == 'd')
     moveRight = false;
-    break;
 
-  case UP:
-  case 'w':
-    moveUp = false;
-    break;
-
-  case DOWN:
-  case 's':
+  else if (keyCode == DOWN || key == 's')
     moveDown = false;
-    break;
-  }
+
+  else if (keyCode == UP || key == 'w')
+    moveUp = false;
 }
