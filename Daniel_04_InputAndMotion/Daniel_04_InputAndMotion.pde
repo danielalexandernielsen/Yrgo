@@ -1,5 +1,4 @@
 boolean moveLeft, moveRight, moveUp, moveDown;
-boolean accelerate, decelerate;
 float size;
 Input input;
 
@@ -15,7 +14,8 @@ void draw()
   background(128);
 
   input.move();
-  input.acceleration();
+  input.accelerate();
+  input.decelerate();
   
   circle(input.position.x, input.position.y, size);
 }
