@@ -24,8 +24,8 @@ void setup()
   velocity = new PVector(0, 0);
   acceleration = new PVector(0, 0);
 
-  velocityLimit = 1000f;
-  speed = 200f;
+  velocityLimit = 20f;
+  speed = 1f;
   drag = 0.9f;
   size = 50;
   time = 0;
@@ -52,7 +52,7 @@ void calculateDeltaTime(String interval)
   {
   case "START":
     time = millis();
-    deltaTime = (time - oldTime) / 1000f;
+    deltaTime = (time - oldTime) * 0.001;
 
   case "END":
     oldTime = time;
@@ -63,12 +63,22 @@ void calculateHorisontalMovement()
 {
   if (moveLeft)
   {
+    if (acceleration.x > 0)
+    {
+      acceleration.x = 0f;
+    }
     acceleration.x -= speed;
   }
+
   if (moveRight)
   {
+    if (acceleration.x < 0)
+    {
+      acceleration.x = 0f;
+    }
     acceleration.x += speed;
   }
+
   if (!moveLeft && !moveRight)
   {
     acceleration.x = 0f;
@@ -80,12 +90,22 @@ void calculateVerticalMovement()
 {
   if (moveUp)
   {
+    if (acceleration.y > 0)
+    {
+      acceleration.y = 0f;
+    }
     acceleration.y -= speed;
-  }
+  } 
+
   if (moveDown)
   {
+    if (acceleration.y < 0)
+    {
+      acceleration.y = 0f;
+    }
     acceleration.y += speed;
   }
+
   if (!moveUp && !moveDown)
   {
     acceleration.y = 0f;
@@ -95,9 +115,12 @@ void calculateVerticalMovement()
 
 void executeMovement()
 { 
-  position.add(PVector.mult(velocity, deltaTime));
-  velocity.add(PVector.mult(acceleration, deltaTime));
-  //velocity.limit(velocityLimit);
+  //velocity.add(acceleration);
+  //position.add(velocity);
+  position.add(PVector.mult(velocity, deltaTime*75));
+  velocity.add(PVector.mult(acceleration, deltaTime*75));
+  velocity.limit(velocityLimit);
+  //acceleration.limit(velocityLimit);
 }
 
 void drawBall()
@@ -108,11 +131,12 @@ void drawBall()
 void diagnostics()
 {
   textSize(25);
-	text("Acceleration X: " + acceleration.x + "\n" +
-	     "Acceleration Y: " + acceleration.y + "\n" +
-	     "Velocity X: " + velocity.x + "\n" +
-	     "Velocity Y: " + velocity.y + "\n" +
-	     "Position X: " + position.x + "\n" +
-	     "Position Y: " + position.y + "\n"
-       , 50, 50);
+  text(
+    "Acceleration X: " + acceleration.x + "\n" +
+    "Acceleration Y: " + acceleration.y + "\n" +
+    "Velocity X: " + velocity.x + "\n" +
+    "Velocity Y: " + velocity.y + "\n" +
+    "Position X: " + position.x + "\n" +
+    "Position Y: " + position.y + "\n"
+    , 50, 50);
 }
