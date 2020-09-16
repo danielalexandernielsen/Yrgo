@@ -15,25 +15,17 @@ class Input
 
   void move()
   {       
-    if (moveLeft || (velocity.x > startVelocity || velocity.y > startVelocity))
-    {
+    if (moveLeft)
       position.x -= velocity.x;
-    }
 
     if (moveRight)
-    {
       position.x += velocity.x;
-    }
 
     if (moveUp)
-    {
       position.y -= velocity.y;
-    }
 
     if (moveDown)
-    {
-      position.y += velocity.y;
-    }
+      position.y += velocity.y; 
   }
 
   void accelerate()
@@ -50,20 +42,44 @@ class Input
 
   void decelerate()
   {
-    if (!keyPressed)
+
+    if ((velocity.x > startVelocity) && (velocity.y > startVelocity))
     {
-      if ((velocity.x > startVelocity) && (velocity.y > startVelocity))
+      velocity.mult(deceleration);
+      deceleration -= 0.05;
+    } 
+
+    else
+    {
+      deceleration = 1;
+      velocity.x = startVelocity;
+      velocity.y = startVelocity;
+
+      if (decelerateLeft)
       {
-        velocity.mult(deceleration);
-        deceleration -= 0.05;
-      } 
-      else
+        moveLeft = false;
+        decelerateLeft = false;
+      }
+
+      if (decelerateRight)
       {
-        deceleration = 1;
-        velocity.x = startVelocity;
-        velocity.y = startVelocity;
+        moveRight = false;
+        decelerateRight = false;
+      }
+
+      if (decelerateDown)
+      {
+        moveDown = false;
+        decelerateDown = false;
+      }
+
+      if (decelerateUp)
+      {
+        moveUp = false;
+        decelerateUp = false;
       }
     }
+
   }
 }
 
@@ -71,39 +87,29 @@ class Input
 void keyPressed()
 {
   if (keyCode == LEFT || key == 'a')
-  {
     moveLeft = true;
-  } 
+  
   else if (keyCode == RIGHT || key == 'd')
-  {
-    moveRight = true;
-  } 
+    moveRight = true;    
+
   else if (keyCode == DOWN || key == 's')
-  {
-    moveDown = true;
-  } 
+    moveDown = true;    
+
   else if (keyCode == UP || key == 'w')
-  {
-    moveUp = true;
-  }
+    moveUp = true;      
 }
 
 void keyReleased()
 {
   if (keyCode == LEFT || key == 'a') 
-  {
-    moveLeft = false;
-  } 
+    decelerateLeft = true;
+
   else if (keyCode == RIGHT || key == 'd')
-  {
-    moveRight = false;
-  } 
+    decelerateRight = true;
+
   else if (keyCode == DOWN || key == 's')
-  {
-    moveDown = false;
-  } 
+    decelerateDown = true;
+
   else if (keyCode == UP || key == 'w')
-  {
-    moveUp = false;
-  }
+    decelerateUp = true;
 }
