@@ -9,7 +9,7 @@ float drag;
 float speed;
 
 float time;
-float currentTime;
+float oldTime;
 float deltaTime;
 
 PVector acceleration;
@@ -19,14 +19,13 @@ PVector position;
 
 void setup() 
 {
-  size(600, 600);
-  frameRate(200);
+  size(1920, 1080);
   position = new PVector(width/2, height/2);
   velocity = new PVector(0, 0);
   acceleration = new PVector(0, 0);
 
-  velocityLimit = 20f;
-  speed = 1000f;
+  velocityLimit = 1000f;
+  speed = 100f;
   drag = 0.9f;
   size = 50;
   time = 0;
@@ -51,11 +50,11 @@ void calculateDeltaTime(String interval)
   switch (interval)
   {
   case "START":
-    currentTime = millis();
-    deltaTime = (currentTime - time) * 0.001f;
+    time = millis();
+    deltaTime = (time - oldTime) / 1000f;
 
   case "END":
-    time = currentTime;
+    oldTime = time;
   }
 }
 
@@ -95,8 +94,8 @@ void calculateVerticalMovement()
 
 void executeMovement()
 { 
-  velocity.add(PVector.mult(acceleration, deltaTime));
   position.add(PVector.mult(velocity, deltaTime));
+  velocity.add(PVector.mult(acceleration, deltaTime));
   velocity.limit(velocityLimit);
 }
 
