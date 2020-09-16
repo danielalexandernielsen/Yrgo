@@ -19,13 +19,13 @@ PVector position;
 
 void setup() 
 {
-  size(1920, 1080);
+  size(1280, 720);
   position = new PVector(width/2, height/2);
   velocity = new PVector(0, 0);
   acceleration = new PVector(0, 0);
 
   velocityLimit = 1000f;
-  speed = 100f;
+  speed = 200f;
   drag = 0.9f;
   size = 50;
   time = 0;
@@ -41,6 +41,7 @@ void draw()
   calculateVerticalMovement();
   executeMovement();
   drawBall();
+  diagnostics();
 
   calculateDeltaTime("END");
 }
@@ -96,10 +97,22 @@ void executeMovement()
 { 
   position.add(PVector.mult(velocity, deltaTime));
   velocity.add(PVector.mult(acceleration, deltaTime));
-  velocity.limit(velocityLimit);
+  //velocity.limit(velocityLimit);
 }
 
 void drawBall()
 {
   ellipse(position.x, position.y, size, size);
+}
+
+void diagnostics()
+{
+  textSize(25);
+	text("Acceleration X: " + acceleration.x + "\n" +
+	     "Acceleration Y: " + acceleration.y + "\n" +
+	     "Velocity X: " + velocity.x + "\n" +
+	     "Velocity Y: " + velocity.y + "\n" +
+	     "Position X: " + position.x + "\n" +
+	     "Position Y: " + position.y + "\n"
+       , 50, 50);
 }
