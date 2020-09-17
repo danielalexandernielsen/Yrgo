@@ -3,8 +3,8 @@ boolean moveLeft, moveRight, moveUp, moveDown;
 float playerSize = 50;
 float velocityLimit = 20f;
 float velocityMultiplier = 75f;
-float accelerationMultiplier = 2f;
-float dragMultiplier = 0.05f;
+float accelerationMultiplier = 3f;
+float dragMultiplier = 0.1f;
 
 float time = 0f;
 float oldTime = 0f;
@@ -20,82 +20,56 @@ PVector position;
 
 void setup() 
 {
-  size(1920, 1080);
-  position = new PVector(width/2, height/2);
+	size(1280, 720);
+	position = new PVector(width/2, height/2);
 }
 
 void draw()
 {
-  background(128);
+	background(128);
 
-  calculateDeltaTime("START");
+	calculateDeltaTime("START");
 
-  acceleration.set(0, 0);
-  acceleration = input();
-  drag = drag();
+	acceleration = input();
+	drag = drag();
+	applyMovement();
+	drawBall();
+	diagnostics();
 
-  applyMovement();
-  drawBall();
-
-  diagnostics();
-
-  calculateDeltaTime("END");
+	calculateDeltaTime("END");
 }
 
 void calculateDeltaTime(String interval)
 {
-  switch (interval)
-  {
-  case "START":
-    time = millis();
-    deltaTime = (time - oldTime) * 0.001;
+	switch (interval)
+	{
+		case "START":
+		time = millis();
+		deltaTime = (time - oldTime) * 0.001;
 
-  case "END":
-    oldTime = time;
-  }
+		case "END":
+		oldTime = time;
+	}
 }
 
-PVector input()
-{
-  accelerationDiscard.set(0, 0);
-
-  if (moveLeft)
-    accelerationDiscard.x -= 1;
-
-  if (moveRight)
-    accelerationDiscard.x += 1;
-
-  if (moveUp)
-    accelerationDiscard.y -= 1;
-
-  if (moveDown)
-    accelerationDiscard.y += 1;
-
-  accelerationDiscard.normalize();
-  accelerationDiscard.mult(accelerationMultiplier);
-
-  return accelerationDiscard;
-}
 
 PVector drag()
 {
-  dragDiscard.set(0, 0);
+	dragDiscard.x = (velocity.x + acceleration.x) * -dragMultiplier;
+	dragDiscard.y = (velocity.y + acceleration.y) * -dragMultiplier;
 
-  dragDiscard.x -= (velocity.x + acceleration.x) * dragMultiplier;
-  dragDiscard.y -= (velocity.y + acceleration.y) * dragMultiplier;
-
-  return dragDiscard;
+	return dragDiscard;
 }
 
 void applyMovement()
 { 
-  velocity.add(PVector.mult(acceleration, deltaTime * velocityMultiplier));
-  velocity.add(PVector.mult(drag, deltaTime * velocityMultiplier));
-  position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
-  velocity.limit(velocityLimit);
+	velocity.add(PVector.mult(acceleration, deltaTime * velocityMultiplier));
+	velocity.add(PVector.mult(drag, deltaTime * velocityMultiplier));
+	position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
+	velocity.limit(velocityLimit);
 }
 
 void drawBall()
 {
-  ellipse(position.x, position.y, playerSize, playerSize);
+	ellipse(position.x, position.y, playerSize, playerSize);
 }
