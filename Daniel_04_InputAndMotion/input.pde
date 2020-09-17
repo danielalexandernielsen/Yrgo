@@ -1,22 +1,20 @@
-PVector inputDiscard = new PVector();
-
 PVector input()
 {
-  inputDiscard.set(0, 0);
+  accelerationDiscard.set(0, 0);
 
   if (moveLeft)
-    inputDiscard.x -= 1;
+    accelerationDiscard.x -= 1;
 
   if (moveRight)
-    inputDiscard.x += 1;
+    accelerationDiscard.x += 1;
 
   if (moveUp)
-    inputDiscard.y -= 1;
+    accelerationDiscard.y -= 1;
 
   if (moveDown)
-    inputDiscard.y += 1;
+    accelerationDiscard.y += 1;
 
-  return inputDiscard.normalize();
+  return accelerationDiscard.normalize();
 }
 
 

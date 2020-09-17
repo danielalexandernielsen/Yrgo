@@ -10,16 +10,19 @@ float time = 0f;
 float oldTime = 0f;
 float deltaTime = 0f;
 
-PVector acceleration = new PVector(0, 0);
 PVector decelerationDiscard = new PVector();
-PVector deceleration = new PVector(0, 0);
-PVector velocity = new PVector(0, 0);
+PVector accelerationDiscard = new PVector();
+PVector velocityDiscard = new PVector();
+PVector acceleration = new PVector();
+PVector deceleration = new PVector();
+PVector velocity = new PVector();
 PVector position;
 
 
 void setup() 
 {
   size(1280, 720);
+  frameRate(60);
   position = new PVector(width/2, height/2);
 }
 
@@ -30,10 +33,10 @@ void draw()
   calculateDeltaTime("START");
 
   acceleration = input();
-  deceleration = decelerate();
-
-  executeMovement();
+  deceleration = decelerate(acceleration, velocity);
+  applyMovement();
   drawBall();
+
   diagnostics();
 
   calculateDeltaTime("END");
@@ -52,20 +55,20 @@ void calculateDeltaTime(String interval)
   }
 }
 
-PVector decelerate()
+PVector decelerate(PVector accelerationDiscard, PVector velocityDiscard)
 {
-  if (acceleration.mag() == 0)
+  if (accelerationDiscard.mag() == 0)
   {		
     deceleration.set(0, 0);
 
-    decelerationDiscard.x = acceleration.x - (velocity.x * decelerationMultiplier);
-    decelerationDiscard.y = acceleration.y - (velocity.y * decelerationMultiplier);
+    decelerationDiscard.x = accelerationDiscard.x - (velocityDiscard.x * decelerationMultiplier);
+    decelerationDiscard.y = accelerationDiscard.y - (velocityDiscard.y * decelerationMultiplier);
   }
 
   return decelerationDiscard;
 }
 
-void executeMovement()
+void applyMovement()
 { 
   acceleration.add(PVector.mult(deceleration, deltaTime * velocityMultiplier));
   velocity.add(PVector.mult(acceleration, deltaTime * velocityMultiplier));
@@ -76,17 +79,4 @@ void executeMovement()
 void drawBall()
 {
   ellipse(position.x, position.y, playerSize, playerSize);
-}
-
-void diagnostics()
-{
-  textSize(25);
-  text(
-    "Acceleration X: " + acceleration.x + "\n" +
-    "Acceleration Y: " + acceleration.y + "\n" +
-    "Velocity X: " + velocity.x + "\n" +
-    "Velocity Y: " + velocity.y + "\n" +
-    "Position X: " + position.x + "\n" +
-    "Position Y: " + position.y + "\n"
-    , 50, 50);
 }
