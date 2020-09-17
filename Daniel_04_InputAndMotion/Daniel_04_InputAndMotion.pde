@@ -33,6 +33,7 @@ void draw()
 	acceleration = acceleration();
 	drag = drag();
 	applyMovement();
+	wraparound();
 	drawBall();
 	diagnostics();
 
@@ -54,24 +55,24 @@ void calculateDeltaTime(String interval)
 
 PVector acceleration()
 {
-  acceleration.set(0, 0);
+	acceleration.set(0, 0);
 
-  if (moveLeft)
-    accelerationDiscard.x = -1;
+	if (moveLeft)
+		accelerationDiscard.x = -1;
 
-  if (moveRight)
-    accelerationDiscard.x = 1;
+	if (moveRight)
+		accelerationDiscard.x = 1;
 
-  if (moveUp)
-    accelerationDiscard.y = -1;
+	if (moveUp)
+		accelerationDiscard.y = -1;
 
-  if (moveDown)
-    accelerationDiscard.y = 1;
+	if (moveDown)
+		accelerationDiscard.y = 1;
 
-  accelerationDiscard.normalize();
-  accelerationDiscard.mult(accelerationMultiplier);
+	accelerationDiscard.normalize();
+	accelerationDiscard.mult(accelerationMultiplier);
 
-  return accelerationDiscard;
+	return accelerationDiscard;
 }
 
 PVector drag()
@@ -88,6 +89,21 @@ void applyMovement()
 	velocity.add(PVector.mult(drag, deltaTime * velocityMultiplier));
 	position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
 	velocity.limit(velocityLimit);
+}
+
+void wraparound()
+{
+	if (position.x - playerSize > width)
+		position.x = 0;
+
+	if (position.x + playerSize < 0)
+		position.x = width;
+
+	if (position.y + playerSize > height)
+		position.y = height;
+
+	if (position.y + playerSize < 0)
+		position.y = 0;
 }
 
 void drawBall()
