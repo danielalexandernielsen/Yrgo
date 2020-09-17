@@ -1,4 +1,4 @@
-## [03- Vectors](https://github.com/yrgo/gp20/tree/master/Programming%20Fundamentals/03%20-%20Vectors)
+## [03 - Vectors](https://github.com/yrgo/gp20/tree/master/Programming%20Fundamentals/03%20-%20Vectors)
 
 
 ## 3D Vectors
