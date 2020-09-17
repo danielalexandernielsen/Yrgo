@@ -85,8 +85,8 @@ PVector decelerate(PVector accelerationDiscard, PVector velocityDiscard)
 	{		
 		decelerationDiscard.set(0, 0);
 
-		decelerationDiscard.x = accelerationDiscard.x - (velocityDiscard.x * decelerationMultiplier);
-		decelerationDiscard.y = accelerationDiscard.y - (velocityDiscard.y * decelerationMultiplier);
+		decelerationDiscard.x = (accelerationDiscard.x + velocityDiscard.x) * decelerationMultiplier;
+		decelerationDiscard.y = (accelerationDiscard.y + velocityDiscard.y) * decelerationMultiplier;
 	}
 
 	return decelerationDiscard;
@@ -94,7 +94,7 @@ PVector decelerate(PVector accelerationDiscard, PVector velocityDiscard)
 
 void applyMovement()
 { 
-	//acceleration.add(PVector.mult(deceleration, deltaTime * velocityMultiplier));
+	acceleration.sub(PVector.mult(deceleration, deltaTime * velocityMultiplier));
 	velocity.add(PVector.mult(acceleration, deltaTime * velocityMultiplier));
 	position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
 	velocity.limit(velocityLimit);
