@@ -1,25 +1,3 @@
-PVector input()
-{
-  acceleration.set(0, 0);
-
-  if (moveLeft)
-    accelerationDiscard.x = -1;
-
-  if (moveRight)
-    accelerationDiscard.x = 1;
-
-  if (moveUp)
-    accelerationDiscard.y = -1;
-
-  if (moveDown)
-    accelerationDiscard.y = 1;
-
-  accelerationDiscard.normalize();
-  accelerationDiscard.mult(accelerationMultiplier);
-
-  return accelerationDiscard;
-}
-
 void keyPressed()
 {
   if (keyCode == LEFT || key == 'a')

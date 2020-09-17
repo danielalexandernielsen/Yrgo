@@ -30,7 +30,7 @@ void draw()
 
 	calculateDeltaTime("START");
 
-	acceleration = input();
+	acceleration = acceleration();
 	drag = drag();
 	applyMovement();
 	drawBall();
@@ -52,6 +52,27 @@ void calculateDeltaTime(String interval)
 	}
 }
 
+PVector acceleration()
+{
+  acceleration.set(0, 0);
+
+  if (moveLeft)
+    accelerationDiscard.x = -1;
+
+  if (moveRight)
+    accelerationDiscard.x = 1;
+
+  if (moveUp)
+    accelerationDiscard.y = -1;
+
+  if (moveDown)
+    accelerationDiscard.y = 1;
+
+  accelerationDiscard.normalize();
+  accelerationDiscard.mult(accelerationMultiplier);
+
+  return accelerationDiscard;
+}
 
 PVector drag()
 {
