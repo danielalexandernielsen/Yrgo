@@ -1,4 +1,5 @@
 boolean moveLeft, moveRight, moveUp, moveDown;
+boolean wrapRight, wrapLeft;
 
 float playerSize = 50;
 float velocityLimit = 20f;
@@ -31,7 +32,8 @@ void draw()
 	acceleration = acceleration();
 	drag = drag();
 	applyMovement();
-	wrapAround();
+	wrapHorisontal();
+	constrainVertical();
 	drawBall();
 	diagnostics();
 
@@ -92,14 +94,17 @@ void applyMovement()
 	acceleration.set(0, 0);
 }
 
-void wrapAround()
+void wrapHorisontal()
 {
 	if (position.x - playerSize > width)
 		position.x = playerSize;
 
 	if (position.x + playerSize < 0)
 		position.x = width - playerSize;
+}
 
+void constrainVertical()
+{
 	if (position.y + playerSize/2 > height)
 		position.y = height - playerSize/2;
 
