@@ -31,7 +31,7 @@ void draw()
 	acceleration = acceleration();
 	drag = drag();
 	applyMovement();
-	wraparound();
+	wrapAround();
 	drawBall();
 	diagnostics();
 
@@ -85,14 +85,14 @@ PVector drag()
 
 void applyMovement()
 { 
-	velocity.add(PVector.mult(acceleration, deltaTime * velocityMultiplier));
-	velocity.add(PVector.mult(drag, deltaTime * velocityMultiplier));
+	velocity.add(acceleration);
+	velocity.add(drag);
 	position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
 	velocity.limit(velocityLimit);
 	acceleration.set(0, 0);
 }
 
-void wraparound()
+void wrapAround()
 {
 	if (position.x - playerSize > width)
 		position.x = playerSize;
