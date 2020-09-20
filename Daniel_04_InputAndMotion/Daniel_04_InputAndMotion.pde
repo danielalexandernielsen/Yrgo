@@ -1,10 +1,12 @@
 boolean moveLeft, moveRight, moveUp, moveDown;
-boolean wrapRight, wrapLeft;
+boolean gravityOn;
 
 float playerSize = 50;
 float velocityLimit = 20f;
 float velocityMultiplier = 75f;
 float accelerationMultiplier = 3f;
+float gravityMultiplier = 1f;
+float bounceMultiplier = 0.95f;
 float dragMultiplier = 0.1f;
 
 float time = 0f;
@@ -13,6 +15,7 @@ float deltaTime = 0f;
 
 PVector acceleration = new PVector();
 PVector drag = new PVector();
+PVector gravity = new PVector();
 PVector velocity = new PVector();
 PVector position;
 
@@ -31,9 +34,13 @@ void draw()
 
 	acceleration = acceleration();
 	drag = drag();
-	applyMovement();
+	gravity = gravity();
+	applyForces();
+
+	bounciness();
+
 	wrapHorisontal();
-	constrainVertical();
+	constrainVertical();	
 	drawBall();
 	diagnostics();
 
@@ -85,10 +92,32 @@ PVector drag()
 	return drag;
 }
 
-void applyMovement()
+PVector gravity()
+{
+	PVector gravity = new PVector();
+
+	if (gravityOn)
+		gravity.set(0, gravityMultiplier);
+
+	return gravity;
+}
+
+void bounciness()
+{
+	if (gravityOn)
+	{
+		if (position.y + playerSize/2 >= height)
+		{
+			velocity.y = velocity.y * -bounceMultiplier;
+		}
+	}
+}
+
+void applyForces()
 { 
 	velocity.add(acceleration);
 	velocity.add(drag);
+	velocity.add(gravity);
 	position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
 	velocity.limit(velocityLimit);
 	acceleration.set(0, 0);
@@ -106,10 +135,15 @@ void wrapHorisontal()
 void constrainVertical()
 {
 	if (position.y + playerSize/2 > height)
+	{
 		position.y = height - playerSize/2;
+	}
 
 	if (position.y - playerSize/2 < 0)
+	{
 		position.y = playerSize/2;
+		velocity.y = 0;
+	}
 }
 
 void drawBall()
