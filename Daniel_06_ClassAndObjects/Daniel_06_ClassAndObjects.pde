@@ -15,7 +15,7 @@ void setup()
 
   for(int i = 0; i < balls.length; i++)
   {
-      balls[i] = new Ball(100, 100, 25, color(255, 204, 0));
+      balls[i] = new Ball(100, 100, 25, color(125, 25, 190));
   }
 }
 
@@ -28,7 +28,7 @@ void draw()
   for(int i = 0; i < balls.length; i++)
   {
       balls[i].update();
-      //balls[i].bounce();
+      balls[i].bounce();
       balls[i].display();
   }
 

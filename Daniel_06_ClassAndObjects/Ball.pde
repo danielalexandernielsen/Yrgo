@@ -24,21 +24,25 @@ class Ball
 
 	void bounce()
 	{
-		if (position.x + size > width)
-			position.x *= -1;
+		if (position.x + size/2 > width)
+			velocity.x *= -1;
 
-		if (position.x - size < 0)
-			position.x *= -1;
+		if (position.x - size/2 < 0)
+			velocity.x *= -1;
 
-		if (position.y + size > height)
-			position.y *= -1;
+		if (position.y + size/2 > height)
+			velocity.y *= -1;
 
-		if (position.y - size < 0)
-			position.y *= -1;
+		if (position.y - size/2 < 0)
+			velocity.y *= -1;
+
 	}
 
 	void display()
 	{
+    push();
+    fill(colour);
 		ellipse(position.x, position.y, size, size);
+    pop();
 	}
 }
