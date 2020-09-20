@@ -1,29 +1,15 @@
 void keyPressed()
 {
-  if (keyCode == LEFT || key == 'a')
-    moveLeft = true;
-
-  if (keyCode == RIGHT || key == 'd')
-    moveRight = true;    
-
-  if (keyCode == DOWN || key == 's')
-    moveDown = true;    
-
-  if (keyCode == UP || key == 'w')
-    moveUp = true;
+  if (key == CODED)
+    keys[keyCode] = true;
+  else
+    keys[key] = true;
 }
 
 void keyReleased()
 {
-  if (keyCode == LEFT || key == 'a') 
-    moveLeft = false;
-
-  if (keyCode == RIGHT || key == 'd')
-    moveRight = false;
-
-  if (keyCode == DOWN || key == 's')
-    moveDown = false;
-
-  if (keyCode == UP || key == 'w')
-    moveUp = false;
+  if (key == CODED)
+    keys[keyCode] = false;
+  else
+    keys[key] = false;
 }
