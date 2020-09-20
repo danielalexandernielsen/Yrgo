@@ -1,4 +1,4 @@
-boolean[] keys = new boolean[128];
+boolean moveLeft, moveRight, moveUp, moveDown;
 
 float playerSize = 50;
 float velocityLimit = 20f;
@@ -10,8 +10,6 @@ float time = 0f;
 float oldTime = 0f;
 float deltaTime = 0f;
 
-PVector dragDiscard = new PVector();
-PVector accelerationDiscard = new PVector();
 PVector acceleration = new PVector();
 PVector drag = new PVector();
 PVector velocity = new PVector();
@@ -55,32 +53,34 @@ void calculateDeltaTime(String interval)
 
 PVector acceleration()
 {
-	acceleration.set(0, 0);
+	PVector acceleration = new PVector();
 
-	if (keys[LEFT] || keys['a'])
-		accelerationDiscard.x = -1;
+	if (moveLeft)
+		acceleration.x -= 1;
 
-	if (keys[UP] || keys['w'])
-		accelerationDiscard.y = -1;
+	if (moveRight)
+		acceleration.x += 1;
 
-	if (keys[RIGHT] || keys['d'])
-		accelerationDiscard.x = 1;
+	if (moveUp)
+		acceleration.y -= 1;
 
-	if (keys[DOWN] || keys['s'])
-		accelerationDiscard.y = 1;
+	if (moveDown)
+		acceleration.y += 1;
 
-	accelerationDiscard.normalize();
-	accelerationDiscard.mult(accelerationMultiplier);
+	acceleration.normalize();
+	acceleration.mult(accelerationMultiplier);
 
-	return accelerationDiscard;
+	return acceleration;
 }
 
 PVector drag()
 {
-	dragDiscard.x = (velocity.x + acceleration.x) * -dragMultiplier;
-	dragDiscard.y = (velocity.y + acceleration.y) * -dragMultiplier;
+	PVector drag = new PVector();
 
-	return dragDiscard;
+	drag.x = (velocity.x + acceleration.x) * -dragMultiplier;
+	drag.y = (velocity.y + acceleration.y) * -dragMultiplier;
+
+	return drag;
 }
 
 void applyMovement()
@@ -89,6 +89,7 @@ void applyMovement()
 	velocity.add(PVector.mult(drag, deltaTime * velocityMultiplier));
 	position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
 	velocity.limit(velocityLimit);
+	acceleration.set(0, 0);
 }
 
 void wraparound()
