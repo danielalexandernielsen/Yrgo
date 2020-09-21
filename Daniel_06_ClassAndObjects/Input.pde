@@ -2,33 +2,28 @@ boolean moveLeft, moveRight, moveUp, moveDown;
 
 void keyPressed()
 {
-  if (keyCode == LEFT || key == 'a')
-    moveLeft = true;
-
-  if (keyCode == RIGHT || key == 'd')
-    moveRight = true;    
-
-  if (keyCode == DOWN || key == 's')
-    moveDown = true;    
-
-  if (keyCode == UP || key == 'w')
-    moveUp = true;
-
-  if (key == 'g')
-    gravityEnabled = !gravityEnabled;
+  keyToggle(true);
 }
 
 void keyReleased()
 {
-  if (keyCode == LEFT || key == 'a') 
-    moveLeft = false;
+  keyToggle(false);
+}
+
+void keyToggle(boolean pushedDown)
+{
+  if (keyCode == LEFT || key == 'a')
+    moveLeft = pushedDown;
 
   if (keyCode == RIGHT || key == 'd')
-    moveRight = false;
+    moveRight = pushedDown;    
 
   if (keyCode == DOWN || key == 's')
-    moveDown = false;
+    moveDown = pushedDown;    
 
   if (keyCode == UP || key == 'w')
-    moveUp = false;
+    moveUp = pushedDown;
+
+  if (key == 'g' && pushedDown == true)
+    gravityEnabled = !gravityEnabled;
 }
