@@ -15,7 +15,7 @@ void keyPressed()
     moveUp = true;
 
   if (key == 'g')
-    gravityOn = !gravityOn;
+    gravityEnabled = !gravityEnabled;
 }
 
 void keyReleased()

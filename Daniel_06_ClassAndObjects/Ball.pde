@@ -5,13 +5,10 @@ class Ball
 	float size;
 	color colour;
 
-	Ball(float x, float y, float size, color colour)
+	Ball(float x, float y, float size, float xSpeed, float ySpeed, color colour)
 	{
 		position = new PVector(x, y);
-		velocity = new PVector();
-		velocity.x = random(11) - 5;
-		velocity.y = random(11) - 5;
-
+		velocity = new PVector(xSpeed, ySpeed);
 		this.size = size;
 		this.colour = colour;
 	}
@@ -41,6 +38,7 @@ class Ball
 	{
 		push();
 		fill(colour);
+		noStroke();
 		ellipse(position.x, position.y, size, size);
 		pop();
 	}

@@ -1,6 +1,7 @@
 class Player
 {
 	float size = 50;
+	float radius;
 	float velocityLimit = 20f;
 	float velocityMultiplier = 75f;
 	float accelerationMultiplier = 3f;
@@ -17,6 +18,7 @@ class Player
 	Player()
 	{
 		position = new PVector(width/2, height/2);
+		radius = size/2;
 	}
 
 	PVector acceleration()
@@ -55,7 +57,7 @@ class Player
 	{
 		PVector gravity = new PVector();
 
-		if (gravityOn)
+		if (gravityEnabled)
 			gravity.set(0, gravityMultiplier);
 
 		return gravity;
@@ -63,9 +65,9 @@ class Player
 
 	void bounciness()
 	{
-		if (gravityOn)
+		if (gravityEnabled)
 		{
-			if (position.y + size/2 >= height)
+			if (position.y + radius >= height)
 			{
 				velocity.y = velocity.y * -bounceMultiplier;
 			}
@@ -93,39 +95,36 @@ class Player
 
 	void constrainVertical()
 	{
-		if (position.y + size/2 > height)
+		if (position.y + radius > height)
 		{
 			position.y = height - size/2;
 		}
 
-		if (position.y - size/2 < 0)
+		if (position.y - radius < 0)
 		{
-			position.y = size/2;
+			position.y = radius;
 			velocity.y = 0;
 		}
 	}
 
-/*
+
 	boolean collision(Ball player, Ball enemy)
 	{
 		float maxDistance = player.size + player.size;
 
-		if(abs(player.x - enemy.x) > maxDistance || abs(player.y - enemy.y) > maxDistance)
+		if (abs(player.position.x - enemy.position.x) > maxDistance || abs(player.position.y - enemy.position.y) > maxDistance)
 		{
 			return false;
-		}
-
-		else if(dist(player.x, player.y, enemy.x, enemy.y) > maxDistance)
+		} 
+		else if (dist(player.position.x, player.position.y, enemy.position.x, enemy.position.y) > maxDistance)
 		{
 			return false;
-		}
-
+		} 
 		else
 		{
 			return true;
 		}
 	}
-*/
 
 	void display()
 	{

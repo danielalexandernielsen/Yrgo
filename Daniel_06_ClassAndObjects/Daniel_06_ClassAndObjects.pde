@@ -1,7 +1,7 @@
 PlayerManager player;
 BallManager enemies;
-boolean gravityOn;
-int numberOfBalls = 100;
+boolean gravityEnabled;
+int numberOfBalls = 10;
 
 float time = 0f;
 float oldTime = 0f;
