@@ -1,8 +1,7 @@
 Player player;
-ArrayList<Ball> enemies = new ArrayList<Ball>();
+Factory balls;
 boolean gravityEnabled;
-int amount = 100;
-
+int amountOfBalls = 100;
 float time = 0f;
 float oldTime = 0f;
 float deltaTime = 0f;
@@ -11,7 +10,7 @@ void setup()
 {
   size(1280, 720);
   player = new Player();
-  enemies = Factory.create("Ball", amount);
+  balls = new Factory(amountOfBalls);
 }
 
 void draw()
@@ -21,12 +20,16 @@ void draw()
   calculateDeltaTime("START");
 
   player.update();
-  for (Ball ball : balls) 
+  balls.updateAll();
+
+  for (int i = 0; balls.balls.size() > i; i++) 
   {
-    ball.update();
-    ball.applyForces();
-    ball.edgeBounce();
-    ball.display();
+    println(i);
+    if (Collision.detection(player, balls.balls.get(i)) == true)
+    {
+      println("test");
+      balls.destroy(balls.balls.get(i));
+    }
   }
 
   calculateDeltaTime("END");

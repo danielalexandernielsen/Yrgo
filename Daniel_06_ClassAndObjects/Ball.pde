@@ -40,17 +40,29 @@ class Ball
 
 	void edgeBounce()
 	{
-		if (position.x + size/2 > width)
+		if (position.x + radius >= width)
+		{
+			position.x = width - radius;
 			velocity.x *= -1;
+		}
 
-		if (position.x - size/2 < 0)
+		if (position.x - radius <= 0)
+		{
+			position.x = radius;
 			velocity.x *= -1;
+		}
 
-		if (position.y + size/2 > height)
+		if (position.y + radius >= height)
+		{
+			position.y = height - radius;
 			velocity.y *= -1;
+		}
 
-		if (position.y - size/2 < 0)
+		if (position.y - radius <= 0)
+		{
+			position.y = 0 + radius;
 			velocity.y *= -1;
+		}
 	}
 
 	void display()

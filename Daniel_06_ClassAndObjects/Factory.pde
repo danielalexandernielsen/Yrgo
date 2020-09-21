@@ -1,14 +1,30 @@
-static class Factory<T>
+class Factory
 {
-  ArrayList<T> create(String object, int amount)
+  ArrayList<Ball> balls = new ArrayList<Ball>();
+
+  Factory(int amount)
   {
-    ArrayList<T> objects = new ArrayList<T>();
-    
+    create(amount);
+  }
+
+  void create(int amount)
+  {
     for (int i = 0; i < amount; i++)
     {
-      Class classType = Class.forName("object");
-      object.getClass().newInstance();
+      balls.add(new Ball());
     }
-    return objects;
+  }
+
+  void destroy(Ball ball)
+  {
+    balls.remove(ball);
+  }
+
+  void updateAll()
+  {
+    for (Ball ball : balls) 
+    {
+      ball.update();
+    }
   }
 }
