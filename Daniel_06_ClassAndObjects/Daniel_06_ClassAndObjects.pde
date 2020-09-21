@@ -1,5 +1,5 @@
-PlayerController controller;
 BallManager enemies;
+Player player;
 boolean gravityEnabled;
 int numberOfBalls = 10;
 
@@ -10,7 +10,7 @@ float deltaTime = 0f;
 void setup() 
 {
   size(1280, 720);
-  controller = new PlayerController(new Player());
+  player = new Player();
   enemies = new BallManager(numberOfBalls);
 }
 
@@ -20,7 +20,7 @@ void draw()
 
   calculateDeltaTime("START");
 
-  controller.display();
+  player.update();
   enemies.display();
 
   calculateDeltaTime("END");
