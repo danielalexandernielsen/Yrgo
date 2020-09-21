@@ -10,20 +10,20 @@ void keyReleased()
   keyToggle(false);
 }
 
-void keyToggle(boolean pushedDown)
+void keyToggle(boolean isPressed)
 {
   if (keyCode == LEFT || key == 'a')
-    moveLeft = pushedDown;
+    moveLeft = isPressed;
 
   if (keyCode == RIGHT || key == 'd')
-    moveRight = pushedDown;    
+    moveRight = isPressed;    
 
   if (keyCode == DOWN || key == 's')
-    moveDown = pushedDown;    
+    moveDown = isPressed;    
 
   if (keyCode == UP || key == 'w')
-    moveUp = pushedDown;
+    moveUp = isPressed;
 
-  if (key == 'g' && pushedDown == true)
+  if (key == 'g' && isPressed == true)
     gravityEnabled = !gravityEnabled;
 }

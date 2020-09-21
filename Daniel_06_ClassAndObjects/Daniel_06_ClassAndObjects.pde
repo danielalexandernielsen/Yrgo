@@ -1,7 +1,7 @@
-BallManager enemies;
 Player player;
+ArrayList<Ball> enemies = new ArrayList<Ball>();
 boolean gravityEnabled;
-int numberOfBalls = 10;
+int amount = 100;
 
 float time = 0f;
 float oldTime = 0f;
@@ -11,7 +11,7 @@ void setup()
 {
   size(1280, 720);
   player = new Player();
-  enemies = new BallManager(numberOfBalls);
+  enemies = Factory.create("Ball", amount);
 }
 
 void draw()
@@ -21,7 +21,13 @@ void draw()
   calculateDeltaTime("START");
 
   player.update();
-  enemies.display();
+  for (Ball ball : balls) 
+  {
+    ball.update();
+    ball.applyForces();
+    ball.edgeBounce();
+    ball.display();
+  }
 
   calculateDeltaTime("END");
 }
