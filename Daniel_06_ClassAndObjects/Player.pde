@@ -105,6 +105,28 @@ class Player
 		}
 	}
 
+/*
+	boolean collision(Ball player, Ball enemy)
+	{
+		float maxDistance = player.size + player.size;
+
+		if(abs(player.x - enemy.x) > maxDistance || abs(player.y - enemy.y) > maxDistance)
+		{
+			return false;
+		}
+
+		else if(dist(player.x, player.y, enemy.x, enemy.y) > maxDistance)
+		{
+			return false;
+		}
+
+		else
+		{
+			return true;
+		}
+	}
+*/
+
 	void display()
 	{
 		ellipse(position.x, position.y, size, size);

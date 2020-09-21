@@ -1,8 +1,7 @@
 PlayerManager player;
-boolean moveLeft, moveRight, moveUp, moveDown;
+BallManager enemies;
 boolean gravityOn;
 int numberOfBalls = 10;
-Ball[] balls = new Ball[numberOfBalls];
 
 float time = 0f;
 float oldTime = 0f;
@@ -12,11 +11,7 @@ void setup()
 {
   size(1280, 720);
   player = new PlayerManager();
-
-  for(int i = 0; i < balls.length; i++)
-  {
-      balls[i] = new Ball(100, 100, 25, color(125, 25, 190));
-  }
+  enemies = new BallManager(numberOfBalls);
 }
 
 void draw()
@@ -25,15 +20,10 @@ void draw()
 
   calculateDeltaTime("START");
 
-  for(int i = 0; i < balls.length; i++)
-  {
-      balls[i].update();
-      balls[i].bounce();
-      balls[i].display();
-  }
-
   player.display();
   player.diagnostics();
+
+  enemies.display();
 
   calculateDeltaTime("END");
 }

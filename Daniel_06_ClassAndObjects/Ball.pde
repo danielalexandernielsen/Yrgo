@@ -35,14 +35,13 @@ class Ball
 
 		if (position.y - size/2 < 0)
 			velocity.y *= -1;
-
 	}
 
 	void display()
 	{
-    push();
-    fill(colour);
+		push();
+		fill(colour);
 		ellipse(position.x, position.y, size, size);
-    pop();
+		pop();
 	}
 }

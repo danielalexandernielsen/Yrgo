@@ -1,3 +1,5 @@
+boolean moveLeft, moveRight, moveUp, moveDown;
+
 void keyPressed()
 {
   if (keyCode == LEFT || key == 'a')
