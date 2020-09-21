@@ -1,7 +1,7 @@
 PlayerManager player;
 BallManager enemies;
 boolean gravityOn;
-int numberOfBalls = 10;
+int numberOfBalls = 100;
 
 float time = 0f;
 float oldTime = 0f;
@@ -22,7 +22,6 @@ void draw()
 
   player.display();
   player.diagnostics();
-
   enemies.display();
 
   calculateDeltaTime("END");
@@ -40,5 +39,4 @@ void calculateDeltaTime(String interval)
     case "END":
     oldTime = time;
   }
-
 }

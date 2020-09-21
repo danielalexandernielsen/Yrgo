@@ -137,5 +137,4 @@ class Player
 		if (position.x - size < 0)
 			ellipse(position.x + width, position.y, size, size);
 	}
-
 }

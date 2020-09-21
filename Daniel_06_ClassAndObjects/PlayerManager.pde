@@ -33,5 +33,4 @@ class PlayerManager
 			"Position Y: " + round(player.position.y) + "\n"
 			, 50, 50);
 	}
-
 }
