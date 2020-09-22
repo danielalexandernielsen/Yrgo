@@ -1,5 +1,7 @@
 Player player;
 Edge edge = new Edge();
+Force force = new Force();
+Force ballForce = new Force();
 Factory ballFactory = new BallFactory();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 boolean gravityEnabled;
@@ -11,7 +13,7 @@ float deltaTime = 0f;
 void setup() 
 {
   size(1280, 720);
-  balls = ballFactory.create(50);
+  balls = ballFactory.create(0);
   player = new Player();
 }
 
@@ -21,16 +23,20 @@ void draw()
 
   calculateDeltaTime("START");
 
-  player.update();
+  player.draw();
+  force.generate(player);
+  force.apply(player);
   edge.wrapHorisontal(player);
-  edge.wrapVertical(player);
+  edge.constrainVertical(player);
 
 
   for (Ball ball : balls) 
   {
-    ball.update();
-    edge.wrapVertical(ball);
-    edge.wrapHorisontal(ball);
+    ball.draw();
+    ballForce.generate(ball);
+    ballForce.apply(ball);
+    edge.bounceVertical(ball);
+    edge.bounceHorisontal(ball);
   }
 
 

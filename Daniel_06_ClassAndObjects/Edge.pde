@@ -10,7 +10,7 @@ class Edge
 
     if (shape.position.y - shape.radius <= 0)
     {
-      shape.position.y = 0 + shape.radius;
+      shape.position.y = shape.radius;
       shape.velocity.y *= -1;
     }
   }
