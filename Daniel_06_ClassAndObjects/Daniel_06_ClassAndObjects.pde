@@ -1,9 +1,7 @@
 Player player;
-
+Edge edge = new Edge();
 Factory ballFactory = new BallFactory();
-ArrayList<Ball> enemies = new ArrayList<Ball>();
-int amountOfBalls = 100;
-
+ArrayList<Ball> balls = new ArrayList<Ball>();
 boolean gravityEnabled;
 
 float time = 0f;
@@ -13,8 +11,8 @@ float deltaTime = 0f;
 void setup() 
 {
   size(1280, 720);
+  balls = ballFactory.create(50);
   player = new Player();
-  enemies = ballFactory.create(10);
 }
 
 void draw()
@@ -24,24 +22,15 @@ void draw()
   calculateDeltaTime("START");
 
   player.update();
-  
-  for (Ball enemy : enemies) 
-  {
-    enemy.update();
-  }
-  
-  //balls.updateAll();
+  edge.wrapHorisontal(player);
+  edge.wrapVertical(player);
 
-  /*
-  for (int i = 0; balls.balls.size() > i; i++) 
+  for (Ball ball : balls) 
   {
-    println(i);
-    if (Collision.detection(player, balls.balls.get(i)) == true)
-    {
-      println("test");
-      balls.destroy(balls.balls.get(i));
-    }
-  }*/
+    ball.update();
+    edge.bounceVertical(ball);
+    edge.bounceHorisontal(ball);
+  }
 
   calculateDeltaTime("END");
 }
@@ -51,11 +40,11 @@ void calculateDeltaTime(String interval)
 {
   switch (interval)
   {
-    case "START":
+  case "START":
     time = millis();
     deltaTime = (time - oldTime) * 0.001;
 
-    case "END":
+  case "END":
     oldTime = time;
   }
 }

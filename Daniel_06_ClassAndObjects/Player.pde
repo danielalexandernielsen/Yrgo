@@ -1,19 +1,5 @@
-class Player
+class Player extends Shape
 {
-  float size = 50;
-  float radius;
-  float velocityLimit = 20f;
-  float velocityMultiplier = 75f;
-  float accelerationMultiplier = 3f;
-  float gravityMultiplier = 1f;
-  float bounceMultiplier = 0.95f;
-  float dragMultiplier = 0.1f;
-
-  PVector acceleration = new PVector();
-  PVector drag = new PVector();
-  PVector gravity = new PVector();
-  PVector velocity = new PVector();
-  PVector position;
 
   Player()
   {
@@ -28,9 +14,6 @@ class Player
     gravity = player.gravity();
     applyForces();
     bounciness();
-
-    wrapHorisontal();
-    constrainVertical();  
     display();
     diagnostics();
   }
@@ -98,28 +81,6 @@ class Player
     acceleration.set(0, 0);
   }
 
-  void wrapHorisontal()
-  {
-    if (position.x - size > width)
-      position.x = size;
-
-    if (position.x + size < 0)
-      position.x = width - size;
-  }
-
-  void constrainVertical()
-  {
-    if (position.y + radius > height)
-    {
-      position.y = height - size/2;
-    }
-
-    if (position.y - radius < 0)
-    {
-      position.y = radius;
-      velocity.y = 0;
-    }
-  }
 
   void display()
   {
@@ -130,6 +91,12 @@ class Player
 
     if (position.x - size < 0)
       ellipse(position.x + width, position.y, size, size);
+
+      if (position.y + size > height)
+      ellipse(position.x, position.y - height, size, size);
+
+    if (position.y - size < 0)
+      ellipse(position.x, position.y + height, size, size);
   }
 
   void diagnostics()

@@ -6,6 +6,7 @@ interface Factory<T>
 
 class BallFactory implements Factory<Ball>
 {
+
   ArrayList<Ball> objects = new ArrayList<Ball>();
 
   ArrayList<Ball> create(int amount)
