@@ -47,12 +47,12 @@ class Edge
   {
     if (shape.position.y - shape.radius > height)
     {
-      shape.position.y = shape.size;
+      shape.position.y = shape.radius;
     }
 
     if (shape.position.y + shape.radius < 0)
     {
-      shape.position.y = height - shape.size;
+      shape.position.y = height - shape.radius;
     }
   }
 

@@ -25,12 +25,14 @@ void draw()
   edge.wrapHorisontal(player);
   edge.wrapVertical(player);
 
+
   for (Ball ball : balls) 
   {
     ball.update();
-    edge.bounceVertical(ball);
-    edge.bounceHorisontal(ball);
+    edge.wrapVertical(ball);
+    edge.wrapHorisontal(ball);
   }
+
 
   calculateDeltaTime("END");
 }

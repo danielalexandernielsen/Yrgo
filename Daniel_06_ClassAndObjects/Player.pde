@@ -92,7 +92,7 @@ class Player extends Shape
     if (position.x - size < 0)
       ellipse(position.x + width, position.y, size, size);
 
-      if (position.y + size > height)
+    if (position.y + size > height)
       ellipse(position.x, position.y - height, size, size);
 
     if (position.y - size < 0)
