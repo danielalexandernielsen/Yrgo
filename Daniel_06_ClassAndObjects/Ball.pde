@@ -11,7 +11,7 @@ class Ball
 	{
 		this.size = random(1, 100);
 		this.radius = size/2;
-		this.colour = color(random(0, 255), random(0, 255), random(0, 255));
+		this.colour = color(random(0, 256), random(0, 256), random(0, 256));
 		position = new PVector(random(0, width), random (0, height ));
 		velocity = new PVector(random(-7, 7), random(-7, 7));
 	}

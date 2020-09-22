@@ -1,30 +1,24 @@
-class Factory
+interface Factory<T>
 {
-  ArrayList<Ball> balls = new ArrayList<Ball>();
+  ArrayList<T> create(int amount);
+  void destroy(T object);
+}
 
-  Factory(int amount)
-  {
-    create(amount);
-  }
+class BallFactory implements Factory<Ball>
+{
+  ArrayList<Ball> objects = new ArrayList<Ball>();
 
-  void create(int amount)
+  ArrayList<Ball> create(int amount)
   {
     for (int i = 0; i < amount; i++)
     {
-      balls.add(new Ball());
+      objects.add(new Ball());
     }
+    return objects;
   }
 
-  void destroy(Ball ball)
+  void destroy(Ball object)
   {
-    balls.remove(ball);
-  }
-
-  void updateAll()
-  {
-    for (Ball ball : balls) 
-    {
-      ball.update();
-    }
+    objects.remove(object);
   }
 }
