@@ -18,7 +18,7 @@ void setup()
 
 void draw()
 {
-  if (GameState.running)
+  if (running)
   {
 
     background(128);
@@ -35,7 +35,7 @@ void draw()
     {
       if (Collision.round(player, ball) == true)
       {
-        GameState.gameOver();
+        gameOver();
       }
       force.generate(ball, 7);
       force.apply(ball, ForceType.CONSTANT);

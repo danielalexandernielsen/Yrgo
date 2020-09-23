@@ -28,5 +28,5 @@ void keyToggle(boolean isPressed)
     gravityEnabled = !gravityEnabled;
 
   if ((key == 'p' || key == 'P') && isPressed == true)
-    GameState.pauseGame();
+    pauseGame();
 }

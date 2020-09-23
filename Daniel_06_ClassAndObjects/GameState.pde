@@ -1,33 +1,28 @@
-static class GameState
+static boolean running = true;
+static boolean gameOver = false;
+
+void startGame()
 {
-	static boolean running = true;
-	static boolean gameOver = false;
+  running = true;
+  gameOver = false;
+}
 
-	static void startGame()
-	{
-		running = true;
-		gameOver = false;
-	}
+void pauseGame()
+{
+  if (!gameOver)
+    running = !running;
+}
 
-	static void pauseGame()
-	{
-		if (!gameOver)
-			running = !running;
-	}
+void gameOver()
+{
+  running = false;
+  gameOver = true;
 
-	static void gameOver()
-	{
-		running = false;
-		gameOver = true;
-
-    /*
-		push();
-		textSize(55);
-		text("GAME OVER", width/2, height/2);
-		textSize(20);
-		text("Click space to continue.", width/2, height/2 + 43);
-		textAlign(CENTER, CENTER);
-		pop();
-    */
-	}
+  push();
+  textSize(55);
+  text("GAME OVER", width/2, height/2);
+  textSize(20);
+  text("Click space to continue.", width/2, height/2 + 43);
+  textAlign(CENTER, CENTER);
+  pop();
 }
