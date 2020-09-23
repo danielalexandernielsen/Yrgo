@@ -1,7 +1,6 @@
 Player player;
 Edge edge = new Edge();
 Force force = new Force();
-Force force2 = new Force();
 Factory ballFactory = new BallFactory();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 boolean gravityEnabled;
@@ -31,8 +30,8 @@ void draw()
 
   for (Ball ball : balls) 
   {
-    force2.generate(ball, 7);
-    force2.apply(ball, ForceType.CONSTANT);
+    force.generate(ball, 7);
+    force.apply(ball, ForceType.CONSTANT);
     edge.wrapVertical(ball);
     edge.wrapHorisontal(ball);
     ball.draw();
