@@ -12,8 +12,6 @@ class Force
 	PVector gravity = new PVector();
 	PVector velocity = new PVector();
 
-	boolean inConstantVelocity = false;
-
 
 	PVector acceleration()
 	{
@@ -83,6 +81,7 @@ class Force
 			object.velocity.set(random(-speed, speed), random(-speed, speed));
 		}
 	}
+
 
 	void apply(GameObject object, ForceType forceType)
 	{   

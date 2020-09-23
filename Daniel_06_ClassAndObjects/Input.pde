@@ -24,6 +24,9 @@ void keyToggle(boolean isPressed)
   if (keyCode == UP || key == 'w')
     moveUp = isPressed;
 
-  if (key == 'g' && isPressed == true)
+  if ((key == 'g' || key == 'G') && isPressed == true)
     gravityEnabled = !gravityEnabled;
+
+  if ((key == 'p' || key == 'P') && isPressed == true)
+    GameState.pauseGame();
 }

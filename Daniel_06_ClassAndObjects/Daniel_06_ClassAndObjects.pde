@@ -18,26 +18,35 @@ void setup()
 
 void draw()
 {
-  background(128);
-
-  calculateDeltaTime("START");
-  
-  force.generate(player);
-  force.apply(player, ForceType.INPUT);
-  edge.bounceHorisontal(player);
-  edge.bounceVertical(player);
-  player.draw();
-
-  for (Ball ball : balls) 
+  if (GameState.running)
   {
-    force.generate(ball, 7);
-    force.apply(ball, ForceType.CONSTANT);
-    edge.bounceVertical(ball);
-    edge.bounceHorisontal(ball);
-    ball.draw();
-  }
 
-  calculateDeltaTime("END");
+    background(128);
+
+    calculateDeltaTime("START");
+
+    force.generate(player);
+    force.apply(player, ForceType.INPUT);
+    edge.wrapHorisontal(player);
+    edge.constrainVertical(player);
+    player.draw();
+
+    for (Ball ball : balls) 
+    {
+      if (Collision.round(player, ball) == true)
+      {
+        GameState.gameOver();
+      }
+      force.generate(ball, 7);
+      force.apply(ball, ForceType.CONSTANT);
+      edge.bounceVertical(ball);
+      edge.bounceHorisontal(ball);
+      ball.draw();
+    }    
+
+    calculateDeltaTime("END");
+    
+  }  
 }
 
 
@@ -45,11 +54,11 @@ void calculateDeltaTime(String interval)
 {
   switch (interval)
   {
-  case "START":
+    case "START":
     time = millis();
     deltaTime = (time - oldTime) * 0.001;
 
-  case "END":
+    case "END":
     oldTime = time;
   }
 }
