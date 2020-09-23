@@ -89,11 +89,11 @@ class Force
 		switch(forceType)
 		{
 			case INPUT:
-			object.velocity.add(acceleration);
-			object.velocity.add(drag);
-			object.velocity.add(gravity);
-			object.position.add(PVector.mult(object.velocity, deltaTime * velocityMultiplier));
-			object.velocity.limit(velocityLimit);
+			velocity.add(acceleration);
+			velocity.add(drag);
+			velocity.add(gravity);
+			velocity.limit(velocityLimit);
+			object.position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
 			acceleration.set(0, 0);
 			break;
 

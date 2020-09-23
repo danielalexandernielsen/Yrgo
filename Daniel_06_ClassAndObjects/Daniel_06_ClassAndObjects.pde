@@ -32,8 +32,8 @@ void draw()
   {
     force.generate(ball, 7);
     force.apply(ball, ForceType.CONSTANT);
-    edge.wrapVertical(ball);
-    edge.wrapHorisontal(ball);
+    edge.bounceVertical(ball);
+    edge.bounceHorisontal(ball);
     ball.draw();
   }
 
