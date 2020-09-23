@@ -1,4 +1,4 @@
-class Ball extends Shape
+class Ball extends GameObject
 {
 
   Ball()
@@ -7,7 +7,6 @@ class Ball extends Shape
     this.radius = size/2;
     this.colour = color(random(0, 256), random(0, 256), random(0, 256));
     position = new PVector(random(0, width), random (0, height ));
-    //velocity = new PVector(random(-7, 7), random(-7, 7));
   }
 
   Ball(float x, float y, float size, float xSpeed, float ySpeed, color colour)
@@ -38,7 +37,6 @@ class Ball extends Shape
 
     if (position.y - size < 0)
       ellipse(position.x, position.y + height, size, size);
-
 
     pop();
   }

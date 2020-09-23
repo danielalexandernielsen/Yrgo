@@ -1,6 +1,7 @@
 static class Collision
 {
-	static boolean detection(Player object1, Ball object2)
+  
+	static boolean round(GameObject object1, GameObject object2)
 	{
 		float maxDistance = object1.radius + object2.radius;
 

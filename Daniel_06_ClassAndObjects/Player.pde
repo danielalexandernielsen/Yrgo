@@ -1,4 +1,4 @@
-class Player extends Shape
+class Player extends GameObject
 {
 
   Player()

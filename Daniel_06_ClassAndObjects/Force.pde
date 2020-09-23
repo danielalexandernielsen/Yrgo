@@ -1,85 +1,111 @@
 class Force
 {
-  float velocityLimit = 20f;
-  float velocityMultiplier = 75f;
-  float accelerationMultiplier = 3f;
-  float gravityMultiplier = 1f;
-  float dragMultiplier = 0.1f;
-  float elasticityMultiplier = 0.95f;
+	float velocityLimit = 20f;
+	float velocityMultiplier = 75f;
+	float accelerationMultiplier = 3f;
+	float gravityMultiplier = 1f;
+	float dragMultiplier = 0.1f;
+	float elasticityMultiplier = 0.95f;
 
-  PVector acceleration = new PVector();
-  PVector drag = new PVector();
-  PVector gravity = new PVector();
-  PVector velocity = new PVector();
+	PVector acceleration = new PVector();
+	PVector drag = new PVector();
+	PVector gravity = new PVector();
+	PVector velocity = new PVector();
 
-  PVector acceleration()
-  {
-    PVector acceleration = new PVector();
+	boolean inConstantVelocity = false;
 
-    if (moveLeft)
-      acceleration.x -= 1;
 
-    if (moveRight)
-      acceleration.x += 1;
+	PVector acceleration()
+	{
+		PVector acceleration = new PVector();
 
-    if (moveUp)
-      acceleration.y -= 1;
+		if (moveLeft)
+			acceleration.x -= 1;
 
-    if (moveDown)
-      acceleration.y += 1;
+		if (moveRight)
+			acceleration.x += 1;
 
-    acceleration.normalize();
-    acceleration.mult(accelerationMultiplier);
+		if (moveUp)
+			acceleration.y -= 1;
 
-    return acceleration;
-  }
+		if (moveDown)
+			acceleration.y += 1;
 
-  PVector drag()
-  {
-    PVector drag = new PVector();
+		acceleration.normalize();
+		acceleration.mult(accelerationMultiplier);
 
-    drag.x = (velocity.x + acceleration.x) * -dragMultiplier;
-    drag.y = (velocity.y + acceleration.y) * -dragMultiplier;
+		return acceleration;
+	}
 
-    return drag;
-  }
+	PVector drag()
+	{
+		PVector drag = new PVector();
 
-  PVector gravity()
-  {
-    PVector gravity = new PVector();
+		drag.x = (velocity.x + acceleration.x) * -dragMultiplier;
+		drag.y = (velocity.y + acceleration.y) * -dragMultiplier;
 
-    if (gravityEnabled)
-      gravity.set(0, gravityMultiplier);
+		return drag;
+	}
 
-    return gravity;
-  }
+	PVector gravity()
+	{
+		PVector gravity = new PVector();
 
-  void elasticity(Shape shape)
-  {
-    if (gravityEnabled)
-    {
-      if (shape.position.y + shape.radius >= height)
-      {
-        velocity.y = velocity.y * -elasticityMultiplier;
-      }
-    }
-  }
+		if (gravityEnabled)
+			gravity.set(0, gravityMultiplier);
 
-  void generate(Shape shape)
-  {
-    acceleration = acceleration();
-    drag = drag();
-    gravity = gravity();
-    elasticity(shape);
-  }
+		return gravity;
+	}
 
-  void apply(Shape shape)
-  { 
-    velocity.add(acceleration);
-    velocity.add(drag);
-    velocity.add(gravity);
-    shape.position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
-    velocity.limit(velocityLimit);
-    acceleration.set(0, 0);
-  }
+	void elasticity(GameObject object)
+	{
+		if (gravityEnabled)
+		{
+			if (object.position.y + object.radius >= height)
+			{
+				velocity.y = velocity.y * -elasticityMultiplier;
+			}
+		}
+	}
+
+	void generate(GameObject object)
+	{
+		acceleration = acceleration();
+		drag = drag();
+		gravity = gravity();
+		elasticity(object);
+	}
+
+	void generate(GameObject object, int speed)
+	{
+		if (object.inMotion == false)
+		{
+			object.velocity.set(random(-speed, speed), random(-speed, speed));
+		}
+	}
+
+	void apply(GameObject object, ForceType forceType)
+	{   
+		switch(forceType)
+		{
+			case INPUT:
+			object.velocity.add(acceleration);
+			object.velocity.add(drag);
+			object.velocity.add(gravity);
+			object.position.add(PVector.mult(object.velocity, deltaTime * velocityMultiplier));
+			object.velocity.limit(velocityLimit);
+			acceleration.set(0, 0);
+			break;
+
+			case CONSTANT:
+			object.position.add(PVector.mult(object.velocity, deltaTime * velocityMultiplier));
+			break;
+		}
+		object.inMotion = true;
+	}
+}
+
+enum ForceType
+{
+	INPUT, CONSTANT;
 }

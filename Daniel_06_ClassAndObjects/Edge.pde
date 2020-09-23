@@ -1,88 +1,88 @@
 class Edge
 {
-  void bounceVertical(Shape shape)
+  void bounceVertical(GameObject object)
   {
-    if (shape.position.y + shape.radius >= height)
+    if (object.position.y + object.radius >= height)
     {
-      shape.position.y = height - shape.radius;
-      shape.velocity.y *= -1;
+      object.position.y = height - object.radius;
+      object.velocity.y *= -1;
     }
 
-    if (shape.position.y - shape.radius <= 0)
+    if (object.position.y - object.radius <= 0)
     {
-      shape.position.y = shape.radius;
-      shape.velocity.y *= -1;
+      object.position.y = object.radius;
+      object.velocity.y *= -1;
     }
   }
 
-  void bounceHorisontal(Shape shape)
+  void bounceHorisontal(GameObject object)
   {
-    if (shape.position.x + shape.radius >= width)
+    if (object.position.x + object.radius >= width)
     {
-      shape.position.x = width - shape.radius;
-      shape.velocity.x *= -1;
+      object.position.x = width - object.radius;
+      object.velocity.x *= -1;
     }
 
-    if (shape.position.x - shape.radius <= 0)
+    if (object.position.x - object.radius <= 0)
     {
-      shape.position.x = shape.radius;
-      shape.velocity.x *= -1;
+      object.position.x = object.radius;
+      object.velocity.x *= -1;
     }
   }
 
-  void wrapHorisontal(Shape shape)
+  void wrapHorisontal(GameObject object)
   {
-    if (shape.position.x - shape.size > width)
+    if (object.position.x - object.size > width)
     {
-      shape.position.x = shape.size;
+      object.position.x = object.size;
     }
 
-    if (shape.position.x + shape.size < 0)
+    if (object.position.x + object.size < 0)
     {
-      shape.position.x = width - shape.size;
+      object.position.x = width - object.size;
     }
   }
 
-  void wrapVertical(Shape shape)
+  void wrapVertical(GameObject object)
   {
-    if (shape.position.y - shape.radius > height)
+    if (object.position.y - object.radius > height)
     {
-      shape.position.y = shape.radius;
+      object.position.y = object.radius;
     }
 
-    if (shape.position.y + shape.radius < 0)
+    if (object.position.y + object.radius < 0)
     {
-      shape.position.y = height - shape.radius;
+      object.position.y = height - object.radius;
     }
   }
 
-  void constrainVertical(Shape shape)
+  void constrainVertical(GameObject object)
   {
-    if (shape.position.y - shape.radius <= 0)
+    if (object.position.y - object.radius <= 0)
     {
-      shape.position.y = shape.radius;
-      shape.velocity.y = 0;
+      object.position.y = object.radius;
+      object.velocity.y = 0;
     }
 
-    if (shape.position.y + shape.radius > height)
+    if (object.position.y + object.radius > height)
     {
-      shape.position.y = height - shape.radius;
-      shape.velocity.y = 0;
+      object.position.y = height - object.radius;
+      object.velocity.y = 0;
     }
   }
 
-  void constrainHorisontal(Shape shape)
+  void constrainHorisontal(GameObject object)
   {
-    if (shape.position.x + shape.radius >= width)
+    if (object.position.x + object.radius >= width)
     {
-      shape.position.x = width - shape.radius;
-      shape.velocity.x = 0;
+      object.position.x = width - object.radius;
+      object.velocity.x = 0;
     }
 
-    if (shape.position.x - shape.radius <= 0)
+    if (object.position.x - object.radius <= 0)
     {
-      shape.position.x = shape.radius;
-      shape.velocity.x = 0;
+      object.position.x = object.radius;
+      object.velocity.x = 0;
     }
   }
 }
