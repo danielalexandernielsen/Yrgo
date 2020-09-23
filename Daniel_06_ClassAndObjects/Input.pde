@@ -29,4 +29,7 @@ void keyToggle(boolean isPressed)
 
   if ((key == 'p' || key == 'P') && isPressed == true)
     pauseGame();
+
+  if (key == ' ' && isPressed == true)
+    startGame();
 }

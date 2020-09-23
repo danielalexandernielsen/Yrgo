@@ -5,9 +5,10 @@ Factory ballFactory = new BallFactory();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 boolean gravityEnabled;
 
-float time = 0f;
-float oldTime = 0f;
-float deltaTime = 0f;
+float time;
+float oldTime;
+float deltaTime;
+float accumulatedTime;
 
 void setup() 
 {
@@ -20,7 +21,6 @@ void draw()
 {
   if (running)
   {
-
     background(128);
 
     calculateDeltaTime("START");
@@ -33,20 +33,22 @@ void draw()
 
     for (Ball ball : balls) 
     {
-      if (Collision.round(player, ball) == true)
-      {
-        gameOver();
-      }
       force.generate(ball, 7);
       force.apply(ball, ForceType.CONSTANT);
       edge.bounceVertical(ball);
       edge.bounceHorisontal(ball);
       ball.draw();
-    }    
+
+      if (Collision.round(player, ball) == true)
+      {
+        gameOver();
+      }
+    }
+
+    addObjectEveryNSecond("Ball", 3);
 
     calculateDeltaTime("END");
-    
-  }  
+  }
 }
 
 
@@ -54,11 +56,28 @@ void calculateDeltaTime(String interval)
 {
   switch (interval)
   {
-    case "START":
+  case "START":
     time = millis();
     deltaTime = (time - oldTime) * 0.001;
 
-    case "END":
+  case "END":
     oldTime = time;
+  }
+}
+
+void addObjectEveryNSecond(String object, float nSecond)
+{
+  accumulatedTime += deltaTime;
+
+  if (accumulatedTime > nSecond && balls.size() <= 100)
+  {
+    print("test");
+    switch (object) 
+    {
+    case "Ball":
+      balls.add(new Ball());
+      break;
+    }
+    accumulatedTime = 0;
   }
 }
