@@ -4,11 +4,13 @@
 ## [King of Tiles](https://github.com/danielalexandernielsen/King-of-Tiles)
 <img src="https://github.com/danielalexandernielsen/Yrgo/blob/master/Daniel_00_SideProjects/King-of-Tiles.gif?raw=true" width="320" height="592">
 Two players compete about being the first to take over 50% of the tiles. Players can take over adjacent tiles by changing their color.
+
 Written in C# Xamarin for Android/iOS.
 
 ## [Tetris](https://github.com/danielalexandernielsen/Tetris)
 <img src="https://github.com/danielalexandernielsen/Yrgo/blob/master/Daniel_00_SideProjects/Tetris.gif?raw=true">
 Tetris clone in Windows Console. 
+
 Written in C#.
 
 ## [Luffarschack](https://github.com/danielalexandernielsen/Luffarschack)
