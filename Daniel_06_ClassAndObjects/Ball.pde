@@ -6,7 +6,7 @@ class Ball extends GameObject
     boolean spawnLocationUnavailable = true;
     while(spawnLocationUnavailable)
     {
-      this.size = random(5, 100);
+      this.size = random(10, 100);
       this.radius = size/2;
       this.colour = color(random(0, 256), random(0, 256), random(0, 256));
       this.position = new PVector(random(0, width), random (0, height ));
