@@ -26,6 +26,6 @@ void gameOver()
 	textSize(height/10);
 	text("GAME OVER", width/2, height/2);
 	textSize(height/30);
-	text("Click space to continue.", width/2, height/2 + height/15);
+	text("Click space to continue.", width/2, height/2 + height/13);
 	pop();
 }

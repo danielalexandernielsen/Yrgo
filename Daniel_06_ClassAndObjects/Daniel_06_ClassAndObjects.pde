@@ -13,17 +13,18 @@ float accumulatedTime;
 void setup() 
 {
   size(1280, 720);
-  balls = ballFactory.create(10);
   player = new Player();
+  balls = ballFactory.create(10);
 }
 
 void draw()
 {
+
+  calculateDeltaTime("START");
+
   if (running)
   {
     background(128);
-
-    calculateDeltaTime("START");
 
     force.generate(player);
     force.apply(player, ForceType.INPUT);
@@ -46,9 +47,8 @@ void draw()
     }
 
     addObjectEveryNSecond("Ball", 3);
-
-    calculateDeltaTime("END");
   }
+  calculateDeltaTime("END");
 }
 
 
@@ -71,7 +71,6 @@ void addObjectEveryNSecond(String object, float nSecond)
 
   if (accumulatedTime > nSecond && balls.size() <= 100)
   {
-    print("test");
     switch (object) 
     {
     case "Ball":
