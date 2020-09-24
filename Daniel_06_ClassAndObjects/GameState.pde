@@ -7,13 +7,25 @@ void startGame()
 	{
 		running = true;
 		gameOver = false;
+		setup();
 	}
 }
 
 void pauseGame()
 {
-	if (!gameOver)
+	if (!gameOver)		
 		running = !running;
+
+	if (!running)
+	{
+		push();
+		textAlign(CENTER, CENTER);
+		textSize(height/10);
+		text("GAME IS PAUSED", width/2, height/2);
+		textSize(height/30);
+		text("Click 'P' to continue.", width/2, height/2 + height/13);
+		pop();
+	}
 }
 
 void gameOver()

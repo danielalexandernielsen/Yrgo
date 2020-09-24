@@ -3,19 +3,32 @@ class Ball extends GameObject
 
   Ball()
   {
-    this.size = random(1, 100);
-    this.radius = size/2;
-    this.colour = color(random(0, 256), random(0, 256), random(0, 256));
-    position = new PVector(random(0, width), random (0, height ));
+    boolean spawnLocationUnavailable = true;
+    while(spawnLocationUnavailable)
+    {
+      this.size = random(5, 100);
+      this.radius = size/2;
+      this.colour = color(random(0, 256), random(0, 256), random(0, 256));
+      this.position = new PVector(random(0, width), random (0, height ));
+
+      spawnLocationUnavailable = Collision.round(player, this.position.x, this.position.y, this.radius);
+    }
+    
   }
 
   Ball(float x, float y, float size, float xSpeed, float ySpeed, color colour)
   {
-    this.size = size;
-    this.radius = size/2;
-    this.colour = colour;
-    position = new PVector(x, y);
-    velocity = new PVector(xSpeed, ySpeed);
+    boolean spawnLocationUnavailable = true;
+    while(spawnLocationUnavailable)
+    {
+      this.size = size;
+      this.radius = size/2;
+      this.colour = colour;
+      this.position = new PVector(x, y);
+      this.velocity = new PVector(xSpeed, ySpeed);
+      
+      spawnLocationUnavailable = Collision.round(player, this.position.x, this.position.y, this.radius);
+    }
   }
 
   void draw()

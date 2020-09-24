@@ -1,8 +1,8 @@
 Player player;
-Edge edge = new Edge();
-Force force = new Force();
-Factory ballFactory = new BallFactory();
-ArrayList<Ball> balls = new ArrayList<Ball>();
+Edge edge;
+Force force;
+Factory ballFactory;
+ArrayList<Ball> balls;
 boolean gravityEnabled;
 
 float time;
@@ -14,6 +14,10 @@ void setup()
 {
   size(1280, 720);
   player = new Player();
+  edge = new Edge();
+  force = new Force();
+  ballFactory = new BallFactory();
+  balls = new ArrayList<Ball>();
   balls = ballFactory.create(10);
 }
 
