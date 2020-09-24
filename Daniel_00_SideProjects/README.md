@@ -2,8 +2,8 @@
 
 
 ## [King of Tiles](https://github.com/danielalexandernielsen/King-of-Tiles)
-<img src="https://github.com/danielalexandernielsen/Yrgo/blob/master/Daniel_00_SideProjects/King-of-Tiles.gif?raw=true" width="320" height="592">
-Two players compete about being the first to take over 50% of the tiles. Players can take over adjacent tiles by changing their color.
+<img src="https://github.com/danielalexandernielsen/Yrgo/blob/master/Daniel_00_SideProjects/King-of-Tiles.gif?raw=true">
+Two players compete about being the first to take over 50% of the tiles. Players can take over adjacent tiles by changing their color. A turn is 60 seconds long and is shown at the bottom of the screen, also the color of the bar shows the current player's turn.
 
 Written in C# Xamarin for Android/iOS.
 
