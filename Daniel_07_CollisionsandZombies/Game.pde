@@ -1,3 +1,9 @@
+boolean gravityEnabled;
+float time;
+float oldTime;
+float deltaTime;
+float accumulatedTime;
+
 void game()
 {
   background(128);
@@ -26,7 +32,18 @@ void game()
 }
 
 
+void calculateDeltaTime(String interval)
+{
+  switch (interval)
+  {
+    case "START":
+    time = millis();
+    deltaTime = (time - oldTime) * 0.001;
 
+    case "END":
+    oldTime = time;
+  }
+}
 
 
 void addObjectEveryNSecond(String object, float nSecond)

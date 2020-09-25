@@ -3,12 +3,7 @@ Edge edge;
 Force force;
 Factory ballFactory;
 ArrayList<Ball> balls;
-boolean gravityEnabled;
 
-float time;
-float oldTime;
-float deltaTime;
-float accumulatedTime;
 
 void setup() 
 {
@@ -31,17 +26,4 @@ void draw()
   }
 
   calculateDeltaTime("END");
-}
-
-void calculateDeltaTime(String interval)
-{
-  switch (interval)
-  {
-    case "START":
-    time = millis();
-    deltaTime = (time - oldTime) * 0.001;
-
-    case "END":
-    oldTime = time;
-  }
 }
