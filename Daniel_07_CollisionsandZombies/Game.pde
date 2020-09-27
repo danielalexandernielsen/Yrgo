@@ -18,8 +18,8 @@ void game()
   {
     force.generate(ball, 7);
     force.apply(ball, ForceType.CONSTANT);
-    edge.bounceVertical(ball);
-    edge.bounceHorisontal(ball);
+    edge.wrapVertical(ball);
+    edge.wrapHorisontal(ball);
     ball.draw();
 
     if (Collision.round(player, ball) == true)
