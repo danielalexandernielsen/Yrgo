@@ -13,7 +13,7 @@ void setup()
   force = new Force();
   ballFactory = new BallFactory();
   balls = new ArrayList<Ball>();
-  balls = ballFactory.create(10);
+  balls = ballFactory.create(5);
 }
 
 void draw()
@@ -24,6 +24,6 @@ void draw()
   {
     game();
   }
- 
+  
   calculateDeltaTime("END");
 }
