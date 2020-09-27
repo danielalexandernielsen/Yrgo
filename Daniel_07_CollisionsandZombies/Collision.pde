@@ -1,7 +1,7 @@
 static class Collision
 {
 
-	static boolean round(GameObject object1, GameObject object2)
+	static boolean round(Character object1, Character object2)
 	{
 		float maxDistance = object1.radius + object2.radius;
 
@@ -19,7 +19,7 @@ static class Collision
 		}
 	}
 
-	static boolean round(GameObject object1, float object2PositionX, float object2PositionY, float object2Radius)
+	static boolean round(Character object1, float object2PositionX, float object2PositionY, float object2Radius)
 	{
 		float maxDistance = object1.radius + object2Radius;
 

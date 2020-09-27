@@ -1,6 +1,6 @@
 class Edge
 {
-  void bounceVertical(GameObject object)
+  void bounceVertical(Character object)
   {
     if (object.position.y + object.radius >= height)
     {
@@ -15,7 +15,7 @@ class Edge
     }
   }
 
-  void bounceHorisontal(GameObject object)
+  void bounceHorisontal(Character object)
   {
     if (object.position.x + object.radius >= width)
     {
@@ -30,7 +30,7 @@ class Edge
     }
   }
 
-  void wrapHorisontal(GameObject object)
+  void wrapHorisontal(Character object)
   {
     if (object.position.x - object.size > width)
     {
@@ -43,7 +43,7 @@ class Edge
     }
   }
 
-  void wrapVertical(GameObject object)
+  void wrapVertical(Character object)
   {
     if (object.position.y - object.radius > height)
     {
@@ -56,7 +56,7 @@ class Edge
     }
   }
 
-  void constrainVertical(GameObject object)
+  void constrainVertical(Character object)
   {
     if (object.position.y - object.radius <= 0)
     {
@@ -71,7 +71,7 @@ class Edge
     }
   }
 
-  void constrainHorisontal(GameObject object)
+  void constrainHorisontal(Character object)
   {
     if (object.position.x + object.radius >= width)
     {

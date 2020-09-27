@@ -55,7 +55,7 @@ class Force
 		return gravity;
 	}
 
-	void elasticity(GameObject object)
+	void elasticity(Character object)
 	{
 		if (gravityEnabled)
 		{
@@ -66,7 +66,7 @@ class Force
 		}
 	}
 
-	void generate(GameObject object)
+	void generate(Character object)
 	{
 		acceleration = acceleration();
 		drag = drag();
@@ -74,7 +74,7 @@ class Force
 		elasticity(object);
 	}
 
-	void generate(GameObject object, int speed)
+	void generate(Character object, float speed)
 	{
 		if (object.inMotion == false)
 		{
@@ -83,19 +83,10 @@ class Force
 	}
 
 
-	void apply(GameObject object, ForceType forceType)
+	void apply(Character object, ForceType forceType)
 	{   
 		switch(forceType)
 		{
-			case INPUT:
-			velocity.add(acceleration);
-			velocity.add(drag);
-			velocity.add(gravity);
-			velocity.limit(velocityLimit);
-			object.position.add(PVector.mult(velocity, deltaTime * velocityMultiplier));
-			acceleration.set(0, 0);
-			break;
-
 			case CONSTANT:
 			object.position.add(PVector.mult(object.velocity, deltaTime * velocityMultiplier));
 			break;
@@ -106,5 +97,5 @@ class Force
 
 enum ForceType
 {
-	INPUT, CONSTANT;
+	CONSTANT;
 }

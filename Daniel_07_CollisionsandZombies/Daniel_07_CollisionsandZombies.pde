@@ -1,19 +1,24 @@
-Player player;
 Edge edge;
-Force force;
-Factory ballFactory;
-ArrayList<Ball> balls;
-
+Force humanMovement;
+Force zombieMovement;
+Factory humanFactory;
+Factory zombieFactory;
+ArrayList<Character> characters;
 
 void setup() 
 {
   size(1280, 720);
-  player = new Player();
   edge = new Edge();
-  force = new Force();
-  ballFactory = new BallFactory();
-  balls = new ArrayList<Ball>();
-  balls = ballFactory.create(5);
+  humanMovement = new Force();
+  zombieMovement = new Force();
+  humanFactory = new HumanFactory();
+  zombieFactory = new ZombieFactory();
+  
+  characters = new ArrayList<Character>();
+
+  characters.addAll(humanFactory.create(99));
+  characters.addAll(zombieFactory.create(1));
+  
 }
 
 void draw()
@@ -24,6 +29,6 @@ void draw()
   {
     game();
   }
-  
+
   calculateDeltaTime("END");
 }
