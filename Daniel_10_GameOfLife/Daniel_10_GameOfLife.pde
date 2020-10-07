@@ -4,7 +4,8 @@ int cellSaturation = 20;
 
 void setup()
 {
-	size(1280, 720);
+	size(600, 600);
+  frameRate(2);
 
 	gameObjectController = new GameObjectController(cellSaturation, cellSize);
 }

@@ -20,100 +20,81 @@ class GameObjectController
 	{
 		int adjacentCells = 0;
 
+		for (int x = 0; x < columns - 1; x++) 
+		{
+			for (int y = 0; y < rows - 1; y++) 
+			{
+				adjacentCells = countAdjacentCells(x, y);
+				
+				if (adjacentCells < 2)								          	// dies of underpopulation
+					grid[x][y].isAlive = false;
+				if (adjacentCells == 2 || adjacentCells == 3)			// lives on to the next generation
+					grid[x][y].isAlive = true;
+				if (adjacentCells > 3)									          // dies of overpopulation
+					grid[x][y].isAlive = false;
+				if (adjacentCells == 3)									          // lives through reproduction
+					grid[x][y].isAlive = true;
+			}
+		}
+	}
+
+
+	void draw()
+	{
 		for (int x = 0; x < columns; x++) 
 		{
 			for (int y = 0; y < rows; y++) 
 			{
-
-				adjacentCells = findAdjacentCells(x, y);
-
-
-
-        // (-1, -1)	(0, -1) (1, -1)
-        // (-1, 0 )	(0 , 0) (1, 0 )
-        // (-1, 1 ) (0 , 1) (1, 1 )
-    }
-}
-}
-
-
-void draw()
-{
-	for (int x = 0; x < columns; x++) 
-	{
-		for (int y = 0; y < rows; y++) 
-		{
-			grid[x][y].draw();
+				grid[x][y].draw();
+			}
 		}
 	}
-}
 
-int findAdjacentCells(int x, int y)
-{
-	int adjacentCells = 0;
 
-	for (int xAdjacent = -1; xAdjacent <= 1; xAdjacent++) 
+	int countAdjacentCells(int x, int y)
 	{
-		if (x + xAdjacent < 0)
-			continue;
-		else if (x + xAdjacent > width)
-			continue;
+		int adjacentCells = 0;
 
-		for (int yAdjacent = -1; yAdjacent <= 1; yAdjacent++) 
+		for (int xAdjacent = -1; xAdjacent <= 1; xAdjacent++) 
 		{
-			println("X before: " + x);
-			println("Y before: " + y);
-
-			if (y + yAdjacent < 0)
-				continue;
-			else if (y + yAdjacent > height)
+			if (x == 0 || x == columns)
 				continue;
 
-        //println("X: " + x);
-        //println("Y: " + y);
-        //println("xAdjacent: " + xAdjacent);
-        //println("yAdjacent: " + yAdjacent);
-        //delay(1000);
+			for (int yAdjacent = -1; yAdjacent <= 1; yAdjacent++) 
+			{
+				if (y == 0 || y == rows)
+					continue;
 
-        if (grid[x - xAdjacent][y - yAdjacent].isAlive == true || (xAdjacent != 0 && yAdjacent != 0))
-        	adjacentCells ++;
-    }
-}
+				if (grid[x - xAdjacent][y - yAdjacent].isAlive == true && (xAdjacent != 0 && yAdjacent != 0))
+					adjacentCells++;
+			}
+		}
 
-return adjacentCells;
-}
+		return adjacentCells;
+	}
 
 
-void spawnCells()
-{
-	grid = new GameObject[columns][rows];
 
-	for (int col = 0; col < columns; col++) 
+	void spawnCells()
 	{
-		for (int row = 0; row < rows; row++) 
-		{
-			int x = col * cellSize;
-			int y = row * cellSize;
+		grid = new GameObject[columns][rows];
 
-			if (random(100) <= cellSaturation)
-				grid[col][row] = new GameObject(x, y, true);
-			else
-				grid[col][row] = new GameObject(x, y, false);
+		for (int col = 0; col < columns; col++) 
+		{
+			for (int row = 0; row < rows; row++) 
+			{
+				int x = col * cellSize;
+				int y = row * cellSize;
+
+				if (random(100) <= cellSaturation)
+					grid[col][row] = new GameObject(x, y, true);
+				else
+					grid[col][row] = new GameObject(x, y, false);
+			}
 		}
 	}
+
 }
-}
-
-/*
-Rules of the game:
- 
- Any live cell with fewer than two live neighbors dies,
- Any live cell with two or three live neighbors lives
- Any live cell with more than three live neighbors dies
- Any dead cell with exactly three live neighbors becomes a live cell
- */
-
-
 
 
 /*
