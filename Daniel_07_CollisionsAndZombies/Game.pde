@@ -9,13 +9,24 @@ void game()
   background(128);
 
 
-  for (Character character : characters) 
+  for (int i = 0; i > characters.length; i++) 
   {
 
     if (character instanceof Human)
     {
       humanMovement.generate(character, 1);
       humanMovement.apply(character, ForceType.CONSTANT);
+
+      for (Character zombie : characters) 
+      {        
+        if (character instanceof Zombie)
+        {
+          if (Collision.round(character, zombie) == true)
+          {
+
+          }
+        }
+      }
     }
 
     if (character instanceof Zombie)
@@ -23,6 +34,9 @@ void game()
       humanMovement.generate(character, 0.5);
       humanMovement.apply(character, ForceType.CONSTANT);
     }
+
+
+
 
     edge.wrapHorisontal(character);
     edge.wrapVertical(character);
