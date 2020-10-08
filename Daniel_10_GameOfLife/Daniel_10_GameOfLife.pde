@@ -1,21 +1,20 @@
-GameObjectController gameObjectController;
-int cellSize = 10;
-int cellSaturation = 20;
+CellController cellController;
 
 void setup()
 {
 	size(600, 600);
-  frameRate(2);
+	frameRate(1);
 
-	gameObjectController = new GameObjectController(cellSaturation, cellSize);
+	int cellSize = 10;
+	int cellSaturation = 20;
+
+	cellController = new CellController(cellSaturation, cellSize);
 }
 
 void draw()
 {
-	background(0);
-	fill(255);
+	background(255);
 
-	gameObjectController.update();
-	gameObjectController.draw();
-
+	cellController.update();
+	cellController.draw();
 }
