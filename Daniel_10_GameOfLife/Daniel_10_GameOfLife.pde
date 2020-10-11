@@ -37,5 +37,4 @@ void draw()
   iteration();
   display();
   
-  saveFrame("line-######.png");
 }
