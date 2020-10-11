@@ -4,26 +4,36 @@ float oldTime;
 float deltaTime;
 float accumulatedTime;
 
+Edge edge;
+Force humanMovement;
+Force zombieMovement;
+
 void game()
 {
   background(128);
 
 
-  for (int i = 0; i > characters.length; i++) 
+  for (int i = 0; i < characters.size(); i++) 
   {
+
+    Character character = characters.get(i);
 
     if (character instanceof Human)
     {
       humanMovement.generate(character, 1);
       humanMovement.apply(character, ForceType.CONSTANT);
 
-      for (Character zombie : characters) 
-      {        
-        if (character instanceof Zombie)
+
+      for (int j = 0; j < characters.size(); j++) 
+      {      
+
+        Character zombie = characters.get(j);
+
+        if (zombie instanceof Zombie)
         {
           if (Collision.round(character, zombie) == true)
           {
-
+            characters.set(i, new Zombie(character.position));
           }
         }
       }
@@ -31,20 +41,15 @@ void game()
 
     if (character instanceof Zombie)
     {
-      humanMovement.generate(character, 0.5);
-      humanMovement.apply(character, ForceType.CONSTANT);
+      zombieMovement.generate(character, 0.5);
+      zombieMovement.apply(character, ForceType.CONSTANT);
     }
-
-
-
 
     edge.wrapHorisontal(character);
     edge.wrapVertical(character);
 
     character.draw();
   }
-
-
 }
 
 

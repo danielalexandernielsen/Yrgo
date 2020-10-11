@@ -23,13 +23,4 @@ void keyToggle(boolean isPressed)
 
   if (keyCode == UP || key == 'w')
     moveUp = isPressed;
-
-  if ((key == 'g' || key == 'G') && isPressed == true)
-    gravityEnabled = !gravityEnabled;
-
-  if ((key == 'p' || key == 'P') && isPressed == true)
-    pauseGame();
-
-  if (key == ' ' && isPressed == true)
-    startGame();
 }

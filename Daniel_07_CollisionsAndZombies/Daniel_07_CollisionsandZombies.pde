@@ -1,6 +1,3 @@
-Edge edge;
-Force humanMovement;
-Force zombieMovement;
 Factory humanFactory;
 Factory zombieFactory;
 ArrayList<Character> characters;
