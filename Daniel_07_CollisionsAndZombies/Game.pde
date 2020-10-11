@@ -11,7 +11,7 @@ Force zombieMovement;
 void game()
 {
   background(128);
-
+  int amountOfHumansLeft = 0;
 
   for (int i = 0; i < characters.size(); i++) 
   {
@@ -20,6 +20,8 @@ void game()
 
     if (character instanceof Human)
     {
+      amountOfHumansLeft++;
+
       humanMovement.generate(character, 1);
       humanMovement.apply(character, ForceType.CONSTANT);
 
@@ -39,6 +41,7 @@ void game()
       }
     }
 
+
     if (character instanceof Zombie)
     {
       zombieMovement.generate(character, 0.5);
@@ -50,7 +53,14 @@ void game()
 
     character.draw();
   }
+
+  if (amountOfHumansLeft <= 0)
+  {
+    gameOver();
+  }
 }
+
+
 
 
 void calculateDeltaTime(String interval)

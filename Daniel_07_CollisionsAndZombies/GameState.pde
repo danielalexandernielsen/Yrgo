@@ -39,8 +39,7 @@ void gameOver()
 	push();
 	textAlign(CENTER, CENTER);
 	textSize(height/10);
-	text("GAME OVER", width/2, height/2);
+	text("ALL HUMANS ARE DEAD!!!", width/2, height/2);
 	textSize(height/30);
-	text("Press 'space' to start a new game.", width/2, height/2 + height/13);
 	pop();
 }
