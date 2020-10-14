@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerExtracurricular : MonoBehaviour
 {
 
     public float speed;
@@ -32,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        rg2d.velocity = movement * speed;
+        rg2d.MovePosition(movement * speed);
     }
 }
 
