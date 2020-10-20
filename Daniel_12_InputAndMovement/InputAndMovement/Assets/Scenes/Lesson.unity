@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 975434155}
   m_Layer: 0
   m_Name: PlayerVelocity
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -469,6 +469,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  rg2d: {fileID: 0}
+  movement: {x: 0, y: 0}
 --- !u!212 &975434158
 SpriteRenderer:
   m_ObjectHideFlags: 0
