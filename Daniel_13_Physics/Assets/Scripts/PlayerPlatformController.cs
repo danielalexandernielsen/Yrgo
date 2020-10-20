@@ -7,6 +7,8 @@ public class PlayerPlatformController : MonoBehaviour
     public float speed = 5;
     public float jumpPower = 10;
     bool grounded = false;
+    bool jump = false;
+
 
     Rigidbody2D rb2d;
     Vector2 movement = new Vector2();
@@ -28,17 +30,8 @@ public class PlayerPlatformController : MonoBehaviour
         //Jump with impulse
         if (Input.GetButtonDown("Jump") && grounded)
         {
-            rb2d.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            jump = true;            
         }
-
-        //if (grounded)
-        //{
-        //    speed = 5;
-        //}
-        //else
-        //{
-        //    speed = 2;
-        //}
 
     }
 
@@ -46,6 +39,13 @@ public class PlayerPlatformController : MonoBehaviour
     private void FixedUpdate()
     {
         rb2d.velocity = movement;
+
+        if (jump)
+        {
+            rb2d.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            jump = false;
+        }
+
     }
 
 
@@ -69,6 +69,10 @@ public class PlayerPlatformController : MonoBehaviour
 
 
 
+
+
+
+
 // UPDATE
 
 // Detta funkar inte pga att den uppdatering sker oftare än fixed ofdate
@@ -81,4 +85,15 @@ public class PlayerPlatformController : MonoBehaviour
 //if (Input.GetButtonDown("Jump"))
 //{
 //    rb2d.velocity = new Vector2(rb2d.velocity.x, jumpPower);
+//}
+
+
+
+//if (grounded)
+//{
+//    speed = 5;
+//}
+//else
+//{
+//    speed = 2;
 //}
