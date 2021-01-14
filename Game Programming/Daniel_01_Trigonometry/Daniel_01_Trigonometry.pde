@@ -1,10 +1,4 @@
 int frame;
-float speed;
-float waveHeight;
-float offsetY;
-float offsetX;
-float distanceBetweenPoints;
-int numberOfPoints;
 
 void setup()
 {
@@ -15,34 +9,89 @@ void setup()
 void draw()
 {
   background(255);
-  speed = 0.1;
-  offsetY = 223;
-  waveHeight = 56;
-  numberOfPoints = 100;
-  distanceBetweenPoints = 6.3;
+
+  /*
+   stroke(255, 0, 0);
+   sineCurve();
+   
+   stroke(0, 0, 255);
+   cosCurve();
+   
+   drawCircle();
+  */
   
-  stroke(255, 0, 0);
-  sineCurve();
-  
-  stroke(0, 0, 255);
-  cosCurve();
-  
+  drawSpiral();
+
 
   frame++;
 }
 
 void sineCurve()
 {
+  float speed = 0.1;
+  float offsetY = 223;
+  float waveHeight = 56;
+  int numberOfPoints = 100;
+  float distanceBetweenPoints = 6.3;
+
   for (int x = 0; x < numberOfPoints; x++)
   {
     point((frame + (x * distanceBetweenPoints)) % width, offsetY + sin((frame + (x * distanceBetweenPoints)) * speed) * waveHeight);
   }
 }
 
+
 void cosCurve()
 {
+  float speed = 0.1;
+  float offsetY = 223;
+  float waveHeight = 56;
+  int numberOfPoints = 100;
+  float distanceBetweenPoints = 6.3;
+
   for (int x = 0; x < numberOfPoints; x++)
   {
     point((frame + (x * distanceBetweenPoints)) % width, offsetY + cos((frame + (x * distanceBetweenPoints)) * speed) * waveHeight);
+  }
+}
+
+
+void drawCircle()
+{
+  float x, y;
+  float size = 150;
+  float angle = 0;
+  float distanceBetweenPoints = 0.1;
+
+  while (angle < 2 * PI)
+  {
+    x = size * cos (angle);
+    y = size * sin (angle);
+
+    point (x + width / 2, y + height / 2);
+    angle += distanceBetweenPoints;
+  }
+}
+
+void drawSpiral()
+{
+  float x, y;
+  float size = 72;
+  float twist = 1;
+  float twist_step = 0.01;
+  float twist_multiplier = 3.44;
+  float angle = 0;
+  float distanceBetweenPoints = 0.1;
+
+  while (angle < 2 * PI)
+  { 
+    x = size * twist * cos (angle);
+    y = size * twist * sin (angle);
+
+    point (x + width / 2, y + height / 2);
+    angle += distanceBetweenPoints;
+
+    twist_multiplier += twist_step;
+    twist += (twist_step * twist_multiplier);
   }
 }
