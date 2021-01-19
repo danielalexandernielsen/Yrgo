@@ -15,6 +15,9 @@ void draw()
   //sineCurve();
 
   drawSun();
+  //filter(ERODE);
+  //filter(BLUR, 1);
+  //filter(DILATE);
 
   //stroke(0, 0, 255);
   //cosCurve();
@@ -102,13 +105,17 @@ void drawSpiral()
 void drawSun()
 {   
 
-  float speed1 = 40;
-  float speed2 = 34;
-  float rayLength1 = 97;
-  float rayLength2 = 225;
+  float speed1 = 129;
+  float speed2 = 105;
+  float speed3 = 34;
+  float speed4 = 37;
+  float rayLength1 = 3171;
+  float rayLength2 = 3437;
+  float rayLength3 = 65;
+  float rayLength4 = -146;
 
   color backgroundColor = color(25, 20, 41);
-  color mainColor = color(86, 206, 76);
+  color mainColor = color(154, 206, 76);
   color secondaryColor1 = color(153, 145, 96, 255);
   color secondaryColor2 = color(136, 168, 162, 242);
   color secondaryColor3 = color(192, 162, 146, 244);
@@ -118,14 +125,14 @@ void drawSun()
   stroke(mainColor);
   strokeWeight(1);
 
-  for (int degrees = 0; degrees <= 360; degrees += 15)
+  for (int degrees = 0; degrees <= 360; degrees += 49)
   {
     push();
     rotate(radians(degrees));
-    for (int angle = 0, i = 0; angle <= 283; angle += 15, i++)
+    for (int angle = 0, i = 0; angle <= 360; angle += 13, i++)
     {
       push();
-      rotate(radians(245));
+      translate(cos(frame / speed3) * rayLength3, sin(frame / speed4) * rayLength4);
       if (i % 2 == 0)
       {
         stroke(secondaryColor1);
@@ -136,7 +143,7 @@ void drawSun()
       {
         stroke(secondaryColor3);
       }
-      line(0, 0, sin(frame / speed1) * rayLength1, cos(frame / speed2) * rayLength2);
+      line(cos(frame / speed3) * rayLength3, sin(frame / speed4) * rayLength4, sin(frame / speed1) * rayLength1 / angle, cos(frame / speed2) * rayLength2  / angle);
       pop();
     }
     pop();
