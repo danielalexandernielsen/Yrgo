@@ -180,7 +180,7 @@ void drawDance()
   {
     push();
     rotate(radians(degrees));
-    for (int angle = 0, i = 0; angle <= 360; angle += 3, i++)
+    for (int angle = 0, i = 0; angle <= 360; angle += 10, i++)
     {
       push();
       translate(cos(frame / speed3) * rayLength3, sin(frame / speed4) * rayLength4);
