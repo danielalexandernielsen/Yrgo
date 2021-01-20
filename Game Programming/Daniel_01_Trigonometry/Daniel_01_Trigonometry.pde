@@ -11,7 +11,7 @@ void draw()
 {
   background(255);
 
-  drawDance(); // 65 - 528
+  drawDance(); 
   
   //stroke(255, 0, 0);
   //sineCurve();
@@ -22,7 +22,7 @@ void draw()
   //drawCircle();
 
   //drawSpiral();
-  saveFrame("dance-######.png");
+  saveFrame("dance-######.png"); // 65 - 528
 
   frame++;
 }
