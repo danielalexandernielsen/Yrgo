@@ -22,7 +22,7 @@ void draw()
   //drawCircle();
 
   //drawSpiral();
-  saveFrame("dance-######.png"); // 65 - 528
+  //saveFrame("dance-######.png"); // 65 - 528
 
   frame++;
 }
