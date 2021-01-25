@@ -27,10 +27,10 @@ public class NameTagManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < nameTags.Length; i++)
-        {
-            nameTags[i].transform.position = Camera.main.WorldToScreenPoint(cars[i].transform.position + offset);
-        }
+        //for (int i = 0; i < nameTags.Length; i++)
+        //{
+        //    nameTags[i].transform.position = Camera.main.WorldToScreenPoint(cars[i].transform.position + offset);
+        //}
 
     }
 }
