@@ -608,6 +608,7 @@ GameObject:
   - component: {fileID: 1013536613}
   - component: {fileID: 1013536612}
   - component: {fileID: 1013536611}
+  - component: {fileID: 1013536614}
   m_Layer: 5
   m_Name: Button MainMenu
   m_TagString: Untagged
@@ -678,7 +679,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1013536612}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1013536614}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1013536612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,6 +730,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013536609}
   m_CullTransparentMesh: 1
+--- !u!114 &1013536614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013536609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e950ed5cde9134c81d4a522c92b9c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Lobby
 --- !u!1 &1256289382
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,7 +800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: return to main menu
+  m_text: return to lobby
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 141626b2d84eb154da2ea0824e3f97cd, type: 2}
   m_sharedMaterial: {fileID: -9161259515172320237, guid: 141626b2d84eb154da2ea0824e3f97cd, type: 2}
