@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "242516552541",
+    "firebase_url": "https://cockroachfootnuclearbomb-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "cockroachfootnuclearbomb",
+    "storage_bucket": "cockroachfootnuclearbomb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242516552541:android:bfd9a20dc2a9ff28a5d6b4",
+        "android_client_info": {
+          "package_name": "com.Radiation.CockroachFootNuclearBomb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242516552541-s739j2601ki43cl86hies4n10n7mcfr1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ-tSykuSnUDo0o1Gjetw_PGvJToGWk5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242516552541-s739j2601ki43cl86hies4n10n7mcfr1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "242516552541-nj9lpm14anbsj7itsgup9duv2utrvmne.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Radiation.CockroachFootNuclearBomb"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
