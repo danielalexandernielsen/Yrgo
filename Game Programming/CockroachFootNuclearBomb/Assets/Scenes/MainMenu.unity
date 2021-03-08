@@ -2316,6 +2316,7 @@ GameObject:
   - component: {fileID: 1318906412}
   - component: {fileID: 1318906411}
   - component: {fileID: 1318906410}
+  - component: {fileID: 1318906413}
   m_Layer: 5
   m_Name: Button Register
   m_TagString: Untagged
@@ -2386,7 +2387,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1318906411}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1318906413}
+        m_TargetAssemblyTypeName: FirebaseDBConnection, Assembly-CSharp
+        m_MethodName: RegisterUser
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1318906411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2425,6 +2438,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318906408}
   m_CullTransparentMesh: 1
+--- !u!114 &1318906413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318906408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d04ac779f6ea0b448e11e6e9663874b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  email: {fileID: 999126624}
+  password: {fileID: 1041517339}
 --- !u!1 &1368102614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2981,6 +3008,7 @@ GameObject:
   - component: {fileID: 1725613010}
   - component: {fileID: 1725613009}
   - component: {fileID: 1725613012}
+  - component: {fileID: 1725613013}
   m_Layer: 5
   m_Name: Button Login
   m_TagString: Untagged
@@ -3051,19 +3079,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1725613010}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1725613012}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1725613010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3115,6 +3131,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: Lobby
+--- !u!114 &1725613013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725613007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d04ac779f6ea0b448e11e6e9663874b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  email: {fileID: 999126624}
+  password: {fileID: 1041517339}
 --- !u!1 &1736389587
 GameObject:
   m_ObjectHideFlags: 0
