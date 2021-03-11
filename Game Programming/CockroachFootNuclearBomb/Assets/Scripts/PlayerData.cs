@@ -1,16 +1,18 @@
 using System;
-
+using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class PlayerData
 {
-    public PlayerMove Move { get; set; }
-    public string Name { get; set; }
+	public static List<PlayerData> registeredPlayers;
+	public PlayerMove move;
+	public string name;
 
 	public PlayerData(string name)
     {
-		Move = PlayerMove.Empty;
-		Name = name;
+		this.name = name;
+		move = PlayerMove.Empty;
 	}
 	
 }
