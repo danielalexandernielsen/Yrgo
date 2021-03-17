@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -10,20 +11,9 @@ public class GameData
     public string playerTwo;
     public static List<GameData> games;
 
-	public GameData(string title, string hostingPlayer)
+	public GameData(string title)
 	{
 		this.title = title;
-		this.playerOne = hostingPlayer;
-
-		if (games.Contains(this) is false)
-		{
-			games.Add(this);
-		}
-		else
-		{
-			Debug.Log("Game already exists.");
-		}
-
 	}
 
 }

@@ -8,13 +8,21 @@ using TMPro;
 
 public class FirebaseCommands : MonoBehaviour
 {
+    public static FirebaseCommands instance;
+
     [SerializeField]
     private TMP_InputField email;
 
     [SerializeField]
     private TMP_InputField password;
 
-    // Functions accessible in the editor
+    void Start()
+    {
+        instance = this;
+    }
+
+
+    #region FUNCTIONS ACCESSIBLE IN THE EDITOR
 
     public void RegisterUser()
     {
@@ -26,9 +34,13 @@ public class FirebaseCommands : MonoBehaviour
         StartCoroutine(LoginUserAsync());
     }
 
-    public void SaveData()
+    public void SavePlayers()
     {
         StartCoroutine(SaveDataAsync(JsonUtility.ToJson(PlayerData.registeredPlayers), "players"));
+    }
+
+    public void SaveGames()
+    {
         StartCoroutine(SaveDataAsync(JsonUtility.ToJson(GameData.games), "games"));
     }
 
@@ -40,8 +52,12 @@ public class FirebaseCommands : MonoBehaviour
     }
 
 
-    // 
 
+    #endregion
+
+
+
+    #region COMMUNICATION WITH FIREBASE
 
     private IEnumerator RegisterUserAsync()
     {
@@ -115,4 +131,6 @@ public class FirebaseCommands : MonoBehaviour
         yield return new WaitUntil(() => loadTask.IsCompleted);
         Debug.Log("Data loaded from Firebase.");
     }
+
+    #endregion
 }

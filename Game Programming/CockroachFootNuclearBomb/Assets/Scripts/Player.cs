@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
         if (PlayerData.registeredPlayers.Contains(newPlayer) is false)
         {
             PlayerData.registeredPlayers.Add(newPlayer);
+            FirebaseCommands.instance.SavePlayers();
         }
         else
         {
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
         if (PlayerData.registeredPlayers.Contains(playerToDelete) is true)
         {
             PlayerData.registeredPlayers.Remove(playerToDelete);
+            FirebaseCommands.instance.SavePlayers();
         }
         else
         {
