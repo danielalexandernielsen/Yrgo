@@ -5,13 +5,13 @@ using UnityEngine;
 [Serializable]
 public class PlayerData
 {
-	public static List<PlayerData> registeredPlayers;
+	public static List<PlayerData> registeredPlayers = new List<PlayerData>();
 	public PlayerMove move;
-	public string name;
+	public string email;
 
-	public PlayerData(string name)
+	public PlayerData(string email)
     {
-		this.name = name;
+		this.email = email;
 		move = PlayerMove.Empty;
 	}
 	

@@ -6,10 +6,10 @@ using UnityEngine;
 [Serializable]
 public class GameData
 {
+    public static List<GameData> games = new List<GameData>();
     public string title;
     public string playerOne;
     public string playerTwo;
-    public static List<GameData> games;
 
 	public GameData(string title)
 	{
