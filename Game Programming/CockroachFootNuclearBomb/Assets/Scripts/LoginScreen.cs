@@ -15,7 +15,6 @@ public class LoginScreen : MonoBehaviour
 
     public void Register()
     {
-        PlayerData newPlayer = new PlayerData(email.text);
 
         if (PlayerData.registeredPlayers?.Any(player => player.email == email.text) is true)
         {
@@ -24,9 +23,7 @@ public class LoginScreen : MonoBehaviour
         }
         else
         {
-            PlayerData.registeredPlayers.Add(newPlayer);
             FirebaseCommands.instance.RegisterUser(email.text, password.text);
-            FirebaseCommands.instance.SavePlayers();
         }
     }
 

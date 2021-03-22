@@ -32,12 +32,20 @@ public class FirebaseCommands : MonoBehaviour
 
     public void SavePlayers()
     {
-        StartCoroutine(SaveDataAsync(JsonUtility.ToJson(PlayerData.registeredPlayers), "players"));
+        foreach (var playerData in PlayerData.registeredPlayers)
+        {
+            StartCoroutine(SaveDataAsync(JsonUtility.ToJson(playerData), "players", playerData.email.Replace("@", "").Replace(".", "")));
+        }
+
     }
 
     public void SaveGames()
     {
-        StartCoroutine(SaveDataAsync(JsonUtility.ToJson(GameData.games), "games"));
+        foreach (var gameData in GameData.games)
+        {
+            StartCoroutine(SaveDataAsync(JsonUtility.ToJson(gameData), "games", gameData.title));
+        }
+
     }
 
     public void LoadPlayers()
@@ -64,13 +72,15 @@ public class FirebaseCommands : MonoBehaviour
 
         yield return new WaitUntil(() => registrationTask.IsCompleted);
 
-        if (registrationTask.IsCompleted)
+        if (registrationTask.Exception is null)
         {
-            Debug.Log("Registration Complete.");
+            PlayerData.registeredPlayers.Add(new PlayerData(email));
+            FirebaseCommands.instance.SavePlayers();
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Registration Complete.");
         }
-        else if (registrationTask.IsFaulted)
+        else
         {
-            Debug.LogWarning(registrationTask.Exception);
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: registrationTask.Exception.ToString());
         }
     }
 
@@ -82,31 +92,31 @@ public class FirebaseCommands : MonoBehaviour
 
         yield return new WaitUntil(() => loginTask.IsCompleted);
 
-        if (loginTask.IsCompleted)
+        if (loginTask.Exception is null)
         {
             loggedIn = true;
-            Debug.Log("Login successful.");
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Welcome! Login successful.");
         }
-        else if (loginTask.IsFaulted)
+        else
         {
             loggedIn = false;
-            Debug.LogWarning(loginTask.Exception);
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: loginTask.Exception.ToString());
         }
     }
 
-    private IEnumerator SaveDataAsync(string data, string folder)
+    private IEnumerator SaveDataAsync(string data, string folder, string subfolder)
     {
-        var saveTask = FirebaseDatabase.DefaultInstance.RootReference.Child(folder).SetRawJsonValueAsync(data);
+        var saveTask = FirebaseDatabase.DefaultInstance.RootReference.Child(folder).Child(subfolder).SetRawJsonValueAsync(data);
 
         yield return new WaitUntil(() => saveTask.IsCompleted);
 
-        if (saveTask.IsCompleted)
+        if (saveTask.Exception is null)
         {
-            Debug.Log("Data saved in Firebase.");
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Data saved in Firebase.");
         }
-        else if (saveTask.IsFaulted)
+        else
         {
-            Debug.LogWarning(saveTask.Exception);
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: saveTask.Exception.ToString());
         }
 
     }
@@ -117,25 +127,25 @@ public class FirebaseCommands : MonoBehaviour
 
         var loadTask = FirebaseDatabase.DefaultInstance.RootReference.Child(folder).GetValueAsync().ContinueWithOnMainThread(task =>
         {
-            if (task.IsCompleted)
+            if (task.Exception is null)
             {
                 snapshot = task.Result;
             }
-            else if (task.IsFaulted)
+            else
             {
-                Debug.LogError(task.Exception);
+                PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: task.Exception.ToString());
             }
         });
 
         yield return new WaitUntil(() => loadTask.IsCompleted);
 
-        ToJson(folder, snapshot);
+        ReadJsonData(folder, snapshot);
 
         Debug.Log("Data loaded from Firebase.");
     }
 
 
-    private static void ToJson(string folder, DataSnapshot snapshot)
+    private static void ReadJsonData(string folder, DataSnapshot snapshot)
     {
         if (folder == "players")
         {
