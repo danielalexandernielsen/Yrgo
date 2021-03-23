@@ -12,9 +12,9 @@ public class PlayerData
     {
 		this.email = email;
 		move = PlayerMove.Empty;
-	}
-	
+	}	
 }
+
 
 [Serializable]
 public class PlayerDataList

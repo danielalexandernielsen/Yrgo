@@ -16,7 +16,7 @@ public class LoginScreen : MonoBehaviour
     public void Register()
     {
 
-        if (DataSingleton.Instance.playerDataList.players?.Any(player => player.email == email.text) is true)
+        if (DataSingleton.Instance.playerDataList.players?.Any(playerData => playerData.email == email.text) is true)
         {
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: This account already exists.");
 

@@ -34,23 +34,20 @@ public class FirebaseCommands : MonoBehaviour
 
     public void SavePlayers()
     {
-        foreach (var playerData in DataSingleton.Instance.playerDataList.players)
-        {
-            StartCoroutine(SaveDataAsync(JsonUtility.ToJson(playerData), "players", playerData.email.Replace("@", "").Replace(".", "")));
-        }
+        StartCoroutine(SaveDataAsync(JsonUtility.ToJson(DataSingleton.Instance.playerDataList)));
     }
 
     public void SaveGames()
     {
-        foreach (var gameData in GameData.games)
-        {
-            StartCoroutine(SaveDataAsync(JsonUtility.ToJson(gameData), "games", gameData.title));
-        }
+        //foreach (var gameData in GameData.games)
+        //{
+        //    StartCoroutine(SaveDataAsync(JsonUtility.ToJson(gameData), "games", gameData.title));
+        //}
     }
 
     public void LoadPlayers()
     {
-        StartCoroutine(LoadDataAsync("players"));        
+        StartCoroutine(LoadDataAsync("players"));
     }
 
     public void LoadGames()
@@ -104,9 +101,9 @@ public class FirebaseCommands : MonoBehaviour
         }
     }
 
-    private IEnumerator SaveDataAsync(string data, string folder, string subfolder)
+    private IEnumerator SaveDataAsync(string data)
     {
-        var saveTask = FirebaseDatabase.DefaultInstance.RootReference.Child(folder).Child(subfolder).SetRawJsonValueAsync(data);
+        var saveTask = FirebaseDatabase.DefaultInstance.RootReference.SetRawJsonValueAsync(data);
 
         yield return new WaitUntil(() => saveTask.IsCompleted);
 
@@ -125,7 +122,7 @@ public class FirebaseCommands : MonoBehaviour
     {
         int retryAttempts = 0;
 
-        RetryLoad:
+    RetryLoad:
         var loadTask = FirebaseDatabase.DefaultInstance.RootReference.Child(folder).GetValueAsync();
         yield return new WaitUntil(() => loadTask.IsCompleted);
 
