@@ -12,7 +12,7 @@ public class FirebaseCommands : MonoBehaviour
     public static bool loggedIn;
 
 
-    void Start()
+    void Awake()
     {
         instance = this;
         LoadPlayers();
@@ -34,11 +34,10 @@ public class FirebaseCommands : MonoBehaviour
 
     public void SavePlayers()
     {
-        foreach (var playerData in PlayerDataList.registeredPlayers)
+        foreach (var playerData in DataSingleton.Instance.playerDataList.registeredPlayers)
         {
             StartCoroutine(SaveDataAsync(JsonUtility.ToJson(playerData), "players", playerData.email.Replace("@", "").Replace(".", "")));
         }
-
     }
 
     public void SaveGames()
@@ -47,7 +46,6 @@ public class FirebaseCommands : MonoBehaviour
         {
             StartCoroutine(SaveDataAsync(JsonUtility.ToJson(gameData), "games", gameData.title));
         }
-
     }
 
     public void LoadPlayers()
@@ -76,7 +74,7 @@ public class FirebaseCommands : MonoBehaviour
 
         if (registrationTask.Exception is null)
         {
-            PlayerDataList.registeredPlayers.Add(new PlayerData(email));
+            DataSingleton.Instance.playerDataList.registeredPlayers.Add(new PlayerData(email));
             FirebaseCommands.instance.SavePlayers();
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Registration Complete.");
         }
@@ -133,53 +131,41 @@ public class FirebaseCommands : MonoBehaviour
 
         string jsonData = loadTask.Result.GetRawJsonValue();
 
-        if (loadTask.Exception is not null)
-        {
-            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: loadTask.Exception.ToString());
-            goto Exit;
-        }
-
         if (jsonData is null)
         {
             retryAttempts++;
             goto RetryLoad;
         }
 
-        Exit:
-
-        //if (snapshot is null)
-        //{
-        //    Debug.Log("Database folder: " + folder + " is empty.");
-        //}
-        //else
-        //{
-        //    ReadJsonData(folder, snapshot);
-        //    Debug.Log("Data loaded from Firebase.");
-        //}
-
-        Debug.Log(jsonData);
+        if (loadTask.Exception is null)
+        {
+            ReadJsonData(folder, jsonData);
+        }
+        else
+        {
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: loadTask.Exception.ToString());
+        }
 
     }
 
 
-    private static void ReadJsonData(string folder, DataSnapshot snapshot)
+    private static void ReadJsonData(string folder, string jsonData)
     {
         if (folder == "players")
         {
-            var playerData = JsonUtility.FromJson<PlayerDataList>(snapshot.GetRawJsonValue());
-            var playerData2 = JsonUtility.FromJson<PlayerDataList>(snapshot.GetRawJsonValue());
+            var importedPlayerDataList = JsonUtility.FromJson<PlayerDataList>(jsonData);
+            var importedPlayerDataList2 = JsonUtility.FromJson<PlayerDataList>(jsonData);
 
-
-            //for (int i = 0; i < playerData.Count; i++)
+            //for (int i = 0; i < importedDataSingleton.Instance.playerDataList.registeredPlayers.Count; i++)
             //{
-            //    PlayerDataList.registeredPlayers.ElementAt(i).email = playerData[i].email;
-            //    PlayerDataList.registeredPlayers.ElementAt(i).move = playerData[i].move;
+            //    DataSingleton.Instance.playerDataList.registeredPlayers.ElementAt(i).email = importedDataSingleton.Instance.playerDataList.ElementAt(i).email;
+            //    DataSingleton.Instance.playerDataList.registeredPlayers.ElementAt(i).move = importedPlayerDataList[i].move;
             //}
         }
 
         else if (folder == "games")
         {
-            var gameData = JsonUtility.FromJson<List<GameData>>(snapshot.GetRawJsonValue());
+            var gameData = JsonUtility.FromJson<List<GameData>>(jsonData);
 
             for (int i = 0; i < gameData.Count; i++)
             {

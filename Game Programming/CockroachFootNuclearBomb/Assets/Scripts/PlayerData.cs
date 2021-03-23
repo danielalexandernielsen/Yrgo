@@ -19,7 +19,7 @@ public class PlayerData
 [Serializable]
 public class PlayerDataList
 {
-	public static List<PlayerData> registeredPlayers = new List<PlayerData>();
+	public List<PlayerData> registeredPlayers = new List<PlayerData>();
 }
 
 
