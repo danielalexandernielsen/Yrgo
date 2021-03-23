@@ -5,7 +5,6 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayerData
 {
-	public static List<PlayerData> registeredPlayers = new List<PlayerData>();
 	public PlayerMove move;
 	public string email;
 
@@ -15,6 +14,12 @@ public class PlayerData
 		move = PlayerMove.Empty;
 	}
 	
+}
+
+[Serializable]
+public class PlayerDataList
+{
+	public static List<PlayerData> registeredPlayers = new List<PlayerData>();
 }
 
 

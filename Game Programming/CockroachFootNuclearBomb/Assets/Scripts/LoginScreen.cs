@@ -16,7 +16,7 @@ public class LoginScreen : MonoBehaviour
     public void Register()
     {
 
-        if (PlayerData.registeredPlayers?.Any(player => player.email == email.text) is true)
+        if (PlayerDataList.registeredPlayers?.Any(player => player.email == email.text) is true)
         {
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: This account already exists.");
 
@@ -42,9 +42,9 @@ public class LoginScreen : MonoBehaviour
     {
         PlayerData playerToDelete = new PlayerData(email.text);
 
-        if (PlayerData.registeredPlayers.Contains(playerToDelete) is true)
+        if (PlayerDataList.registeredPlayers.Contains(playerToDelete) is true)
         {
-            PlayerData.registeredPlayers.Remove(playerToDelete);
+            PlayerDataList.registeredPlayers.Remove(playerToDelete);
             FirebaseCommands.instance.SavePlayers();
         }
         else
