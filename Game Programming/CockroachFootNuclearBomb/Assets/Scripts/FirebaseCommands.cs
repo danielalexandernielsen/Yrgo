@@ -12,7 +12,7 @@ public class FirebaseCommands : MonoBehaviour
     public static bool loggedIn;
 
 
-    void Awake()
+    void OnEnable()
     {
         instance = this;
         LoadPlayers();
@@ -34,7 +34,7 @@ public class FirebaseCommands : MonoBehaviour
 
     public void SavePlayers()
     {
-        foreach (var playerData in DataSingleton.Instance.playerDataList.registeredPlayers)
+        foreach (var playerData in DataSingleton.Instance.playerDataList.players)
         {
             StartCoroutine(SaveDataAsync(JsonUtility.ToJson(playerData), "players", playerData.email.Replace("@", "").Replace(".", "")));
         }
@@ -74,7 +74,7 @@ public class FirebaseCommands : MonoBehaviour
 
         if (registrationTask.Exception is null)
         {
-            DataSingleton.Instance.playerDataList.registeredPlayers.Add(new PlayerData(email));
+            DataSingleton.Instance.playerDataList.players.Add(new PlayerData(email));
             FirebaseCommands.instance.SavePlayers();
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Registration Complete.");
         }
@@ -140,6 +140,7 @@ public class FirebaseCommands : MonoBehaviour
         if (loadTask.Exception is null)
         {
             ReadJsonData(folder, jsonData);
+            Debug.Log("Data loaded from firebase.");
         }
         else
         {
@@ -154,13 +155,12 @@ public class FirebaseCommands : MonoBehaviour
         if (folder == "players")
         {
             var importedPlayerDataList = JsonUtility.FromJson<PlayerDataList>(jsonData);
-            var importedPlayerDataList2 = JsonUtility.FromJson<PlayerDataList>(jsonData);
 
-            //for (int i = 0; i < importedDataSingleton.Instance.playerDataList.registeredPlayers.Count; i++)
-            //{
-            //    DataSingleton.Instance.playerDataList.registeredPlayers.ElementAt(i).email = importedDataSingleton.Instance.playerDataList.ElementAt(i).email;
-            //    DataSingleton.Instance.playerDataList.registeredPlayers.ElementAt(i).move = importedPlayerDataList[i].move;
-            //}
+            for (int i = 0; i < importedPlayerDataList.players.Count; i++)
+            {
+                DataSingleton.Instance.playerDataList.players.ElementAt(i).email = importedPlayerDataList.players.ElementAt(i).email;
+                DataSingleton.Instance.playerDataList.players.ElementAt(i).move = importedPlayerDataList.players.ElementAt(i).move;
+            }
         }
 
         else if (folder == "games")

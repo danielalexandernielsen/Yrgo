@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class DataSingleton : MonoBehaviour
 {
+
+    public PlayerDataList playerDataList = new PlayerDataList();
+
+
     private static DataSingleton _instance;
     public static DataSingleton Instance
     {
@@ -11,7 +15,6 @@ public class DataSingleton : MonoBehaviour
         }
     }
 
-    public PlayerDataList playerDataList = new PlayerDataList();
 
     private void Awake()
     {
