@@ -16,7 +16,7 @@ public class FirebaseCommands : MonoBehaviour
     {
         instance = this;
         LoadPlayers();
-        LoadGames();
+        //LoadGames();
     }
 
 
@@ -71,7 +71,7 @@ public class FirebaseCommands : MonoBehaviour
 
         if (registrationTask.Exception is null)
         {
-            DataSingleton.Instance.playerDataList.players.Add(new PlayerData(email));
+            DataSingleton.Instance.playerDataList.players.Add(new PlayerData(email, PlayerMove.Empty));
             FirebaseCommands.instance.SavePlayers();
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Registration Complete.");
         }
@@ -118,12 +118,12 @@ public class FirebaseCommands : MonoBehaviour
 
     }
 
-    private IEnumerator LoadDataAsync(string folder)
+    private IEnumerator LoadDataAsync(string type)
     {
         int retryAttempts = 0;
 
-    RetryLoad:
-        var loadTask = FirebaseDatabase.DefaultInstance.RootReference.Child(folder).GetValueAsync();
+        RetryLoad:
+        var loadTask = FirebaseDatabase.DefaultInstance.RootReference.GetValueAsync();
         yield return new WaitUntil(() => loadTask.IsCompleted);
 
         string jsonData = loadTask.Result.GetRawJsonValue();
@@ -136,7 +136,7 @@ public class FirebaseCommands : MonoBehaviour
 
         if (loadTask.Exception is null)
         {
-            ReadJsonData(folder, jsonData);
+            ReadJsonData(type, jsonData);
             Debug.Log("Data loaded from firebase.");
         }
         else
@@ -147,20 +147,24 @@ public class FirebaseCommands : MonoBehaviour
     }
 
 
-    private static void ReadJsonData(string folder, string jsonData)
+    private static void ReadJsonData(string type, string jsonData)
     {
-        if (folder == "players")
+        if (type == "players")
         {
             var importedPlayerDataList = JsonUtility.FromJson<PlayerDataList>(jsonData);
 
+            DataSingleton.Instance.playerDataList.players.Clear();
+
             for (int i = 0; i < importedPlayerDataList.players.Count; i++)
             {
-                DataSingleton.Instance.playerDataList.players.ElementAt(i).email = importedPlayerDataList.players.ElementAt(i).email;
-                DataSingleton.Instance.playerDataList.players.ElementAt(i).move = importedPlayerDataList.players.ElementAt(i).move;
+                DataSingleton.Instance.playerDataList.players.Add(
+                    new PlayerData(
+                        importedPlayerDataList.players.ElementAt(i).email,
+                        importedPlayerDataList.players.ElementAt(i).move));
             }
         }
 
-        else if (folder == "games")
+        else if (type == "games")
         {
             var gameData = JsonUtility.FromJson<List<GameData>>(jsonData);
 

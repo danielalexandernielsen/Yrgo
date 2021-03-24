@@ -40,7 +40,7 @@ public class LoginScreen : MonoBehaviour
 
     public void DeletePlayer()
     {
-        PlayerData playerToDelete = new PlayerData(email.text);
+        PlayerData playerToDelete = new PlayerData(email.text, PlayerMove.Empty);
 
         if (DataSingleton.Instance.playerDataList.players.Contains(playerToDelete) is true)
         {

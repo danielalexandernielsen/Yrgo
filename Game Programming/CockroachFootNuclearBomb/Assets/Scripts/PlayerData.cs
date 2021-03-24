@@ -8,10 +8,10 @@ public class PlayerData
 	public PlayerMove move;
 	public string email;
 
-	public PlayerData(string email)
+	public PlayerData(string email, PlayerMove move)
     {
 		this.email = email;
-		move = PlayerMove.Empty;
+		this.move = move;
 	}	
 }
 
