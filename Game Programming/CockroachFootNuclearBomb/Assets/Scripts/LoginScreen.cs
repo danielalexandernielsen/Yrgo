@@ -30,12 +30,8 @@ public class LoginScreen : MonoBehaviour
     public void Login()
     {
         FirebaseCommands.instance.LoginUser(email.text, password.text);
-
-        if (FirebaseCommands.loggedIn)
-        {
-            SceneManager.LoadScene("Lobby");
-        }
     }
+
 
 
     public void DeletePlayer()

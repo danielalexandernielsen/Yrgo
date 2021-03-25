@@ -1,15 +1,15 @@
 using UnityEngine;
-using Firebase.Extensions;
 using Firebase.Database;
 using System.Collections;
 using Firebase.Auth;
 using System.Linq;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class FirebaseCommands : MonoBehaviour
 {
     public static FirebaseCommands instance;
     public static bool loggedIn;
+    public static bool loginInProcess;
 
 
     void OnEnable()
@@ -36,13 +36,10 @@ public class FirebaseCommands : MonoBehaviour
         StartCoroutine(SaveDataAsync(JsonUtility.ToJson(DataSingleton.Instance.data)));
     }
 
-
     public void LoadData()
     {
         StartCoroutine(LoadDataAsync());
     }
-
-
 
     #endregion
 
@@ -65,7 +62,7 @@ public class FirebaseCommands : MonoBehaviour
         }
         else
         {
-            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: registrationTask.Exception.ToString());
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Registration failed.");
         }
     }
 
@@ -79,13 +76,12 @@ public class FirebaseCommands : MonoBehaviour
 
         if (loginTask.Exception is null)
         {
-            loggedIn = true;
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Welcome! Login successful.");
+            SceneManager.LoadScene("Lobby");
         }
         else
         {
-            loggedIn = false;
-            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: loginTask.Exception.ToString());
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: Wrong username or password.");
         }
     }
 
@@ -101,7 +97,7 @@ public class FirebaseCommands : MonoBehaviour
         }
         else
         {
-            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: saveTask.Exception.ToString());
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: Data could not saved.");
         }
 
     }
@@ -125,11 +121,11 @@ public class FirebaseCommands : MonoBehaviour
         if (loadTask.Exception is null)
         {
             ReadJsonData(jsonData);
-            Debug.Log("Data loaded from firebase.");
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Data loaded from firebase.");
         }
         else
         {
-            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: loadTask.Exception.ToString());
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: Data could not be loaded.");
         }
 
     }
@@ -138,7 +134,7 @@ public class FirebaseCommands : MonoBehaviour
     private static void ReadJsonData(string jsonData)
     {
 
-        var importedData = JsonUtility.FromJson<Data>(jsonData); // Has to be done slower
+        var importedData = JsonUtility.FromJson<Data>(jsonData);
 
         DataSingleton.Instance.data.playerDataList.players.Clear();
         DataSingleton.Instance.data.gameDataList.games.Clear();
