@@ -15,8 +15,7 @@ public class FirebaseCommands : MonoBehaviour
     void OnEnable()
     {
         instance = this;
-        LoadPlayers();
-        //LoadGames();
+        LoadData();
     }
 
 
@@ -32,28 +31,17 @@ public class FirebaseCommands : MonoBehaviour
         StartCoroutine(LoginUserAsync(email, password));
     }
 
-    public void SavePlayers()
+    public void SaveData()
     {
-        StartCoroutine(SaveDataAsync(JsonUtility.ToJson(DataSingleton.Instance.playerDataList)));
+        StartCoroutine(SaveDataAsync(JsonUtility.ToJson(DataSingleton.Instance.data)));
     }
 
-    public void SaveGames()
+
+    public void LoadData()
     {
-        //foreach (var gameData in GameData.games)
-        //{
-        //    StartCoroutine(SaveDataAsync(JsonUtility.ToJson(gameData), "games", gameData.title));
-        //}
+        StartCoroutine(LoadDataAsync());
     }
 
-    public void LoadPlayers()
-    {
-        StartCoroutine(LoadDataAsync("players"));
-    }
-
-    public void LoadGames()
-    {
-        StartCoroutine(LoadDataAsync("games"));
-    }
 
 
     #endregion
@@ -71,8 +59,8 @@ public class FirebaseCommands : MonoBehaviour
 
         if (registrationTask.Exception is null)
         {
-            DataSingleton.Instance.playerDataList.players.Add(new PlayerData(email, PlayerMove.Empty));
-            FirebaseCommands.instance.SavePlayers();
+            DataSingleton.Instance.data.playerDataList.players.Add(new PlayerData(email, PlayerMove.Empty));
+            FirebaseCommands.instance.SaveData();
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Registration Complete.");
         }
         else
@@ -118,11 +106,11 @@ public class FirebaseCommands : MonoBehaviour
 
     }
 
-    private IEnumerator LoadDataAsync(string type)
+    private IEnumerator LoadDataAsync()
     {
         int retryAttempts = 0;
 
-        RetryLoad:
+    RetryLoad:
         var loadTask = FirebaseDatabase.DefaultInstance.RootReference.GetValueAsync();
         yield return new WaitUntil(() => loadTask.IsCompleted);
 
@@ -136,7 +124,7 @@ public class FirebaseCommands : MonoBehaviour
 
         if (loadTask.Exception is null)
         {
-            ReadJsonData(type, jsonData);
+            ReadJsonData(jsonData);
             Debug.Log("Data loaded from firebase.");
         }
         else
@@ -147,34 +135,33 @@ public class FirebaseCommands : MonoBehaviour
     }
 
 
-    private static void ReadJsonData(string type, string jsonData)
+    private static void ReadJsonData(string jsonData)
     {
-        if (type == "players")
+
+        var importedData = JsonUtility.FromJson<Data>(jsonData); // Has to be done slower
+
+        DataSingleton.Instance.data.playerDataList.players.Clear();
+        DataSingleton.Instance.data.gameDataList.games.Clear();
+
+        for (int i = 0; i < importedData.playerDataList.players.Count; i++)
         {
-            var importedPlayerDataList = JsonUtility.FromJson<PlayerDataList>(jsonData);
-
-            DataSingleton.Instance.playerDataList.players.Clear();
-
-            for (int i = 0; i < importedPlayerDataList.players.Count; i++)
-            {
-                DataSingleton.Instance.playerDataList.players.Add(
-                    new PlayerData(
-                        importedPlayerDataList.players.ElementAt(i).email,
-                        importedPlayerDataList.players.ElementAt(i).move));
-            }
+            DataSingleton.Instance.data.playerDataList.players.Add(
+                new PlayerData(
+                    importedData.playerDataList.players.ElementAt(i).email,
+                    importedData.playerDataList.players.ElementAt(i).move)
+                );
         }
 
-        else if (type == "games")
+        for (int i = 0; i < importedData.gameDataList.games.Count; i++)
         {
-            var gameData = JsonUtility.FromJson<List<GameData>>(jsonData);
-
-            for (int i = 0; i < gameData.Count; i++)
-            {
-                GameData.games.ElementAt(i).title = gameData[i].title;
-                GameData.games.ElementAt(i).playerOne = gameData[i].playerOne;
-                GameData.games.ElementAt(i).playerTwo = gameData[i].playerTwo;
-            }
+            DataSingleton.Instance.data.gameDataList.games.Add(
+                new GameData(
+                    importedData.gameDataList.games.ElementAt(i).title,
+                    importedData.gameDataList.games.ElementAt(i).playerOne,
+                    importedData.gameDataList.games.ElementAt(i).playerTwo)
+                );
         }
+
     }
 
     #endregion

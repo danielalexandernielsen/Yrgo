@@ -1,19 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+
 
 [Serializable]
 public class GameData
 {
-    public static List<GameData> games = new List<GameData>();
     public string title;
     public string playerOne;
     public string playerTwo;
 
-	public GameData(string title)
+	public GameData(string title, string playerOne, string playerTwo)
 	{
 		this.title = title;
+		this.playerOne = playerOne;
+		this.playerTwo = playerTwo;
 	}
 
+}
+
+
+[Serializable]
+public class GameDataList
+{
+    public List<GameData> games = new List<GameData>();
 }

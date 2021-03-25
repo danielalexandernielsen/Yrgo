@@ -3,7 +3,7 @@ using UnityEngine;
 public class DataSingleton : MonoBehaviour
 {
 
-    public PlayerDataList playerDataList = new PlayerDataList();
+    public Data data = new Data();
 
 
     private static DataSingleton _instance;

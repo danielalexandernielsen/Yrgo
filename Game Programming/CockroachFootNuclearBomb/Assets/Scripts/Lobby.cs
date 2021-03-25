@@ -8,14 +8,14 @@ public class Lobby : MonoBehaviour
     private TMP_Dropdown dropdownOfGames;
 
 
-    void CreateGame(string title)
+    void CreateGame(string title, string playerOne, string playerTwo)
     {
-        GameData newGame = new GameData(title);
+        GameData newGame = new GameData(title, playerOne, playerTwo);
 
-        if (GameData.games.Contains(newGame) is false)
+        if (DataSingleton.Instance.data.gameDataList.games.Contains(newGame) is false)
         {
-            GameData.games.Add(newGame);
-            FirebaseCommands.instance.SaveGames();
+            DataSingleton.Instance.data.gameDataList.games.Add(newGame);
+            FirebaseCommands.instance.SaveData();
         }
         else
         {
@@ -23,14 +23,14 @@ public class Lobby : MonoBehaviour
         }
     }
 
-    void DeleteGame(string title)
+    void DeleteGame(string title, string playerOne, string playerTwo)
     {
-        GameData gameToDelete = new GameData(title);
+        GameData gameToDelete = new GameData(title, playerOne, playerTwo);
 
-        if (GameData.games.Contains(gameToDelete) is true)
+        if (DataSingleton.Instance.data.gameDataList.games.Contains(gameToDelete) is true)
         {
-            GameData.games.Remove(gameToDelete);
-            FirebaseCommands.instance.SaveGames();
+            DataSingleton.Instance.data.gameDataList.games.Remove(gameToDelete);
+            FirebaseCommands.instance.SaveData();
         }
         else
         {
@@ -40,7 +40,7 @@ public class Lobby : MonoBehaviour
 
     void JoinGame(string title, string player, int slot)
     {
-        GameData game = GameData.games.Where(game => game.title == title).FirstOrDefault();
+        GameData game = DataSingleton.Instance.data.gameDataList.games.Where(game => game.title == title).FirstOrDefault();
 
         if (game is null)
         {
@@ -57,7 +57,7 @@ public class Lobby : MonoBehaviour
             game.playerTwo = player;
         }
 
-        FirebaseCommands.instance.SaveGames();
+        FirebaseCommands.instance.SaveData();
     }
 
     void StartGame()
@@ -69,7 +69,7 @@ public class Lobby : MonoBehaviour
     {
         dropdownOfGames.options.Clear();
 
-        foreach (var game in GameData.games)
+        foreach (var game in DataSingleton.Instance.data.gameDataList.games)
         {
             dropdownOfGames.options.Add(new TMP_Dropdown.OptionData() { text = game.title });
         }
