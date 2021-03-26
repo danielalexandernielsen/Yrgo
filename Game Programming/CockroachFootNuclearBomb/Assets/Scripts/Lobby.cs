@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Lobby : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Lobby : MonoBehaviour
             DataSingleton.Instance.data.gameDataList.games.Add(newGame);
             FirebaseCommands.instance.SaveData();
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Game created successfully.");
+            SceneManager.LoadScene("Game");
         }
         else
         {
@@ -63,7 +65,4 @@ public class Lobby : MonoBehaviour
     {
 
     }
-
-
-
 }

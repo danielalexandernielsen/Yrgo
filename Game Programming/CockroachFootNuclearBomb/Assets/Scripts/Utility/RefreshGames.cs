@@ -7,6 +7,11 @@ public class RefreshGames : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown dropdownOfGames;
 
+    private void Awake()
+    {
+        ListGames();
+    }
+
 
     public void ListGames()
     {
