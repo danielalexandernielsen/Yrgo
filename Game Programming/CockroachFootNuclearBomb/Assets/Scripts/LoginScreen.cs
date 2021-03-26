@@ -30,6 +30,7 @@ public class LoginScreen : MonoBehaviour
     public void Login()
     {
         FirebaseCommands.instance.LoginUser(email.text, password.text);
+        DataSingleton.Instance.loggedInUser = email.text;
     }
 
 

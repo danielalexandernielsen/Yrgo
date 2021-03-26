@@ -5,6 +5,10 @@ using Firebase.Extensions;
 
 public class FirebaseConduit : MonoBehaviour
 {
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
     void Start()
     {

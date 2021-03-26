@@ -4,6 +4,7 @@ public class DataSingleton : MonoBehaviour
 {
 
     public Data data = new Data();
+    public string loggedInUser;
 
 
     private static DataSingleton _instance;
