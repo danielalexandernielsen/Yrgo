@@ -26,7 +26,7 @@ public class Lobby : MonoBehaviour
            
             GameSession.Instance.dataPlayerOne = 
                 DataSingleton.Instance.data.playerDataList.players.
-                Where(player => player.email == GameSession.Instance.activeSession.playerOne).
+                Where(player => player.email == DataSingleton.Instance.loggedInUser).
                 FirstOrDefault();
 
             FirebaseCommands.instance.SaveData();
@@ -57,6 +57,12 @@ public class Lobby : MonoBehaviour
         {
             joinedGame.playerTwo = DataSingleton.Instance.loggedInUser;
             GameSession.Instance.activeSession = joinedGame;
+
+            GameSession.Instance.dataPlayerTwo =
+                DataSingleton.Instance.data.playerDataList.players.
+                Where(player => player.email == DataSingleton.Instance.loggedInUser).
+                FirstOrDefault();
+
             SceneManager.LoadScene("Game");
         }
 

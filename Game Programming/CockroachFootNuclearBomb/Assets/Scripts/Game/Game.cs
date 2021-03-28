@@ -15,12 +15,15 @@ public class Game : MonoBehaviour
     private GameObject availableMoves;
 
     private bool playersSet;
+    private float loadDelay;
+    private float loadTimer;
 
 
     private void Start()
     {
         DontDestroyOnLoad(this);
         InvokeRepeating(nameof(StartGame), 1f, 5f);
+        loadDelay = 5f;
     }
 
     private void StartGame()
@@ -40,36 +43,13 @@ public class Game : MonoBehaviour
             return;
         }
 
-        if (playersSet is false)
-        {
-            SetPlayers();
-            playersSet = true;
-        }
-
         CancelInvoke();
-
 
         waitingForJoinText.SetActive(false);
         availableMoves.SetActive(true);
         InvokeRepeating(nameof(Battle), 1f, 5f);
     }
 
-
-    private void SetPlayers()
-    {
-        GameSession.Instance.dataPlayerOne = 
-            DataSingleton.Instance.data.playerDataList.players.
-            Where(player => player.email == GameSession.Instance.activeSession.playerOne).
-            FirstOrDefault();
-
-        GameSession.Instance.dataPlayerTwo =
-            DataSingleton.Instance.data.playerDataList.players.
-            Where(player => player.email == GameSession.Instance.activeSession.playerTwo).
-            FirstOrDefault();
-
-        GameSession.Instance.dataPlayerOne.move = PlayerMove.Empty;
-        GameSession.Instance.dataPlayerTwo.move = PlayerMove.Empty;
-    }
 
     private void Battle()
     {
@@ -120,5 +100,7 @@ public class Game : MonoBehaviour
         GameSession.Instance.dataPlayerTwo.move = PlayerMove.Empty;
         SceneManager.LoadScene("Results");
     }
+
+
 
 }
