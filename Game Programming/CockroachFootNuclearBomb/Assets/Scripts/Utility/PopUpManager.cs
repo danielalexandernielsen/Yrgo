@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PopUpManager : MonoBehaviour
 {
+
     public static void ClosePopUp(string dialog)
     {
         GameObject.Find(dialog).transform.GetChild(0).gameObject.SetActive(false);

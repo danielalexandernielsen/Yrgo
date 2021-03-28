@@ -16,8 +16,8 @@ public class Lobby : MonoBehaviour
 
         if (DataSingleton.Instance.data.gameDataList.games?.Any(gameData => gameData.title == hostedGameTitle.text) is false)
         {
-            GameData newGame = new GameData(hostedGameTitle.text, DataSingleton.Instance.loggedInUser, null);
-            DataSingleton.Instance.data.gameDataList.games.Add(newGame);
+            GameSession.Instance.activeSession = new GameData(hostedGameTitle.text, DataSingleton.Instance.loggedInUser, null);
+            DataSingleton.Instance.data.gameDataList.games.Add(GameSession.Instance.activeSession);
             FirebaseCommands.instance.SaveData();
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Game created successfully.");
             SceneManager.LoadScene("Game");
@@ -45,24 +45,23 @@ public class Lobby : MonoBehaviour
 
     public void JoinGame()
     {
-        GameData game = DataSingleton.Instance.data.gameDataList.games.Where(game => game.title == joinedGameTitle.captionText.text).FirstOrDefault();
+        GameData joinedGame = DataSingleton.Instance.data.gameDataList.games.Where(game => game.title == joinedGameTitle.captionText.text).FirstOrDefault();
 
-        if (game is null)
+        if (joinedGame is null)
         {
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: Cannot join game. Game does not exist.");
             return;
         }
         else
         {
-            game.playerTwo = DataSingleton.Instance.loggedInUser;
+            joinedGame.playerTwo = DataSingleton.Instance.loggedInUser;
+            GameSession.Instance.activeSession = joinedGame;
+            SceneManager.LoadScene("Game");
         }
 
 
         FirebaseCommands.instance.SaveData();
     }
 
-    public void StartGame()
-    {
 
-    }
 }

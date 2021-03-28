@@ -16,6 +16,7 @@ public class RefreshGames : MonoBehaviour
     public void ListGames()
     {
         dropdownOfGames.options.Clear();
+        FirebaseCommands.instance.LoadData();
 
         foreach (var game in DataSingleton.Instance.data.gameDataList.games)
         {

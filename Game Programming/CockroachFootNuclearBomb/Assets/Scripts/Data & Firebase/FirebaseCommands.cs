@@ -121,7 +121,8 @@ public class FirebaseCommands : MonoBehaviour
         if (loadTask.Exception is null)
         {
             ReadJsonData(jsonData);
-            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Data loaded from firebase.");
+            //PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Data loaded from firebase.");
+            Debug.Log("Data loaded from firebase.");
         }
         else
         {
