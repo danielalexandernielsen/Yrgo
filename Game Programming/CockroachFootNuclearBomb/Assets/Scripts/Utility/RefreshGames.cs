@@ -22,6 +22,8 @@ public class RefreshGames : MonoBehaviour
         {
             dropdownOfGames.options.Add(new TMP_Dropdown.OptionData() { text = game.title });
         }
+
+        dropdownOfGames.RefreshShownValue();
     }
 
 }

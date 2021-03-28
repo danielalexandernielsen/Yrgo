@@ -11,6 +11,11 @@ public class Lobby : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown joinedGameTitle;
 
+    private void Awake()
+    {
+        FirebaseCommands.instance.LoadData();
+    }
+
     public void CreateGame()
     {
 
@@ -18,6 +23,12 @@ public class Lobby : MonoBehaviour
         {
             GameSession.Instance.activeSession = new GameData(hostedGameTitle.text, DataSingleton.Instance.loggedInUser, null);
             DataSingleton.Instance.data.gameDataList.games.Add(GameSession.Instance.activeSession);
+           
+            GameSession.Instance.dataPlayerOne = 
+                DataSingleton.Instance.data.playerDataList.players.
+                Where(player => player.email == GameSession.Instance.activeSession.playerOne).
+                FirstOrDefault();
+
             FirebaseCommands.instance.SaveData();
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Game created successfully.");
             SceneManager.LoadScene("Game");
@@ -25,21 +36,6 @@ public class Lobby : MonoBehaviour
         else
         {
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: A game with this title already exists.");
-        }
-    }
-
-    public void DeleteGame(string title)
-    {
-
-        if (DataSingleton.Instance.data.gameDataList.games?.Any(gameData => gameData.title == title) is true)
-        {
-            var gameToDelete = DataSingleton.Instance.data.gameDataList.games?.Where(gameData => gameData.title == title).FirstOrDefault();
-            DataSingleton.Instance.data.gameDataList.games.Remove(gameToDelete);
-            FirebaseCommands.instance.SaveData();
-        }
-        else
-        {
-            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: Cannot delete. Game does not exist.");
         }
     }
 
@@ -64,9 +60,25 @@ public class Lobby : MonoBehaviour
             SceneManager.LoadScene("Game");
         }
 
-
         FirebaseCommands.instance.SaveData();
     }
+
+    public void DeleteGame(string title)
+    {
+
+        if (DataSingleton.Instance.data.gameDataList.games?.Any(gameData => gameData.title == title) is true)
+        {
+            var gameToDelete = DataSingleton.Instance.data.gameDataList.games?.Where(gameData => gameData.title == title).FirstOrDefault();
+            DataSingleton.Instance.data.gameDataList.games.Remove(gameToDelete);
+            FirebaseCommands.instance.SaveData();
+        }
+        else
+        {
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: Cannot delete. Game does not exist.");
+        }
+    }
+
+
 
 
 }

@@ -25,6 +25,8 @@ public class Game : MonoBehaviour
 
     private void StartGame()
     {
+        FirebaseCommands.instance.LoadData();
+
         waitingForJoinText.SetActive(true);
         availableMoves.SetActive(false);
 
@@ -38,12 +40,14 @@ public class Game : MonoBehaviour
             return;
         }
 
-        CancelInvoke();
-
         if (playersSet is false)
         {
             SetPlayers();
+            playersSet = true;
         }
+
+        CancelInvoke();
+
 
         waitingForJoinText.SetActive(false);
         availableMoves.SetActive(true);
@@ -65,12 +69,11 @@ public class Game : MonoBehaviour
 
         GameSession.Instance.dataPlayerOne.move = PlayerMove.Empty;
         GameSession.Instance.dataPlayerTwo.move = PlayerMove.Empty;
-
-        playersSet = true;
     }
 
     private void Battle()
     {
+        FirebaseCommands.instance.LoadData();
 
         if (GameSession.Instance.dataPlayerOne.move is PlayerMove.Empty || GameSession.Instance.dataPlayerTwo.move is PlayerMove.Empty)
         {

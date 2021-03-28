@@ -1089,7 +1089,7 @@ GameObject:
   - component: {fileID: 550624670}
   - component: {fileID: 550624669}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SelectedText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3292,6 +3292,10 @@ MonoBehaviour:
   dataPlayerTwo:
     move: 0
     email: 
+  winner:
+    move: 0
+    email: 
+  tie: 0
 --- !u!1 &1774342721
 GameObject:
   m_ObjectHideFlags: 0
