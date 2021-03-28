@@ -4,9 +4,11 @@ public class GameSession : MonoBehaviour
 {
 
     public GameData activeSession;
-    public PlayerData playerOneData;
-    public PlayerData playerTwoData;
+    public PlayerData dataPlayerOne;
+    public PlayerData dataPlayerTwo;
 
+    public PlayerData winner;
+    public bool tie;
 
     private static GameSession _instance;
     public static GameSession Instance

@@ -39,7 +39,7 @@ public class Lobby : MonoBehaviour
         }
         else
         {
-            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: Cannot delete. Player does not exist.");
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: Cannot delete. Game does not exist.");
         }
     }
 
@@ -50,6 +50,11 @@ public class Lobby : MonoBehaviour
         if (joinedGame is null)
         {
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: Cannot join game. Game does not exist.");
+            return;
+        }
+        else if (joinedGame.playerOne == joinedGame.playerTwo)
+        {
+            PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Error: You cannot join as the second player on your own game.");
             return;
         }
         else
