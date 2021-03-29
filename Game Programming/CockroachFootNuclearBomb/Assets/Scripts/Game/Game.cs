@@ -14,46 +14,69 @@ public class Game : MonoBehaviour
     [SerializeField]
     private GameObject availableMoves;
 
-    private bool playersSet;
-    private float loadDelay;
-    private float loadTimer;
+    private bool dataLoaded;
 
 
     private void Start()
     {
         DontDestroyOnLoad(this);
-        InvokeRepeating(nameof(StartGame), 1f, 5f);
-        loadDelay = 5f;
-    }
-
-    private void StartGame()
-    {
-        FirebaseCommands.instance.LoadData();
 
         waitingForJoinText.SetActive(true);
         availableMoves.SetActive(false);
 
-        if (GameSession.Instance.activeSession is null)
+        InvokeRepeating(nameof(LoadGame), 10f, 10f);
+        InvokeRepeating(nameof(StartGame), 15f, 15f);
+    }
+
+    private void LoadGame()
+    {
+        Debug.Log("Attempting to Load Game");
+        FirebaseCommands.instance.LoadData();
+    }
+
+    private void StartGame()
+    {
+        Debug.Log("Attempting to Start Game");
+
+        GameSession.Instance.activeSession =
+            DataSingleton.Instance.data.gameDataList.games.
+            Where(game => game.title == GameSession.Instance.activeSessionTitle).
+            FirstOrDefault();
+
+        if (GameSession.Instance.activeSession.playerOne == "" || GameSession.Instance.activeSession.playerTwo == "" ||
+            GameSession.Instance.activeSession.playerOne is null || GameSession.Instance.activeSession.playerTwo is null)
         {
+            Debug.Log("Waiting for second player to join.");
             return;
         }
 
-        if (GameSession.Instance.activeSession.playerOne is null || GameSession.Instance.activeSession.playerTwo is null)
-        {
-            return;
-        }
-
-        CancelInvoke();
+        Debug.Log("Players are ready. Starting game.");
+        Debug.Log("Player one: " + GameSession.Instance.activeSession.playerOne);
+        Debug.Log("Player two: " + GameSession.Instance.activeSession.playerTwo);
+        CancelInvoke(nameof(StartGame));
 
         waitingForJoinText.SetActive(false);
         availableMoves.SetActive(true);
-        InvokeRepeating(nameof(Battle), 1f, 5f);
+
+        InvokeRepeating(nameof(Battle), 5f, 15f);
     }
 
 
     private void Battle()
     {
-        FirebaseCommands.instance.LoadData();
+        Debug.Log("Attempting to Start Battle");
+        Debug.Log("Player one: " + GameSession.Instance.activeSession.playerOne);
+        Debug.Log("Player two: " + GameSession.Instance.activeSession.playerTwo);
+
+        GameSession.Instance.dataPlayerOne =
+            DataSingleton.Instance.data.playerDataList.players.
+            Where(player => player.email == GameSession.Instance.activeSession.playerOne).
+            FirstOrDefault();
+
+        GameSession.Instance.dataPlayerTwo =
+            DataSingleton.Instance.data.playerDataList.players.
+            Where(player => player.email == GameSession.Instance.activeSession.playerTwo).
+            FirstOrDefault();
 
         if (GameSession.Instance.dataPlayerOne.move is PlayerMove.Empty || GameSession.Instance.dataPlayerTwo.move is PlayerMove.Empty)
         {
@@ -62,7 +85,7 @@ public class Game : MonoBehaviour
         }
 
         waitingForMoveText.SetActive(false);
-        CancelInvoke();
+        CancelInvoke(nameof(Battle));
 
         if (GameSession.Instance.dataPlayerOne.move == GameSession.Instance.dataPlayerTwo.move)
         {
@@ -98,6 +121,9 @@ public class Game : MonoBehaviour
 
         GameSession.Instance.dataPlayerOne.move = PlayerMove.Empty;
         GameSession.Instance.dataPlayerTwo.move = PlayerMove.Empty;
+
+        Debug.Log("Battle completed!");
+
         SceneManager.LoadScene("Results");
     }
 

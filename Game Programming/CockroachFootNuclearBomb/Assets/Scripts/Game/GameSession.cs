@@ -4,6 +4,7 @@ public class GameSession : MonoBehaviour
 {
 
     public GameData activeSession;
+    public string activeSessionTitle;
     public PlayerData dataPlayerOne;
     public PlayerData dataPlayerTwo;
 

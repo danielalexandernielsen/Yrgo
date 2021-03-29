@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
-  <string name="firebase_database_url" translatable="false">https://cockroachfootnuclearbomb-default-rtdb.europe-west1.firebasedatabase.app</string>
-  <string name="gcm_defaultSenderId" translatable="false">242516552541</string>
-  <string name="google_storage_bucket" translatable="false">cockroachfootnuclearbomb.appspot.com</string>
-  <string name="project_id" translatable="false">cockroachfootnuclearbomb</string>
-  <string name="google_api_key" translatable="false">AIzaSyBQ-tSykuSnUDo0o1Gjetw_PGvJToGWk5A</string>
-  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBQ-tSykuSnUDo0o1Gjetw_PGvJToGWk5A</string>
-  <string name="google_app_id" translatable="false">1:242516552541:android:bfd9a20dc2a9ff28a5d6b4</string>
-  <string name="default_web_client_id" translatable="false">242516552541-s739j2601ki43cl86hies4n10n7mcfr1.apps.googleusercontent.com</string>
+  <string name="firebase_database_url" translatable="false">https://cockroachfootnuke-default-rtdb.europe-west1.firebasedatabase.app</string>
+  <string name="gcm_defaultSenderId" translatable="false">754390457487</string>
+  <string name="google_storage_bucket" translatable="false">cockroachfootnuke.appspot.com</string>
+  <string name="project_id" translatable="false">cockroachfootnuke</string>
+  <string name="google_api_key" translatable="false">AIzaSyAhlMdQpKfjx8N_z-R6GxAE-j8L7rcLwC8</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAhlMdQpKfjx8N_z-R6GxAE-j8L7rcLwC8</string>
+  <string name="google_app_id" translatable="false">1:754390457487:android:ef9ecd187c7fa103a3e4fa</string>
+  <string name="default_web_client_id" translatable="false">754390457487-pe5k262ncc8ddv3l5rfsf58am9vr45pd.apps.googleusercontent.com</string>
 </resources>

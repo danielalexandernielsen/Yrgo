@@ -21,13 +21,9 @@ public class Lobby : MonoBehaviour
 
         if (DataSingleton.Instance.data.gameDataList.games?.Any(gameData => gameData.title == hostedGameTitle.text) is false)
         {
-            GameSession.Instance.activeSession = new GameData(hostedGameTitle.text, DataSingleton.Instance.loggedInUser, null);
-            DataSingleton.Instance.data.gameDataList.games.Add(GameSession.Instance.activeSession);
-           
-            GameSession.Instance.dataPlayerOne = 
-                DataSingleton.Instance.data.playerDataList.players.
-                Where(player => player.email == DataSingleton.Instance.loggedInUser).
-                FirstOrDefault();
+            var hostedGame = new GameData(hostedGameTitle.text, DataSingleton.Instance.loggedInUser, null);
+            DataSingleton.Instance.data.gameDataList.games.Add(hostedGame);
+            GameSession.Instance.activeSessionTitle = hostedGameTitle.text;
 
             FirebaseCommands.instance.SaveData();
             PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Game created successfully.");
@@ -56,12 +52,7 @@ public class Lobby : MonoBehaviour
         else
         {
             joinedGame.playerTwo = DataSingleton.Instance.loggedInUser;
-            GameSession.Instance.activeSession = joinedGame;
-
-            GameSession.Instance.dataPlayerTwo =
-                DataSingleton.Instance.data.playerDataList.players.
-                Where(player => player.email == DataSingleton.Instance.loggedInUser).
-                FirstOrDefault();
+            GameSession.Instance.activeSessionTitle = joinedGameTitle.captionText.text;
 
             SceneManager.LoadScene("Game");
         }

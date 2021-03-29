@@ -10,6 +10,8 @@ public class FirebaseCommands : MonoBehaviour
     public static FirebaseCommands instance;
     public static bool loggedIn;
     public static bool loginInProcess;
+    public static bool loadingDataInProgress;
+    public static bool dataLoaded;
 
 
     void OnEnable()
@@ -104,7 +106,7 @@ public class FirebaseCommands : MonoBehaviour
 
     private IEnumerator LoadDataAsync()
     {
-        int retryAttempts = 0;
+        loadingDataInProgress = true;
 
     RetryLoad:
         var loadTask = FirebaseDatabase.DefaultInstance.RootReference.GetValueAsync();
@@ -114,15 +116,17 @@ public class FirebaseCommands : MonoBehaviour
 
         if (jsonData is null)
         {
-            retryAttempts++;
             goto RetryLoad;
         }
+
+        loadingDataInProgress = false;
 
         if (loadTask.Exception is null)
         {
             ReadJsonData(jsonData);
             //PopUpManager.DisplayPopUp(dialog: "PopUp", textbox: "PopUpText", message: "Data loaded from firebase.");
             Debug.Log("Data loaded from firebase.");
+            dataLoaded = true;
         }
         else
         {
@@ -130,7 +134,6 @@ public class FirebaseCommands : MonoBehaviour
         }
 
     }
-
 
     private static void ReadJsonData(string jsonData)
     {
@@ -160,6 +163,8 @@ public class FirebaseCommands : MonoBehaviour
         }
 
     }
+
+
 
     #endregion
 }

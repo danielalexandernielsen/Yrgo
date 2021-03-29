@@ -9,18 +9,21 @@ public class PerformMove : MonoBehaviour
     {
         Player().move = PlayerMove.Cockroach;
         HighlightButton("Button Cockroach");
+        FirebaseCommands.instance.SaveData();
     }
 
     public void Foot()
     {
         Player().move = PlayerMove.Foot;
         HighlightButton("Button Foot");
+        FirebaseCommands.instance.SaveData();
     }
 
     public void Nuke()
     {
         Player().move = PlayerMove.Nuke;
         HighlightButton("Button Nuke");
+        FirebaseCommands.instance.SaveData();
     }
 
     private PlayerData Player()
