@@ -119,14 +119,9 @@ public class Game : MonoBehaviour
                 GameSession.Instance.winner = GameSession.Instance.dataPlayerTwo;
         }
 
-        GameSession.Instance.dataPlayerOne.move = PlayerMove.Empty;
-        GameSession.Instance.dataPlayerTwo.move = PlayerMove.Empty;
-
         Debug.Log("Battle completed!");
 
         SceneManager.LoadScene("Results");
     }
-
-
 
 }

@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "754390457487",
-    "firebase_url": "https://cockroachfootnuke-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "cockroachfootnuke",
-    "storage_bucket": "cockroachfootnuke.appspot.com"
+    "project_number": "383313569278",
+    "firebase_url": "https://roachfootnuke-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "roachfootnuke",
+    "storage_bucket": "roachfootnuke.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:754390457487:android:ef9ecd187c7fa103a3e4fa",
+        "mobilesdk_app_id": "1:383313569278:android:62b557473a74be75384caf",
         "android_client_info": {
-          "package_name": "Radiation.CockroachFootNuke"
+          "package_name": "Radiation.RoachFootNuke"
         }
       },
       "oauth_client": [
         {
-          "client_id": "754390457487-pe5k262ncc8ddv3l5rfsf58am9vr45pd.apps.googleusercontent.com",
+          "client_id": "383313569278-doaal4p3dd3mopn0apqnef6n7526mhuf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAhlMdQpKfjx8N_z-R6GxAE-j8L7rcLwC8"
+          "current_key": "AIzaSyDvwQGaxmBU55sicv-sTvsYaofKtjkX5t4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "754390457487-pe5k262ncc8ddv3l5rfsf58am9vr45pd.apps.googleusercontent.com",
+              "client_id": "383313569278-doaal4p3dd3mopn0apqnef6n7526mhuf.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "754390457487-h3v0tubp9cqa1o09gbqfjai07j881fn6.apps.googleusercontent.com",
+              "client_id": "383313569278-r4j31p6mqnbqrvnpofe5jvhsguooi9pt.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "Radiation.CockroachFootNuke"
+                "bundle_id": "Radiation.RoachFootNuke"
               }
             }
           ]

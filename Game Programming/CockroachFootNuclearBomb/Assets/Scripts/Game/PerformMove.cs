@@ -7,30 +7,36 @@ public class PerformMove : MonoBehaviour
 
     public void Cockroach()
     {
-        Player().move = PlayerMove.Cockroach;
+        GetPlayer().move = PlayerMove.Cockroach;
         HighlightButton("Button Cockroach");
-        FirebaseCommands.instance.SaveData();
+        FirebaseCommands.instance.SavePlayerMove(GetPlayerIndex().ToString(), ((int)GetPlayer().move).ToString());
     }
 
     public void Foot()
     {
-        Player().move = PlayerMove.Foot;
+        GetPlayer().move = PlayerMove.Foot;
         HighlightButton("Button Foot");
-        FirebaseCommands.instance.SaveData();
+        FirebaseCommands.instance.SavePlayerMove(GetPlayerIndex().ToString(), ((int)GetPlayer().move).ToString());
     }
 
     public void Nuke()
     {
-        Player().move = PlayerMove.Nuke;
+        GetPlayer().move = PlayerMove.Nuke;
         HighlightButton("Button Nuke");
-        FirebaseCommands.instance.SaveData();
+        FirebaseCommands.instance.SavePlayerMove(GetPlayerIndex().ToString(), ((int)GetPlayer().move).ToString());
     }
 
-    private PlayerData Player()
+    private PlayerData GetPlayer()
     {
         return DataSingleton.Instance.data.playerDataList.players.
             Where(player => player.email == DataSingleton.Instance.loggedInUser).
             FirstOrDefault();
+    }
+
+    private int GetPlayerIndex()
+    {
+        return DataSingleton.Instance.data.playerDataList.players.
+            FindIndex(player => player == GetPlayer());
     }
 
     private void HighlightButton(string button)

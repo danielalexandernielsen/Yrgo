@@ -22,6 +22,7 @@ public class FirebaseConduit : MonoBehaviour
                 Debug.LogError(task.Exception);
             }
         });
+
     }
 
 }

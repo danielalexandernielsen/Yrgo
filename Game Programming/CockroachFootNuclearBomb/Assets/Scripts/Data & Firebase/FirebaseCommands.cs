@@ -43,6 +43,12 @@ public class FirebaseCommands : MonoBehaviour
         StartCoroutine(LoadDataAsync());
     }
 
+    public void SavePlayerMove(string playerIndex, string move)
+    {
+        StartCoroutine(SavePlayerMoveAsync(playerIndex, move));
+    }
+
+
     #endregion
 
 
@@ -104,6 +110,29 @@ public class FirebaseCommands : MonoBehaviour
 
     }
 
+    private IEnumerator SavePlayerMoveAsync(string playerIndex, string move)
+    {
+        var saveTask = FirebaseDatabase.DefaultInstance.RootReference.
+            Child("playerDataList").
+            Child("players").
+            Child(playerIndex).
+            Child("move").
+            SetRawJsonValueAsync(move);
+
+        yield return new WaitUntil(() => saveTask.IsCompleted);
+
+        if (saveTask.Exception is null)
+        {
+            Debug.Log("Player move saved in firebase.");
+        }
+        else
+        {
+            Debug.Log("Error: Player move could not be saved in firebase.");
+        }
+
+    }
+
+
     private IEnumerator LoadDataAsync()
     {
         loadingDataInProgress = true;
@@ -163,7 +192,6 @@ public class FirebaseCommands : MonoBehaviour
         }
 
     }
-
 
 
     #endregion
